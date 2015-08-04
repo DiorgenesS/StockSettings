@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <CheckBoxPreference
+        android:title="@string/key_home_double_tap_action_title"
+        android:key="key_home_double_tap_action" />
+
+    <CheckBoxPreference
+        android:key="sound_patch_key"
+        android:summary="@string/sound_patch_summary"
+        android:title="@string/sound_patch_title" />
+
+    <PreferenceScreen
+        android:title="@string/app_screen_mask_title"
+        android:key="app_screen_mask_key" >
+        <intent
+            android:action="android.intent.action.main"
+            android:targetClass="cn.mixiaoxiao.myappscreenmask.MainActivity"
+            android:targetPackage="cn.mixiaoxiao.myappscreenmask" />
+    </PreferenceScreen>
+
+    <PreferenceScreen
+        android:title="@string/cm_settings_title"
+        android:key="cm_settings_key" >
+        <intent
+            android:action="android.intent.action.main"
+            android:targetClass="com.android.settings_ex.DisplaySettings"
+            android:targetPackage="com.android.settings_ex">
+            </intent>
+        </PreferenceScreen>
+
+    <PreferenceScreen
+        android:title="@string/camera_sound_title"
+        android:key="camera_sound_key" >
+        <intent
+            android:action="android.intent.action.MAIN"
+            android:targetClass="com.xs.stocksettings.CameraSound"
+            android:targetPackage="com.xs.stocksettings" />
+        </PreferenceScreen>
+
+    <ListPreference
+        android:defaultValue="0"
+        android:key="camera_switch_key"
+        android:title="@string/camera_switch_title"/>
+
+    <ListPreference
+        android:defaultValue="0"
+        android:key="storage_switch_key"
+        android:title="@string/storage_switch_title" />
+
+    <ListPreference
+        android:defaultValue="0"
+        android:key="systemui_style_key"
+        android:title="@string/systemui_style_title" />
+
+    <ListPreference
+        android:defaultValue="0"
+        android:title="@string/home_layout_switch_title"
+        android:key="home_layout_switch_key" />
+
+    <EditTextPreference
+        android:digits="1234567890"
+        android:key="density_key"
+        android:title="@string/density_title"/>
+
+    <Preference
+        android:summary="© 2015 MIUI Tools | Powered by Xs"
+        android:title="@string/about_title"
+        android:key="about_key" >
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:data="http://weibo.com/acexs" />
+    </Preference>
+
+
+</PreferenceScreen>
