@@ -19,7 +19,7 @@ import java.util.List;
  */
 public class StockSettings extends miui.preference.PreferenceActivity implements Preference.OnPreferenceChangeListener {
 
-    private static final String KeyHomeDoubleTapAction = "key_home_double_tap_action";
+    private static final String DoubleTapHomeToSleep = "key_home_double_tap_action";
     private static final String CMSettings = "cm_settings_key";
     private static final String CameraSwitch = "camera_switch_key";
     private static final String HomeLayoutSwitch = "home_layout_switch_key";
@@ -44,7 +44,7 @@ public class StockSettings extends miui.preference.PreferenceActivity implements
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.stocksettings);
 
-        mDoubleTapHomeToSleep = (CheckBoxPreference) findPreference(KeyHomeDoubleTapAction);
+        mDoubleTapHomeToSleep = (CheckBoxPreference) findPreference(DoubleTapHomeToSleep);
         mSoundPatch = (CheckBoxPreference) findPreference(SoundPatch);
         mCMSettings = (PreferenceScreen) findPreference(CMSettings);
         mAppScreenMask = (PreferenceScreen) findPreference(AppScreenMask);
@@ -126,6 +126,8 @@ public class StockSettings extends miui.preference.PreferenceActivity implements
                     return true;
                 }
             });
+        } else { /* Null Device*/
+            getPreferenceScreen().removeAll();
         }
 
         setListPreferenceSummary(mCameraSwitch);
@@ -137,9 +139,9 @@ public class StockSettings extends miui.preference.PreferenceActivity implements
     public boolean onPreferenceTreeClick(PreferenceScreen preferencescreen , Preference preference) {
         if (preference == mDoubleTapHomeToSleep) {
             if (mDoubleTapHomeToSleep.isChecked()) {
-                Settings.System.putInt(getContentResolver(), KeyHomeDoubleTapAction, 8);
+                Settings.System.putInt(getContentResolver(), DoubleTapHomeToSleep, 8);
             } else {
-                Settings.System.putInt(getContentResolver(),KeyHomeDoubleTapAction,0);
+                Settings.System.putInt(getContentResolver(),DoubleTapHomeToSleep,0);
             }
         }
         if (preference == mSoundPatch) {
@@ -392,6 +394,7 @@ public class StockSettings extends miui.preference.PreferenceActivity implements
 
     public void DialogReboot() {
         new AlertDialog.Builder(this)
+                .setCancelable(false)
                 .setMessage(R.string.dialog_message)
                 .setTitle(R.string.dialog_ok)
                 .setPositiveButton(R.string.dialog_yes, new DialogInterface.OnClickListener() {
