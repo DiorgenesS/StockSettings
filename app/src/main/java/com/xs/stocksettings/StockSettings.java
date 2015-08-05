@@ -6,13 +6,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.preference.*;
 import android.provider.Settings;
-import android.util.Log;
 import android.widget.Toast;
+import com.xs.stocksettings.utils.*;
 
-import com.xs.stocksettings.utils.DeviceInfo;
-import com.xs.stocksettings.utils.RootCmd;
-
-import java.util.List;
+import miui.os.SystemProperties;
 
 /**
  * Created by xs on 15-7-25.
@@ -28,6 +25,7 @@ public class StockSettings extends miui.preference.PreferenceActivity implements
     private static final String AppScreenMask = "app_screen_mask_key";
     private static final String StorageSwitch = "storage_switch_key";
     private static final String SystemuiStyle = "systemui_style_key";
+    private static final String NowDensity = SystemProperties.get("persist.xsdensity");
 
     private CheckBoxPreference mDoubleTapHomeToSleep;
     private CheckBoxPreference mSoundPatch;
@@ -88,6 +86,9 @@ public class StockSettings extends miui.preference.PreferenceActivity implements
                             Toast.makeText(getBaseContext(), R.string.density_error, Toast.LENGTH_LONG).show();
                             return false;
                         }
+                        String res = getResources().getString(R.string.density_summary_bacon);
+                        String str = String.format(res,NewDensity);
+                        mDensity.setSummary(str);
                         DialogReboot();
                         RootCmd.RunRootCmd("setprop persist.xsdensity " + NewDensity + "");
                         return true;
@@ -121,6 +122,9 @@ public class StockSettings extends miui.preference.PreferenceActivity implements
                             return false;
                         }
                     }
+                    String res = getResources().getString(R.string.density_summary_8297);
+                    String str = String.format(res,NewDensity);
+                    mDensity.setSummary(str);
                     DialogReboot();
                     RootCmd.RunRootCmd("setprop persist.xsdensity " + NewDensity + "");
                     return true;
@@ -134,6 +138,7 @@ public class StockSettings extends miui.preference.PreferenceActivity implements
         setListPreferenceSummary(mHomeLayoutSwitch);
         setListPreferenceSummary(mStorageSwitch);
         setListPreferenceSummary(mSystemuiStyle);
+        setEditTextPreferenceSummary(mDensity);
     }
 
     public boolean onPreferenceTreeClick(PreferenceScreen preferencescreen , Preference preference) {
@@ -156,6 +161,20 @@ public class StockSettings extends miui.preference.PreferenceActivity implements
             }
         }
         return false;
+    }
+
+    private void setEditTextPreferenceSummary(EditTextPreference mEditTextPreference) {
+        if (mEditTextPreference == mDensity) {
+            if (DeviceInfo.IsBacon()) {
+                String res = getResources().getString(R.string.density_summary_bacon);
+                String str = String.format(res,NowDensity);
+                mDensity.setSummary(str);
+            } else if (DeviceInfo.Is8297()) {
+                String res = getResources().getString(R.string.density_summary_8297);
+                String str = String.format(res,NowDensity);
+                mDensity.setSummary(str);
+            }
+        }
     }
 
     private void setListPreferenceSummary(ListPreference mListPreference) {

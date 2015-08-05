@@ -23,6 +23,8 @@
     <string name="density_title">屏幕密度</string>
     <string name="density_edit_title">屏幕密度修改</string>
     <string name="density_edit_message_bacon">请输入一个合理的密度值(300-600)\n修改密度值可能导致系统频发FC，请谨慎修改！</string>
+    <string name="density_summary_bacon">当前密度值为%1$s，默认密度值为480</string>
+    <string name="density_summary_8297">当前密度值为%1$s，默认密度值为320</string>
     <string name="dialog_ok">应用成功，是否重启手机？</string>
     <string name="dialog_message">注意：本次重启为热重启！</string>
     <string name="dialog_yes">确定</string>
