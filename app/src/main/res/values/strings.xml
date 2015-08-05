@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">StockSettings</string>
+    <string name="app_name">Other StockSettings</string>
     <string name="camera_sound_title">Camera Sound</string>
     <string name="record_sound_title">Record Sound</string>
     <string name="focus_sound_title">Focus Sound</string>

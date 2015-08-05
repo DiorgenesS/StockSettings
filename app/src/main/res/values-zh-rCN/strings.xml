@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">附加设置</string>
+    <string name="app_name">其他附加设置</string>
     <string name="camera_sound_title">相机声音</string>
     <string name="record_sound_title">录像声音</string>
     <string name="focus_sound_title">对焦声音</string>
