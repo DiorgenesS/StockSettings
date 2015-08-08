@@ -41,4 +41,7 @@
     <string name="systemui_style_default">默认风格 | 无天气、农历、音乐...</string>
     <string name="systemui_style_diy">自定风格 | 状态栏显示天气和农历等</string>
     <string name="systemui_style_title">状态栏风格</string>
+    <string name="donate_title">请我喝可乐</string>
+    <string name="donate_summary">如果觉得ROM做的还不错，那就请我喝一罐可乐吧:)</string>
+    <string name="donate_link">https://qr.alipay.com/apqb2gl09e91ifsq17</string>
 </resources>
