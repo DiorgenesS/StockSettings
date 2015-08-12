@@ -68,8 +68,8 @@ public class StockSettings extends miui.preference.PreferenceActivity implements
             getPreferenceScreen().removePreference(mSystemuiStyle);
             mCameraSwitch.setEntries(R.array.camera_switch_entries_bacon);
             mCameraSwitch.setEntryValues(R.array.camera_switch_values_bacon);
-            mHomeLayoutSwitch.setEntries(R.array.home_layout_switch_entries_bacon);
-            mHomeLayoutSwitch.setEntryValues(R.array.home_layout_switch_values_bacon);
+            mHomeLayoutSwitch.setEntries(R.array.home_layout_switch_entries);
+            mHomeLayoutSwitch.setEntryValues(R.array.home_layout_switch_values);
             //DPI
             mDensity.setDialogMessage(getResources().getString(R.string.density_edit_message_bacon));
             mDensity.setDialogTitle(getResources().getString(R.string.density_edit_title));
@@ -102,9 +102,10 @@ public class StockSettings extends miui.preference.PreferenceActivity implements
             mStorageSwitch.setEntryValues(R.array.storage_switch_values);
             mSystemuiStyle.setEntries(R.array.systemui_style_entries);
             mSystemuiStyle.setEntryValues(R.array.systemui_style_values);
+            mHomeLayoutSwitch.setEntries(R.array.home_layout_switch_entries);
+            mHomeLayoutSwitch.setEntryValues(R.array.home_layout_switch_values);
             getPreferenceScreen().removePreference(mDoubleTapHomeToSleep);
             getPreferenceScreen().removePreference(mCMSettings);
-            getPreferenceScreen().removePreference(mHomeLayoutSwitch);
             //DPI
             mDensity.setDialogMessage(getResources().getString(R.string.density_edit_message_8297));
             mDensity.setDialogTitle(getResources().getString(R.string.density_edit_title));
@@ -206,7 +207,13 @@ public class StockSettings extends miui.preference.PreferenceActivity implements
                         mListPreference.setSummary(R.string.home_layout_switch_summary_5x5);
                     }
                 } else if (DeviceInfo.Is8297()) {
-
+                    if (0 == Integer.parseInt(mListPreference.getValue())) {
+                        mListPreference.setSummary(R.string.home_layout_switch_summary_4x5);
+                    } else if (1 == Integer.parseInt(mListPreference.getValue())) {
+                        mListPreference.setSummary(R.string.home_layout_switch_summary_4x6);
+                    } else if (2 == Integer.parseInt(mListPreference.getValue())) {
+                        mListPreference.setSummary(R.string.home_layout_switch_summary_5x5);
+                    }
                 }
             }
 
@@ -330,7 +337,42 @@ public class StockSettings extends miui.preference.PreferenceActivity implements
                         break;
                 }
             } else if (DeviceInfo.Is8297()) {
-
+                String ValueHomeLayoutSwitch = (String) newValue;
+                mHomeLayoutSwitch.setValue(ValueHomeLayoutSwitch);
+                int mode = Integer.parseInt(ValueHomeLayoutSwitch);
+                switch  (mode) {
+                    case 0:
+                        preference.setSummary(R.string.home_layout_switch_summary_4x5);
+                        RootCmd.RunRootCmd("mount -o remount,rw /system");
+                        RootCmd.RunRootCmd("rm -rf /system/media/theme/default/com.miui.home");
+                        RootCmd.RunRootCmd("busybox killall com.miui.home");
+                        Intent intent = new Intent(Intent.ACTION_MAIN);
+                        intent.addCategory(Intent.CATEGORY_HOME);
+                        startActivity(intent);
+                        break;
+                    case 1:
+                        preference.setSummary(R.string.home_layout_switch_summary_4x6);
+                        RootCmd.RunRootCmd("mount -o remount,rw /system");
+                        RootCmd.RunRootCmd("rm -rf /system/media/theme/default/com.miui.home");
+                        RootCmd.RunRootCmd("cp -f /system/stocksettings/com.miui.home46 /system/media/theme/default/com.miui.home");
+                        RootCmd.RunRootCmd("busybox killall com.miui.home");
+                        Intent intent1 = new Intent(Intent.ACTION_MAIN);
+                        intent1.addCategory(Intent.CATEGORY_HOME);
+                        startActivity(intent1);
+                        break;
+                    case 2:
+                        preference.setSummary(R.string.home_layout_switch_summary_5x5);
+                        RootCmd.RunRootCmd("mount -o remount,rw /system");
+                        RootCmd.RunRootCmd("rm -rf /system/media/theme/default/com.miui.home");
+                        RootCmd.RunRootCmd("cp -f /system/stocksettings/com.miui.home55 /system/media/theme/default/com.miui.home");
+                        RootCmd.RunRootCmd("busybox killall com.miui.home");
+                        Intent intent2 = new Intent(Intent.ACTION_MAIN);
+                        intent2.addCategory(Intent.CATEGORY_HOME);
+                        startActivity(intent2);
+                        break;
+                    default:
+                        break;
+                }
             }
         }
 
