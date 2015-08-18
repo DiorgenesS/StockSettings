@@ -71,7 +71,9 @@ public class StockSettings extends miui.preference.PreferenceActivity implements
             mHomeLayoutSwitch.setEntries(R.array.home_layout_switch_entries);
             mHomeLayoutSwitch.setEntryValues(R.array.home_layout_switch_values);
             //DPI
-            mDensity.setDialogMessage(getResources().getString(R.string.density_edit_message_bacon));
+            String density_edit_message = getResources().getString(R.string.density_edit_message);
+            String density_edit_message_format = String.format(density_edit_message,"300-600");
+            mDensity.setDialogMessage(density_edit_message_format);
             mDensity.setDialogTitle(getResources().getString(R.string.density_edit_title));
             mDensity.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
                 @Override
@@ -86,9 +88,9 @@ public class StockSettings extends miui.preference.PreferenceActivity implements
                             Toast.makeText(getBaseContext(), R.string.density_error, Toast.LENGTH_LONG).show();
                             return false;
                         }
-                        String res = getResources().getString(R.string.density_summary_bacon);
-                        String str = String.format(res,NewDensity);
-                        mDensity.setSummary(str);
+                        String density_sumarry = getResources().getString(R.string.density_summary);
+                        String density_summary_format = String.format(density_sumarry,NewDensity,480);
+                        mDensity.setSummary(density_summary_format);
                         DialogReboot();
                         RootCmd.RunRootCmd("setprop persist.xsdensity " + NewDensity + "");
                         return true;
@@ -107,7 +109,9 @@ public class StockSettings extends miui.preference.PreferenceActivity implements
             getPreferenceScreen().removePreference(mDoubleTapHomeToSleep);
             getPreferenceScreen().removePreference(mCMSettings);
             //DPI
-            mDensity.setDialogMessage(getResources().getString(R.string.density_edit_message_8297));
+            String density_edit_message = getResources().getString(R.string.density_edit_message);
+            String density_edit_message_format = String.format(density_edit_message,"280-320");
+            mDensity.setDialogMessage(density_edit_message_format);
             mDensity.setDialogTitle(getResources().getString(R.string.density_edit_title));
             mDensity.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
                 @Override
@@ -123,9 +127,9 @@ public class StockSettings extends miui.preference.PreferenceActivity implements
                             return false;
                         }
                     }
-                    String res = getResources().getString(R.string.density_summary_8297);
-                    String str = String.format(res,NewDensity);
-                    mDensity.setSummary(str);
+                    String density_summary = getResources().getString(R.string.density_summary);
+                    String density_summar_format = String.format(density_summary,NewDensity,320);
+                    mDensity.setSummary(density_summar_format);
                     DialogReboot();
                     RootCmd.RunRootCmd("setprop persist.xsdensity " + NewDensity + "");
                     return true;
@@ -167,13 +171,13 @@ public class StockSettings extends miui.preference.PreferenceActivity implements
     private void setEditTextPreferenceSummary(EditTextPreference mEditTextPreference) {
         if (mEditTextPreference == mDensity) {
             if (DeviceInfo.IsBacon()) {
-                String res = getResources().getString(R.string.density_summary_bacon);
-                String str = String.format(res,NowDensity);
-                mDensity.setSummary(str);
+                String density_summary = getResources().getString(R.string.density_summary);
+                String density_summary_format = String.format(density_summary,NowDensity,"480");
+                mDensity.setSummary(density_summary_format);
             } else if (DeviceInfo.Is8297()) {
-                String res = getResources().getString(R.string.density_summary_8297);
-                String str = String.format(res,NowDensity);
-                mDensity.setSummary(str);
+                String density_summary = getResources().getString(R.string.density_summary);
+                String density_summary_format = String.format(density_summary,NowDensity,"320");
+                mDensity.setSummary(density_summary_format);
             }
         }
     }
