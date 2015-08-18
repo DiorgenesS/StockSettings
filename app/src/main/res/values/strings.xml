@@ -45,6 +45,6 @@
     <string name="systemui_style_default">Default | No Weather...</string>
     <string name="systemui_style_diy">DIY | Weather Music...</string>
     <string name="donate_link">http://dwz.cn/donate_link</string>
-    <string name="donate_summary">If you like my work in making this ROM,you are welcome to treat me some coke :)</string>
+    <string name="donate_summary">If you like my work in making this ROM, you are welcome to treat me some coke:)</string>
     <string name="donate_title">Treat Me Coke</string>
 </resources>
