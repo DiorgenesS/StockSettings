@@ -92,7 +92,7 @@ public class StockSettings extends miui.preference.PreferenceActivity implements
                         String density_summary_format = String.format(density_sumarry,NewDensity,480);
                         mDensity.setSummary(density_summary_format);
                         DialogReboot();
-                        RootCmd.RunRootCmd("setprop persist.xsdensity " + NewDensity + "");
+                        Tools.Shell("setprop persist.xsdensity " + NewDensity + "");
                         return true;
                     }
                 }
@@ -131,7 +131,7 @@ public class StockSettings extends miui.preference.PreferenceActivity implements
                     String density_summar_format = String.format(density_summary,NewDensity,320);
                     mDensity.setSummary(density_summar_format);
                     DialogReboot();
-                    RootCmd.RunRootCmd("setprop persist.xsdensity " + NewDensity + "");
+                    Tools.Shell("setprop persist.xsdensity " + NewDensity + "");
                     return true;
                 }
             });
@@ -156,12 +156,12 @@ public class StockSettings extends miui.preference.PreferenceActivity implements
         }
         if (preference == mSoundPatch) {
             if (mSoundPatch.isChecked()){
-                RootCmd.RunRootCmd("mount -o remount,rw /data");
-                RootCmd.RunRootCmd("cp -r /system/stocksettings/Audio_ver1_Vol_custom /data/nvram/APCFG/APRDCL/Audio_ver1_Vol_custom");
+                Tools.Shell("mount -o remount,rw /data");
+                Tools.Shell("cp -r /system/stocksettings/Audio_ver1_Vol_custom /data/nvram/APCFG/APRDCL/Audio_ver1_Vol_custom");
                 DialogReboot();
             } else {
-                RootCmd.RunRootCmd("mount -o remount,rw /data");
-                RootCmd.RunRootCmd("rm -rf /data/nvram/APCFG/APRDCL/Audio_ver1_Vol_custom");
+                Tools.Shell("mount -o remount,rw /data");
+                Tools.Shell("rm -rf /data/nvram/APCFG/APRDCL/Audio_ver1_Vol_custom");
                 DialogReboot();
             }
         }
@@ -255,24 +255,24 @@ public class StockSettings extends miui.preference.PreferenceActivity implements
                 switch (mode) {
                     case 0:
                         preference.setSummary(R.string.camera_switch_color_summary);
-                        RootCmd.RunRootCmd("mount -o remount,rw /system");
-                        RootCmd.RunRootCmd("rm -rf /system/app/Camera.apk");
-                        RootCmd.RunRootCmd("cp -f /system/stocksettings/ColorCameraMod.apk /system/app/Camera.apk");
-                        RootCmd.RunRootCmd("chmod 0644 /system/app/Camera.apk");
+                        Tools.Shell("mount -o remount,rw /system");
+                        Tools.Shell("rm -rf /system/app/Camera.apk");
+                        Tools.Shell("cp -f /system/stocksettings/ColorCameraMod.apk /system/app/Camera.apk");
+                        Tools.Shell("chmod 0644 /system/app/Camera.apk");
                         break;
                     case 1:
                         preference.setSummary(R.string.camera_switch_miui_summary);
-                        RootCmd.RunRootCmd("mount -o remount,rw /system");
-                        RootCmd.RunRootCmd("rm -rf /system/app/Camera.apk");
-                        RootCmd.RunRootCmd("cp -f /system/stocksettings/MiuiCamera.apk /system/app/Camera.apk");
-                        RootCmd.RunRootCmd("chmod 0644 /system/app/Camera.apk");
+                        Tools.Shell("mount -o remount,rw /system");
+                        Tools.Shell("rm -rf /system/app/Camera.apk");
+                        Tools.Shell("cp -f /system/stocksettings/MiuiCamera.apk /system/app/Camera.apk");
+                        Tools.Shell("chmod 0644 /system/app/Camera.apk");
                         break;
                     case 2:
                         preference.setSummary(R.string.camera_switch_cm_summary);
-                        RootCmd.RunRootCmd("mount -o remount,rw /system");
-                        RootCmd.RunRootCmd("rm -rf /system/app/Camera.apk");
-                        RootCmd.RunRootCmd("cp -f /system/stocksettings/CyanogenModCamera.apk /system/app/Camera.apk");
-                        RootCmd.RunRootCmd("chmod 0644 /system/app/Camera.apk");
+                        Tools.Shell("mount -o remount,rw /system");
+                        Tools.Shell("rm -rf /system/app/Camera.apk");
+                        Tools.Shell("cp -f /system/stocksettings/CyanogenModCamera.apk /system/app/Camera.apk");
+                        Tools.Shell("chmod 0644 /system/app/Camera.apk");
                         break;
                     default:
                         break;
@@ -284,17 +284,17 @@ public class StockSettings extends miui.preference.PreferenceActivity implements
                 switch (mode) {
                     case 0:
                         preference.setSummary(R.string.camera_switch_miui_summary);
-                        RootCmd.RunRootCmd("mount -o remount,rw /system");
-                        RootCmd.RunRootCmd("rm -rf /system/priv-app/Camera.apk");
-                        RootCmd.RunRootCmd("cp -f /system/stocksettings/MiuiCamera.apk /system/priv-app/Camera.apk");
-                        RootCmd.RunRootCmd("chmod 0644 /system/priv-app/Camera.apk");
+                        Tools.Shell("mount -o remount,rw /system");
+                        Tools.Shell("rm -rf /system/priv-app/Camera.apk");
+                        Tools.Shell("cp -f /system/stocksettings/MiuiCamera.apk /system/priv-app/Camera.apk");
+                        Tools.Shell("chmod 0644 /system/priv-app/Camera.apk");
                         break;
                     case 1:
                         preference.setSummary(R.string.camera_switch_cp_summary);
-                        RootCmd.RunRootCmd("mount -o remount,rw /system");
-                        RootCmd.RunRootCmd("rm -rf /system/priv-app/Camera.apk");
-                        RootCmd.RunRootCmd("cp -f /system/stocksettings/CoolpadCamera.apk /system/priv-app/Camera.apk");
-                        RootCmd.RunRootCmd("chmod 0644 /system/priv-app/Camera.apk");
+                        Tools.Shell("mount -o remount,rw /system");
+                        Tools.Shell("rm -rf /system/priv-app/Camera.apk");
+                        Tools.Shell("cp -f /system/stocksettings/CoolpadCamera.apk /system/priv-app/Camera.apk");
+                        Tools.Shell("chmod 0644 /system/priv-app/Camera.apk");
                         break;
                     default:
                         break;
@@ -310,29 +310,29 @@ public class StockSettings extends miui.preference.PreferenceActivity implements
                 switch  (mode) {
                     case 0:
                         preference.setSummary(R.string.home_layout_switch_summary_4x5);
-                        RootCmd.RunRootCmd("mount -o remount,rw /system");
-                        RootCmd.RunRootCmd("rm -rf /system/media/theme/default/com.miui.home");
-                        RootCmd.RunRootCmd("busybox killall com.miui.home");
+                        Tools.Shell("mount -o remount,rw /system");
+                        Tools.Shell("rm -rf /system/media/theme/default/com.miui.home");
+                        Tools.Shell("busybox killall com.miui.home");
                         Intent intent = new Intent(Intent.ACTION_MAIN);
                         intent.addCategory(Intent.CATEGORY_HOME);
                         startActivity(intent);
                         break;
                     case 1:
                         preference.setSummary(R.string.home_layout_switch_summary_4x6);
-                        RootCmd.RunRootCmd("mount -o remount,rw /system");
-                        RootCmd.RunRootCmd("rm -rf /system/media/theme/default/com.miui.home");
-                        RootCmd.RunRootCmd("cp -f /system/stocksettings/com.miui.home46 /system/media/theme/default/com.miui.home");
-                        RootCmd.RunRootCmd("busybox killall com.miui.home");
+                        Tools.Shell("mount -o remount,rw /system");
+                        Tools.Shell("rm -rf /system/media/theme/default/com.miui.home");
+                        Tools.Shell("cp -f /system/stocksettings/com.miui.home46 /system/media/theme/default/com.miui.home");
+                        Tools.Shell("busybox killall com.miui.home");
                         Intent intent1 = new Intent(Intent.ACTION_MAIN);
                         intent1.addCategory(Intent.CATEGORY_HOME);
                         startActivity(intent1);
                         break;
                     case 2:
                         preference.setSummary(R.string.home_layout_switch_summary_5x5);
-                        RootCmd.RunRootCmd("mount -o remount,rw /system");
-                        RootCmd.RunRootCmd("rm -rf /system/media/theme/default/com.miui.home");
-                        RootCmd.RunRootCmd("cp -f /system/stocksettings/com.miui.home55 /system/media/theme/default/com.miui.home");
-                        RootCmd.RunRootCmd("busybox killall com.miui.home");
+                        Tools.Shell("mount -o remount,rw /system");
+                        Tools.Shell("rm -rf /system/media/theme/default/com.miui.home");
+                        Tools.Shell("cp -f /system/stocksettings/com.miui.home55 /system/media/theme/default/com.miui.home");
+                        Tools.Shell("busybox killall com.miui.home");
                         Intent intent2 = new Intent(Intent.ACTION_MAIN);
                         intent2.addCategory(Intent.CATEGORY_HOME);
                         startActivity(intent2);
@@ -347,29 +347,29 @@ public class StockSettings extends miui.preference.PreferenceActivity implements
                 switch  (mode) {
                     case 0:
                         preference.setSummary(R.string.home_layout_switch_summary_4x5);
-                        RootCmd.RunRootCmd("mount -o remount,rw /system");
-                        RootCmd.RunRootCmd("rm -rf /system/media/theme/default/com.miui.home");
-                        RootCmd.RunRootCmd("busybox killall com.miui.home");
+                        Tools.Shell("mount -o remount,rw /system");
+                        Tools.Shell("rm -rf /system/media/theme/default/com.miui.home");
+                        Tools.Shell("busybox killall com.miui.home");
                         Intent intent = new Intent(Intent.ACTION_MAIN);
                         intent.addCategory(Intent.CATEGORY_HOME);
                         startActivity(intent);
                         break;
                     case 1:
                         preference.setSummary(R.string.home_layout_switch_summary_4x6);
-                        RootCmd.RunRootCmd("mount -o remount,rw /system");
-                        RootCmd.RunRootCmd("rm -rf /system/media/theme/default/com.miui.home");
-                        RootCmd.RunRootCmd("cp -f /system/stocksettings/com.miui.home46 /system/media/theme/default/com.miui.home");
-                        RootCmd.RunRootCmd("busybox killall com.miui.home");
+                        Tools.Shell("mount -o remount,rw /system");
+                        Tools.Shell("rm -rf /system/media/theme/default/com.miui.home");
+                        Tools.Shell("cp -f /system/stocksettings/com.miui.home46 /system/media/theme/default/com.miui.home");
+                        Tools.Shell("busybox killall com.miui.home");
                         Intent intent1 = new Intent(Intent.ACTION_MAIN);
                         intent1.addCategory(Intent.CATEGORY_HOME);
                         startActivity(intent1);
                         break;
                     case 2:
                         preference.setSummary(R.string.home_layout_switch_summary_5x5);
-                        RootCmd.RunRootCmd("mount -o remount,rw /system");
-                        RootCmd.RunRootCmd("rm -rf /system/media/theme/default/com.miui.home");
-                        RootCmd.RunRootCmd("cp -f /system/stocksettings/com.miui.home55 /system/media/theme/default/com.miui.home");
-                        RootCmd.RunRootCmd("busybox killall com.miui.home");
+                        Tools.Shell("mount -o remount,rw /system");
+                        Tools.Shell("rm -rf /system/media/theme/default/com.miui.home");
+                        Tools.Shell("cp -f /system/stocksettings/com.miui.home55 /system/media/theme/default/com.miui.home");
+                        Tools.Shell("busybox killall com.miui.home");
                         Intent intent2 = new Intent(Intent.ACTION_MAIN);
                         intent2.addCategory(Intent.CATEGORY_HOME);
                         startActivity(intent2);
@@ -390,34 +390,34 @@ public class StockSettings extends miui.preference.PreferenceActivity implements
                 switch (mode) {
                     case 0:
                         preference.setSummary(R.string.storage_switch_internal);
-                        RootCmd.RunRootCmd("mount -o remount,rw /system");
-                        RootCmd.RunRootCmd("rm -rf /system/bin/sdcard");
-                        RootCmd.RunRootCmd("rm -rf /system/bin/vold");
-                        RootCmd.RunRootCmd("rm -rf /system/etc/vold.fstab");
-                        RootCmd.RunRootCmd("rm -rf /system/etc/vold.fstab.nand");
-                        RootCmd.RunRootCmd("cp -r /system/stocksettings/internal/sdcard /system/bin/sdcard");
-                        RootCmd.RunRootCmd("cp -r /system/stocksettings/internal/vold /system/bin/vold");
-                        RootCmd.RunRootCmd("chmod 0755 /system/bin/sdcard");
-                        RootCmd.RunRootCmd("chmod 0755 /system/bin/vold");
-                        RootCmd.RunRootCmd("dd if=/system/stocksettings/internal/boot.img of=/dev/bootimg");
+                        Tools.Shell("mount -o remount,rw /system");
+                        Tools.Shell("rm -rf /system/bin/sdcard");
+                        Tools.Shell("rm -rf /system/bin/vold");
+                        Tools.Shell("rm -rf /system/etc/vold.fstab");
+                        Tools.Shell("rm -rf /system/etc/vold.fstab.nand");
+                        Tools.Shell("cp -r /system/stocksettings/internal/sdcard /system/bin/sdcard");
+                        Tools.Shell("cp -r /system/stocksettings/internal/vold /system/bin/vold");
+                        Tools.Shell("chmod 0755 /system/bin/sdcard");
+                        Tools.Shell("chmod 0755 /system/bin/vold");
+                        Tools.Shell("dd if=/system/stocksettings/internal/boot.img of=/dev/bootimg");
                         DialogReboot();
                         break;
                     case 1:
                         preference.setSummary(R.string.storage_switch_external);
-                        RootCmd.RunRootCmd("mount -o remount,rw /system");
-                        RootCmd.RunRootCmd("rm -rf /system/bin/sdcard");
-                        RootCmd.RunRootCmd("rm -rf /system/bin/vold");
-                        RootCmd.RunRootCmd("rm -rf /system/etc/vold.fstab");
-                        RootCmd.RunRootCmd("rm -rf /system/etc/vold.fstab.nand");
-                        RootCmd.RunRootCmd("cp -r /system/stocksettings/external/sdcard /system/bin/sdcard");
-                        RootCmd.RunRootCmd("cp -r /system/stocksettings/external/vold /system/bin/vold");
-                        RootCmd.RunRootCmd("cp -r /system/stocksettings/external/vold.fstab /system/etc/vold.fstab");
-                        RootCmd.RunRootCmd("cp -r /system/stocksettings/external/vold.fstab.nand /system/etc/vold.fstab.nand");
-                        RootCmd.RunRootCmd("chmod 0755 /system/bin/sdcard");
-                        RootCmd.RunRootCmd("chmod 0755 /system/bin/vold");
-                        RootCmd.RunRootCmd("chmod 0755 /system/etc/vold.fstab");
-                        RootCmd.RunRootCmd("chmod 0755 /system/etc/vold.fstab.nand");
-                        RootCmd.RunRootCmd("dd if=/system/stocksettings/external/boot.img of=/dev/bootimg");
+                        Tools.Shell("mount -o remount,rw /system");
+                        Tools.Shell("rm -rf /system/bin/sdcard");
+                        Tools.Shell("rm -rf /system/bin/vold");
+                        Tools.Shell("rm -rf /system/etc/vold.fstab");
+                        Tools.Shell("rm -rf /system/etc/vold.fstab.nand");
+                        Tools.Shell("cp -r /system/stocksettings/external/sdcard /system/bin/sdcard");
+                        Tools.Shell("cp -r /system/stocksettings/external/vold /system/bin/vold");
+                        Tools.Shell("cp -r /system/stocksettings/external/vold.fstab /system/etc/vold.fstab");
+                        Tools.Shell("cp -r /system/stocksettings/external/vold.fstab.nand /system/etc/vold.fstab.nand");
+                        Tools.Shell("chmod 0755 /system/bin/sdcard");
+                        Tools.Shell("chmod 0755 /system/bin/vold");
+                        Tools.Shell("chmod 0755 /system/etc/vold.fstab");
+                        Tools.Shell("chmod 0755 /system/etc/vold.fstab.nand");
+                        Tools.Shell("dd if=/system/stocksettings/external/boot.img of=/dev/bootimg");
                         DialogReboot();
                         break;
                     default:
@@ -436,16 +436,16 @@ public class StockSettings extends miui.preference.PreferenceActivity implements
                 switch (mode) {
                     case 0:
                         preference.setSummary(R.string.systemui_style_default);
-                        RootCmd.RunRootCmd("mount -o remount,rw /data");
-                        RootCmd.RunRootCmd("cp -r /system/stocksettings/systemui/default/statusbar_clock.maml /data/data/com.android.systemui/files/statusbar_clock.maml");
-                        RootCmd.RunRootCmd("cp -r /system/stocksettings/systemui/default/statusbar_music.maml /data/data/com.android.systemui/files/statusbar_music.maml");
+                        Tools.Shell("mount -o remount,rw /data");
+                        Tools.Shell("cp -r /system/stocksettings/systemui/default/statusbar_clock.maml /data/data/com.android.systemui/files/statusbar_clock.maml");
+                        Tools.Shell("cp -r /system/stocksettings/systemui/default/statusbar_music.maml /data/data/com.android.systemui/files/statusbar_music.maml");
                         DialogReboot();
                         break;
                     case 1:
                         preference.setSummary(R.string.systemui_style_diy);
-                        RootCmd.RunRootCmd("mount -o remount,rw /data");
-                        RootCmd.RunRootCmd("cp -r /system/stocksettings/systemui/diy/statusbar_clock.maml /data/data/com.android.systemui/files/statusbar_clock.maml");
-                        RootCmd.RunRootCmd("cp -r /system/stocksettings/systemui/diy/statusbar_music.maml /data/data/com.android.systemui/files/statusbar_music.maml");
+                        Tools.Shell("mount -o remount,rw /data");
+                        Tools.Shell("cp -r /system/stocksettings/systemui/diy/statusbar_clock.maml /data/data/com.android.systemui/files/statusbar_clock.maml");
+                        Tools.Shell("cp -r /system/stocksettings/systemui/diy/statusbar_music.maml /data/data/com.android.systemui/files/statusbar_music.maml");
                         DialogReboot();
                         break;
                     default:
@@ -465,7 +465,7 @@ public class StockSettings extends miui.preference.PreferenceActivity implements
                 .setPositiveButton(R.string.dialog_yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        RootCmd.RunRootCmd("busybox killall system_server");
+                        Tools.Shell("busybox killall system_server");
                     }
                 })
                 .setNeutralButton(R.string.dialog_no, new DialogInterface.OnClickListener() {

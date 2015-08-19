@@ -4,8 +4,7 @@ import android.os.Bundle;
 import android.preference.*;
 import android.widget.Toast;
 
-import com.xs.stocksettings.utils.IfAppInstall;
-import com.xs.stocksettings.utils.RootCmd;
+import com.xs.stocksettings.utils.Tools;
 
 public class CameraSound extends miui.preference.PreferenceActivity {
 
@@ -29,7 +28,7 @@ public class CameraSound extends miui.preference.PreferenceActivity {
 
     public void onStart() {
         super.onStart();
-        if (IfAppInstall.isInstall(this,"com.oppo.camera")) {
+        if (Tools.IsInstall(this, "com.oppo.camera")) {
             Toast.makeText(this,getResources().getString(R.string.find_color_camera),Toast.LENGTH_LONG).show();
         }
     }
@@ -38,27 +37,27 @@ public class CameraSound extends miui.preference.PreferenceActivity {
                                          Preference preference) {
 
         if (preference == mCameraSound) {
-            RootCmd.RunRootCmd("mount -o remount,rw /system");
+            Tools.Shell("mount -o remount,rw /system");
             if (mCameraSound.isChecked()) {
-                RootCmd.RunRootCmd("mv /system/media/audio/ui/camera_click.bak /system/media/audio/ui/camera_click.ogg");
+                Tools.Shell("mv /system/media/audio/ui/camera_click.bak /system/media/audio/ui/camera_click.ogg");
             } else {
-                RootCmd.RunRootCmd("mv /system/media/audio/ui/camera_click.ogg /system/media/audio/ui/camera_click.bak");
+                Tools.Shell("mv /system/media/audio/ui/camera_click.ogg /system/media/audio/ui/camera_click.bak");
             }
         }
         if (preference == mRecordSound) {
-            RootCmd.RunRootCmd("mount -o remount,rw /system");
+            Tools.Shell("mount -o remount,rw /system");
             if (mRecordSound.isChecked()) {
-                RootCmd.RunRootCmd("mv /system/media/audio/ui/VideoRecord.bak /system/media/audio/ui/VideoRecord.ogg");
+                Tools.Shell("mv /system/media/audio/ui/VideoRecord.bak /system/media/audio/ui/VideoRecord.ogg");
             } else {
-                RootCmd.RunRootCmd("mv /system/media/audio/ui/VideoRecord.ogg /system/media/audio/ui/VideoRecord.bak");
+                Tools.Shell("mv /system/media/audio/ui/VideoRecord.ogg /system/media/audio/ui/VideoRecord.bak");
             }
         }
         if (preference == mFocusSound) {
-            RootCmd.RunRootCmd("mount -o remount,rw /system");
+            Tools.Shell("mount -o remount,rw /system");
             if (mFocusSound.isChecked()) {
-                RootCmd.RunRootCmd("mv /system/media/audio/ui/camera_focus.bak /system/media/audio/ui/camera_focus.ogg");
+                Tools.Shell("mv /system/media/audio/ui/camera_focus.bak /system/media/audio/ui/camera_focus.ogg");
             } else {
-                RootCmd.RunRootCmd("mv /system/media/audio/ui/camera_focus.ogg /system/media/audio/ui/camera_focus.bak");
+                Tools.Shell("mv /system/media/audio/ui/camera_focus.ogg /system/media/audio/ui/camera_focus.bak");
             }
         }
 
