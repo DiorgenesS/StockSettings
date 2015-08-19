@@ -45,4 +45,5 @@
     <string name="donate_link">http://dwz.cn/donate_link</string>
     <string name="donate_summary">If you like my work in making this ROM, you are welcome to treat me some coke:)</string>
     <string name="donate_title">Treat Me Coke</string>
+    <string name="find_color_camera">The system is being used in the Color camera, please turn off the camera sound on the color camera settings</string>
 </resources>

@@ -1,9 +1,10 @@
 package com.xs.stocksettings;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.*;
+import android.widget.Toast;
 
+import com.xs.stocksettings.utils.IfAppInstall;
 import com.xs.stocksettings.utils.RootCmd;
 
 public class CameraSound extends miui.preference.PreferenceActivity {
@@ -21,11 +22,16 @@ public class CameraSound extends miui.preference.PreferenceActivity {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.camera_sound);
 
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-
         mCameraSound = (CheckBoxPreference) findPreference(KEY_CAMERA_SOUND);
         mRecordSound = (CheckBoxPreference) findPreference(KEY_RECORD_SOUND);
         mFocusSound = (CheckBoxPreference) findPreference(KEY_FOCUS_SOUND);
+    }
+
+    public void onStart() {
+        super.onStart();
+        if (IfAppInstall.isInstall(this,"com.oppo.camera")) {
+            Toast.makeText(this,getResources().getString(R.string.find_color_camera),Toast.LENGTH_LONG).show();
+        }
     }
 
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen,

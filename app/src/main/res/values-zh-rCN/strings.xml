@@ -42,4 +42,5 @@
     <string name="donate_title">请我喝可乐</string>
     <string name="donate_summary">如果觉得ROM做的还不错，那就请我喝一罐可乐吧:)</string>
     <string name="donate_link">https://qr.alipay.com/apqb2gl09e91ifsq17</string>
+    <string name="find_color_camera">检测到系统正在使用Color相机，请同时在Color相机设置中关闭相机声音</string>
 </resources>
