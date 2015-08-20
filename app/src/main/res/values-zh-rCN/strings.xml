@@ -19,7 +19,6 @@
     <string name="density_edit_message">请输入一个合理的密度值(%1$s)\n修改密度值可能导致系统频发FC，请谨慎修改！</string>
     <string name="density_summary">当前密度值为%1$s，默认密度值为%2$s</string>
     <string name="dialog_ok">应用成功，是否重启手机？</string>
-    <string name="dialog_message">注意：本次重启为热重启！</string>
     <string name="dialog_yes">确定</string>
     <string name="dialog_no">取消</string>
     <string name="dialog_reboot">请在稍晚些时刻手动重启手机</string>

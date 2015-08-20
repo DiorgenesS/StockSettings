@@ -141,7 +141,10 @@ public class StockSettings extends miui.preference.PreferenceActivity implements
         } else { /* Null Device*/
             getPreferenceScreen().removeAll();
         }
+    }
 
+    public void onStart() {
+        super.onStart();
         setListPreferenceSummary(mCameraSwitch);
         setListPreferenceSummary(mHomeLayoutSwitch);
         setListPreferenceSummary(mStorageSwitch);
@@ -488,12 +491,11 @@ public class StockSettings extends miui.preference.PreferenceActivity implements
     public void DialogReboot() {
         new AlertDialog.Builder(this)
                 .setCancelable(false)
-                .setMessage(R.string.dialog_message)
                 .setTitle(R.string.dialog_ok)
                 .setPositiveButton(R.string.dialog_yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Tools.Shell("busybox killall system_server");
+                        Tools.Shell("reboot");
                     }
                 })
                 .setNeutralButton(R.string.dialog_no, new DialogInterface.OnClickListener() {
