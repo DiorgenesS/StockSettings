@@ -26,9 +26,11 @@ public class StockSettings extends miui.preference.PreferenceActivity implements
     private static final String StorageSwitch = "storage_switch_key";
     private static final String SystemuiStyle = "systemui_style_key";
     private static final String NowDensity = SystemProperties.get("persist.xsdensity");
+    private static final String CameraSound = "camera_sound_key";
 
     private CheckBoxPreference mDoubleTapHomeToSleep;
     private CheckBoxPreference mSoundPatch;
+    private CheckBoxPreference mCameraSound;
     private PreferenceScreen mCMSettings;
     private PreferenceScreen mAppScreenMask;
     private ListPreference mCameraSwitch;
@@ -44,6 +46,7 @@ public class StockSettings extends miui.preference.PreferenceActivity implements
 
         mDoubleTapHomeToSleep = (CheckBoxPreference) findPreference(DoubleTapHomeToSleep);
         mSoundPatch = (CheckBoxPreference) findPreference(SoundPatch);
+        mCameraSound = (CheckBoxPreference) findPreference(CameraSound);
         mCMSettings = (PreferenceScreen) findPreference(CMSettings);
         mAppScreenMask = (PreferenceScreen) findPreference(AppScreenMask);
         mDensity = (EditTextPreference) findPreference(Density);
@@ -144,6 +147,7 @@ public class StockSettings extends miui.preference.PreferenceActivity implements
         setListPreferenceSummary(mStorageSwitch);
         setListPreferenceSummary(mSystemuiStyle);
         setEditTextPreferenceSummary(mDensity);
+        setCheckBoxPreferenceSummary(mCameraSound);
     }
 
     public boolean onPreferenceTreeClick(PreferenceScreen preferencescreen , Preference preference) {
@@ -155,17 +159,41 @@ public class StockSettings extends miui.preference.PreferenceActivity implements
             }
         }
         if (preference == mSoundPatch) {
+            Tools.Shell("mount -o remount,rw /data");
             if (mSoundPatch.isChecked()){
-                Tools.Shell("mount -o remount,rw /data");
                 Tools.Shell("cp -r /system/stocksettings/Audio_ver1_Vol_custom /data/nvram/APCFG/APRDCL/Audio_ver1_Vol_custom");
                 DialogReboot();
             } else {
-                Tools.Shell("mount -o remount,rw /data");
                 Tools.Shell("rm -rf /data/nvram/APCFG/APRDCL/Audio_ver1_Vol_custom");
                 DialogReboot();
             }
         }
+        if (preference == mCameraSound) {
+            Tools.Shell("mount -o remount,rw /system");
+            if  (mCameraSound.isChecked()) {
+                Tools.Shell("sed -i 's/bak/ogg/g' /system/lib/libcameraservice.so");
+                mCameraSound.setSummary(getResources().getString(R.string.camera_sound_summary_on));
+                DialogReboot();
+            } else {
+                Tools.Shell("sed -i 's/ogg/bak/g' /system/lib/libcameraservice.so");
+                mCameraSound.setSummary(getResources().getString(R.string.camera_sound_summary_off));
+                if (Tools.IsInstall(this, "com.oppo.camera")) {
+                    Toast.makeText(this, getResources().getString(R.string.find_color_camera), Toast.LENGTH_LONG).show();
+                }
+                DialogReboot();
+            }
+        }
         return false;
+    }
+
+    private void setCheckBoxPreferenceSummary(CheckBoxPreference mCheckBoxPreference) {
+        if (mCheckBoxPreference == mCameraSound) {
+            if (mCameraSound.isChecked()) {
+                mCameraSound.setSummary(getResources().getString(R.string.camera_sound_summary_on));
+            } else if (mCameraSound.isEnabled()) {
+                mCameraSound.setSummary(getResources().getString(R.string.camera_sound_summary_off));
+            }
+        }
     }
 
     private void setEditTextPreferenceSummary(EditTextPreference mEditTextPreference) {

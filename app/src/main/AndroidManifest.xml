@@ -28,8 +28,6 @@
             </intent-filter>
         </activity>
 
-        <activity android:label="@string/camera_sound_title" android:name=".CameraSound" />
-
     </application>
 
 </manifest>

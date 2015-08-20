@@ -10,6 +10,11 @@
         android:summary="@string/sound_patch_summary"
         android:title="@string/sound_patch_title" />
 
+    <CheckBoxPreference
+        android:defaultValue="true"
+        android:key="camera_sound_key"
+        android:title="@string/camera_sound_title" />
+
     <PreferenceScreen
         android:title="@string/app_screen_mask_title"
         android:key="app_screen_mask_key" >
@@ -27,15 +32,6 @@
             android:targetClass="com.android.settings_ex.DisplaySettings"
             android:targetPackage="com.android.settings_ex">
             </intent>
-        </PreferenceScreen>
-
-    <PreferenceScreen
-        android:title="@string/camera_sound_title"
-        android:key="camera_sound_key" >
-        <intent
-            android:action="android.intent.action.MAIN"
-            android:targetClass="com.xs.stocksettings.CameraSound"
-            android:targetPackage="com.xs.stocksettings" />
         </PreferenceScreen>
 
     <ListPreference

@@ -1,14 +1,8 @@
 <resources>
     <string name="app_name">Other StockSettings</string>
     <string name="camera_sound_title">Camera Sound</string>
-    <string name="record_sound_title">Record Sound</string>
-    <string name="focus_sound_title">Focus Sound</string>
     <string name="camera_sound_summary_off">Off</string>
     <string name="camera_sound_summary_on">On</string>
-    <string name="record_sound_summary_off">Off</string>
-    <string name="record_sound_summary_on">On</string>
-    <string name="focus_sound_summary_off">Off</string>
-    <string name="focus_sound_summary_on">On</string>
     <string name="warning_title">Warning!</string>
     <string name="warning_summary">Shutter sound is compulsory in some regions.\nPlease abide strictly by the laws, rules and regulations of your area.</string>
     <string name="key_home_double_tap_action_title">Double tap home to sleep</string>

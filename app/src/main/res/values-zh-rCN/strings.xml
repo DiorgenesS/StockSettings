@@ -1,14 +1,8 @@
 <resources>
     <string name="app_name">其他附加设置</string>
     <string name="camera_sound_title">相机声音</string>
-    <string name="record_sound_title">录像声音</string>
-    <string name="focus_sound_title">对焦声音</string>
-    <string name="camera_sound_summary_off">相机声音已关闭！</string>
-    <string name="camera_sound_summary_on">相机声音已开启！</string>
-    <string name="record_sound_summary_off">录像声音已关闭！</string>
-    <string name="record_sound_summary_on">录像声音已开启！</string>
-    <string name="focus_sound_summary_off">对焦声音已关闭！</string>
-    <string name="focus_sound_summary_on">对焦声音已开启！</string>
+    <string name="camera_sound_summary_off">相机声音已禁用！</string>
+    <string name="camera_sound_summary_on">相机声音已启用！</string>
     <string name="warning_title">警告！</string>
     <string name="warning_summary">停用相机声音在某些国家属于违法行为，请严谨遵守当地法律！</string>
     <string name="key_home_double_tap_action_title">双击Home锁屏</string>
