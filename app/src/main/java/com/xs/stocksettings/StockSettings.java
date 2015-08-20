@@ -174,11 +174,19 @@ public class StockSettings extends miui.preference.PreferenceActivity implements
         if (preference == mCameraSound) {
             Tools.Shell("mount -o remount,rw /system");
             if  (mCameraSound.isChecked()) {
-                Tools.Shell("sed -i 's/bak/ogg/g' /system/lib/libcameraservice.so");
+                new Thread() {
+                    public void run() {
+                        Tools.Shell("sed -i 's/bak/ogg/g' /system/lib/libcameraservice.so");
+                    }
+                }.start();
                 mCameraSound.setSummary(getResources().getString(R.string.camera_sound_summary_on));
                 DialogReboot();
             } else {
-                Tools.Shell("sed -i 's/ogg/bak/g' /system/lib/libcameraservice.so");
+                new Thread() {
+                    public void run() {
+                        Tools.Shell("sed -i 's/ogg/bak/g' /system/lib/libcameraservice.so");
+                    }
+                }.start();
                 mCameraSound.setSummary(getResources().getString(R.string.camera_sound_summary_off));
                 if (Tools.IsInstall(this, "com.oppo.camera")) {
                     Toast.makeText(this, getResources().getString(R.string.find_color_camera), Toast.LENGTH_LONG).show();
