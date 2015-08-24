@@ -1,0 +1,23 @@
+From 14b12f5dbb402ecd9e09935245b86abc51d82846 Mon Sep 17 00:00:00 2001
+From: X-s <imxs1107@gmail.com>
+Date: Mon, 24 Aug 2015 23:14:48 +0800
+Subject: [PATCH] add power_sounds_xs
+
+---
+ MiuiSystemUI/smali/com/android/systemui/power/PowerUI.smali | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+--- a/MiuiSystemUI/smali/com/android/systemui/power/PowerUI.smali
++++ b/MiuiSystemUI/smali/com/android/systemui/power/PowerUI.smali
+@@ -366,7 +366,7 @@
+     move-result-object v0
+ 
+     .local v0, "cr":Landroid/content/ContentResolver;
+-    const-string v2, "power_sounds_enabled"
++    const-string v2, "power_sounds_xs"
+ 
+     invoke-static {v0, v2, v3}, Landroid/provider/Settings$System;->getInt(Landroid/content/ContentResolver;Ljava/lang/String;I)I
+ 
+-- 
+1.9.1
+
