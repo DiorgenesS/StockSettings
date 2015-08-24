@@ -16,7 +16,7 @@ import miui.os.SystemProperties;
  */
 public class StockSettings extends miui.preference.PreferenceActivity implements Preference.OnPreferenceChangeListener {
 
-    private static final String DoubleTapHomeToSleep = "key_home_double_tap_action";
+    private static final String DoubleTapHomeToSleep = "double_tap_home_to_sleep_key";
     private static final String CMSettings = "cm_settings_key";
     private static final String CameraSwitch = "camera_switch_key";
     private static final String HomeLayoutSwitch = "home_layout_switch_key";
@@ -27,10 +27,12 @@ public class StockSettings extends miui.preference.PreferenceActivity implements
     private static final String SystemuiStyle = "systemui_style_key";
     private static final String NowDensity = SystemProperties.get("persist.xsdensity");
     private static final String CameraSound = "camera_sound_key";
+    private static final String PowerSound = "power_sound_key";
 
     private CheckBoxPreference mDoubleTapHomeToSleep;
     private CheckBoxPreference mSoundPatch;
     private CheckBoxPreference mCameraSound;
+    private CheckBoxPreference mPowerSound;
     private PreferenceScreen mCMSettings;
     private PreferenceScreen mAppScreenMask;
     private ListPreference mCameraSwitch;
@@ -47,6 +49,7 @@ public class StockSettings extends miui.preference.PreferenceActivity implements
         mDoubleTapHomeToSleep = (CheckBoxPreference) findPreference(DoubleTapHomeToSleep);
         mSoundPatch = (CheckBoxPreference) findPreference(SoundPatch);
         mCameraSound = (CheckBoxPreference) findPreference(CameraSound);
+        mPowerSound = (CheckBoxPreference) findPreference(PowerSound);
         mCMSettings = (PreferenceScreen) findPreference(CMSettings);
         mAppScreenMask = (PreferenceScreen) findPreference(AppScreenMask);
         mDensity = (EditTextPreference) findPreference(Density);
@@ -151,14 +154,24 @@ public class StockSettings extends miui.preference.PreferenceActivity implements
         setListPreferenceSummary(mSystemuiStyle);
         setEditTextPreferenceSummary(mDensity);
         setCheckBoxPreferenceSummary(mCameraSound);
+        setCheckBoxPreferenceSummary(mPowerSound);
     }
 
     public boolean onPreferenceTreeClick(PreferenceScreen preferencescreen , Preference preference) {
         if (preference == mDoubleTapHomeToSleep) {
             if (mDoubleTapHomeToSleep.isChecked()) {
-                Settings.System.putInt(getContentResolver(), DoubleTapHomeToSleep, 8);
+                Settings.System.putInt(getContentResolver(), "key_home_double_tap_action", 8);
             } else {
-                Settings.System.putInt(getContentResolver(),DoubleTapHomeToSleep,0);
+                Settings.System.putInt(getContentResolver(), "key_home_double_tap_action", 0);
+            }
+        }
+        if (preference == mPowerSound) {
+            if (mPowerSound.isChecked()) {
+                Settings.System.putInt(getContentResolver(), "power_sounds_xs", 1);
+                mPowerSound.setSummary(getResources().getString(R.string.power_sound_summary_on));
+            } else {
+                Settings.System.putInt(getContentResolver(), "power_sounds_xs", 0);
+                mPowerSound.setSummary(getResources().getString(R.string.power_sound_summary_off));
             }
         }
         if (preference == mSoundPatch) {
@@ -203,6 +216,13 @@ public class StockSettings extends miui.preference.PreferenceActivity implements
                 mCameraSound.setSummary(getResources().getString(R.string.camera_sound_summary_on));
             } else if (mCameraSound.isEnabled()) {
                 mCameraSound.setSummary(getResources().getString(R.string.camera_sound_summary_off));
+            }
+        }
+        if (mCheckBoxPreference == mPowerSound) {
+            if (mPowerSound.isChecked()) {
+                mPowerSound.setSummary(getResources().getString(R.string.power_sound_summary_on));
+            } else if (mPowerSound.isEnabled()) {
+                mPowerSound.setSummary(getResources().getString(R.string.power_sound_summary_off));
             }
         }
     }

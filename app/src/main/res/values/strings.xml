@@ -5,7 +5,7 @@
     <string name="camera_sound_summary_on">On</string>
     <string name="warning_title">Warning!</string>
     <string name="warning_summary">Shutter sound is compulsory in some regions.\nPlease abide strictly by the laws, rules and regulations of your area.</string>
-    <string name="key_home_double_tap_action_title">Double tap home to sleep</string>
+    <string name="double_tap_home_to_sleep_title">Double tap home to sleep</string>
     <string name="cm_settings_title">CyanogenMod Settings</string>
     <string name="camera_switch_title">Camera Switch</string>
     <string name="about_title">About</string>
@@ -39,4 +39,7 @@
     <string name="donate_summary">If you like my work in making this ROM, you are welcome to treat me some coke:)</string>
     <string name="donate_title">Treat Me Coke</string>
     <string name="find_color_camera">The system is being used in the Color camera, please turn off the camera sound on the color camera settings</string>
+    <string name="power_sound_title">Power Sound</string>
+    <string name="power_sound_summary_off">Off</string>
+    <string name="power_sound_summary_on">On</string>
 </resources>

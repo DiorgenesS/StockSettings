@@ -2,8 +2,8 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <CheckBoxPreference
-        android:title="@string/key_home_double_tap_action_title"
-        android:key="key_home_double_tap_action" />
+        android:title="@string/double_tap_home_to_sleep_title"
+        android:key="double_tap_home_to_sleep_key" />
 
     <CheckBoxPreference
         android:key="sound_patch_key"
@@ -14,6 +14,11 @@
         android:defaultValue="true"
         android:key="camera_sound_key"
         android:title="@string/camera_sound_title" />
+
+    <CheckBoxPreference
+        android:defaultValue="true"
+        android:key="power_sound_key"
+        android:title="@string/power_sound_title" />
 
     <PreferenceScreen
         android:title="@string/app_screen_mask_title"
