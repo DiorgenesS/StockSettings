@@ -167,10 +167,10 @@ public class StockSettings extends miui.preference.PreferenceActivity implements
         }
         if (preference == mPowerSound) {
             if (mPowerSound.isChecked()) {
-                Settings.System.putInt(getContentResolver(), "power_sounds_xs", 1);
+                Tools.Shell("setprop persist.xs.power.sounds 1");
                 mPowerSound.setSummary(getResources().getString(R.string.power_sound_summary_on));
             } else {
-                Settings.System.putInt(getContentResolver(), "power_sounds_xs", 0);
+                Tools.Shell("setprop persist.xs.power.sounds 0");
                 mPowerSound.setSummary(getResources().getString(R.string.power_sound_summary_off));
             }
         }
