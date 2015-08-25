@@ -14,7 +14,7 @@ Subject: [PATCH] add power sounds
  
      .local v0, "cr":Landroid/content/ContentResolver;
 -    const-string v2, "power_sounds_enabled"
-+    const-string v2, "persist.xs.power.sounds"
++    const-string v2, "persist.xs.power.sound"
  
 -    invoke-static {v0, v2, v3}, Landroid/provider/Settings$System;->getInt(Landroid/content/ContentResolver;Ljava/lang/String;I)I
 +    #invoke-static {v0, v2, v3}, Landroid/provider/Settings$System;->getInt(Landroid/content/ContentResolver;Ljava/lang/String;I)I
@@ -25,4 +25,3 @@ Subject: [PATCH] add power sounds
  
 -- 
 1.9.1
-

@@ -28,6 +28,8 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".Sounds" android:label="@string/sounds" android:allowBackup="true"/>
+
     </application>
 
 </manifest>

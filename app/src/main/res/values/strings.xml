@@ -42,4 +42,8 @@
     <string name="power_sound_title">Power Sound</string>
     <string name="power_sound_summary_off">Off</string>
     <string name="power_sound_summary_on">On</string>
+    <string name="sounds">Sounds</string>
+    <string name="screenshot_sound_summary_off">Screenshot Sound Off!</string>
+    <string name="screenshot_sound_summary_on">Screenshot Sound On!</string>
+    <string name="screenshot_sound_title">Screenshot Sound</string>
 </resources>

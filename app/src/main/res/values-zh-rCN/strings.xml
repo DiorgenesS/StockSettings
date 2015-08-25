@@ -39,4 +39,8 @@
     <string name="power_sound_title">充电声音</string>
     <string name="power_sound_summary_off">充电插拔声音及低电量提示音已禁用！</string>
     <string name="power_sound_summary_on">充电插拔声音及低电量提示音已启用！</string>
+    <string name="sounds">声音</string>
+    <string name="screenshot_sound_title">截屏声音</string>
+    <string name="screenshot_sound_summary_off">截屏声音已禁用！</string>
+    <string name="screenshot_sound_summary_on">截屏声音已启用！</string>
 </resources>

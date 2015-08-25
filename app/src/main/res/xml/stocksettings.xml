@@ -5,20 +5,13 @@
         android:title="@string/double_tap_home_to_sleep_title"
         android:key="double_tap_home_to_sleep_key" />
 
-    <CheckBoxPreference
-        android:key="sound_patch_key"
-        android:summary="@string/sound_patch_summary"
-        android:title="@string/sound_patch_title" />
-
-    <CheckBoxPreference
-        android:defaultValue="true"
-        android:key="camera_sound_key"
-        android:title="@string/camera_sound_title" />
-
-    <CheckBoxPreference
-        android:defaultValue="true"
-        android:key="power_sound_key"
-        android:title="@string/power_sound_title" />
+    <PreferenceScreen
+        android:title="@string/sounds" >
+        <intent
+            android:action="android.intent.action.main"
+            android:targetClass="com.xs.stocksettings.Sounds"
+            android:targetPackage="com.xs.stocksettings"/>
+    </PreferenceScreen>
 
     <PreferenceScreen
         android:title="@string/app_screen_mask_title"
