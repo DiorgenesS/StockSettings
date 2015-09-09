@@ -104,6 +104,7 @@ public class StockSettings extends miui.preference.PreferenceActivity implements
             mHomeLayoutSwitch.setEntryValues(R.array.home_layout_switch_values);
             getPreferenceScreen().removePreference(mDoubleTapHomeToSleep);
             getPreferenceScreen().removePreference(mCMSettings);
+            getPreferenceScreen().removePreference(mStorageSwitch);
             //DPI
             String density_edit_message = getResources().getString(R.string.density_edit_message);
             String density_edit_message_format = String.format(density_edit_message,"280-320");
@@ -244,23 +245,23 @@ public class StockSettings extends miui.preference.PreferenceActivity implements
                     case 0:
                         preference.setSummary(R.string.camera_switch_color_summary);
                         Tools.Shell("mount -o remount,rw /system");
-                        Tools.Shell("rm -rf /system/app/Camera.apk");
-                        Tools.Shell("cp -f /system/stocksettings/ColorCameraMod.apk /system/app/Camera.apk");
-                        Tools.Shell("chmod 0644 /system/app/Camera.apk");
+                        Tools.Shell("rm -rf /system/priv-app/Camera.apk");
+                        Tools.Shell("cp -f /system/stocksettings/ColorCameraMod.apk /system/priv-app/Camera.apk");
+                        Tools.Shell("chmod 0644 /system/priv-app/Camera.apk");
                         break;
                     case 1:
                         preference.setSummary(R.string.camera_switch_miui_summary);
                         Tools.Shell("mount -o remount,rw /system");
-                        Tools.Shell("rm -rf /system/app/Camera.apk");
-                        Tools.Shell("cp -f /system/stocksettings/MiuiCamera.apk /system/app/Camera.apk");
-                        Tools.Shell("chmod 0644 /system/app/Camera.apk");
+                        Tools.Shell("rm -rf /system/priv-app/Camera.apk");
+                        Tools.Shell("cp -f /system/stocksettings/MiuiCamera.apk /system/priv-app/Camera.apk");
+                        Tools.Shell("chmod 0644 /system/priv-app/Camera.apk");
                         break;
                     case 2:
                         preference.setSummary(R.string.camera_switch_cm_summary);
                         Tools.Shell("mount -o remount,rw /system");
-                        Tools.Shell("rm -rf /system/app/Camera.apk");
-                        Tools.Shell("cp -f /system/stocksettings/CyanogenModCamera.apk /system/app/Camera.apk");
-                        Tools.Shell("chmod 0644 /system/app/Camera.apk");
+                        Tools.Shell("rm -rf /system/priv-app/Camera.apk");
+                        Tools.Shell("cp -f /system/stocksettings/CyanogenModCamera.apk /system/priv-app/Camera.apk");
+                        Tools.Shell("chmod 0644 /system/priv-app/Camera.apk");
                         break;
                     default:
                         break;
