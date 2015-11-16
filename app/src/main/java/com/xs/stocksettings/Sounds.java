@@ -120,7 +120,7 @@ public class Sounds extends miui.preference.PreferenceActivity {
                 }.start();
                 mCameraSound.setSummary(getResources().getString(R.string.camera_sound_summary_off));
                 if (Tools.IsInstall(this, "com.oppo.camera")) {
-                    Toast.makeText(this, getResources().getString(R.string.find_color_camera), Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, getResources().getString(R.string.find_oppo_camera), Toast.LENGTH_LONG).show();
                 }
                 DialogReboot();
             }

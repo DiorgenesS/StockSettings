@@ -2,7 +2,7 @@
 <resources>
 
     <string-array name="camera_switch_entries_bacon">
-        <item>Color相机</item>
+        <item>OPPO相机</item>
         <item>MIUI相机</item>
         <item>CM相机</item>
     </string-array>

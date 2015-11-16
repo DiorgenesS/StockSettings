@@ -2,7 +2,7 @@
 <resources>
 
     <string-array name="camera_switch_entries_bacon">
-        <item>Color Camera</item>
+        <item>OPPO Camera</item>
         <item>MIUI Camera</item>
         <item>CyanogenMod Camera</item>
     </string-array>

@@ -9,7 +9,7 @@
     <string name="cm_settings_title">CyanogenMod Settings</string>
     <string name="camera_switch_title">Camera Switch</string>
     <string name="about_title">About</string>
-    <string name="camera_switch_color_summary">Color Camera</string>
+    <string name="camera_switch_oppo_summary">OPPO Camera</string>
     <string name="camera_switch_miui_summary">MIUI Camera</string>
     <string name="camera_switch_cm_summary">CM Camera</string>
     <string name="camera_switch_cp_summary">Coolpad Camera</string>
@@ -38,7 +38,7 @@
     <string name="donate_link">http://dwz.cn/donate_link</string>
     <string name="donate_summary">If you like my work in making this ROM, you are welcome to treat me some coke:)</string>
     <string name="donate_title">Treat Me Coke</string>
-    <string name="find_color_camera">The system is being used in the Color camera, please turn off the camera sound on the color camera settings</string>
+    <string name="find_oppo_camera">The system is being used in the OPPO camera, please turn off the camera sound on the OPPO camera settings</string>
     <string name="power_sound_title">Power Sound</string>
     <string name="power_sound_summary_off">Off</string>
     <string name="power_sound_summary_on">On</string>

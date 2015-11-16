@@ -9,7 +9,7 @@
     <string name="cm_settings_title">原厂设置</string>
     <string name="camera_switch_title">相机切换</string>
     <string name="about_title">关于</string>
-    <string name="camera_switch_color_summary">当前相机为Color相机</string>
+    <string name="camera_switch_oppo_summary">当前相机为OPPO相机</string>
     <string name="camera_switch_miui_summary">当前相机为MIUI相机</string>
     <string name="camera_switch_cm_summary">当前相机为CM相机</string>
     <string name="home_layout_switch_title">桌面布局</string>
@@ -35,7 +35,7 @@
     <string name="donate_title">请我喝可乐</string>
     <string name="donate_summary">如果觉得ROM做的还不错，那就请我喝一罐可乐吧:)</string>
     <string name="donate_link">https://qr.alipay.com/apqb2gl09e91ifsq17</string>
-    <string name="find_color_camera">检测到系统正在使用Color相机，请同时在Color相机设置中关闭相机声音</string>
+    <string name="find_oppo_camera">检测到系统正在使用OPPO相机，请同时在OPPO相机设置中关闭相机声音</string>
     <string name="power_sound_title">充电声音</string>
     <string name="power_sound_summary_off">充电插拔声音及低电量提示音已禁用！</string>
     <string name="power_sound_summary_on">充电插拔声音及低电量提示音已启用！</string>

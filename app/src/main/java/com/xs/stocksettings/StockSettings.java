@@ -175,7 +175,7 @@ public class StockSettings extends miui.preference.PreferenceActivity implements
             if (mListPreference == mCameraSwitch) {
                 if (DeviceInfo.IsBacon()) {
                     if (0 == Integer.parseInt(mListPreference.getValue())) {
-                        mListPreference.setSummary(R.string.camera_switch_color_summary);
+                        mListPreference.setSummary(R.string.camera_switch_oppo_summary);
                     } else if (1 == Integer.parseInt(mListPreference.getValue())) {
                         mListPreference.setSummary(R.string.camera_switch_miui_summary);
                     } else if (2 == Integer.parseInt(mListPreference.getValue())) {
@@ -243,10 +243,10 @@ public class StockSettings extends miui.preference.PreferenceActivity implements
                 int mode = Integer.parseInt(ValueCameraSwitch);
                 switch (mode) {
                     case 0:
-                        preference.setSummary(R.string.camera_switch_color_summary);
+                        preference.setSummary(R.string.camera_switch_oppo_summary);
                         Tools.Shell("mount -o remount,rw /system");
                         Tools.Shell("rm -rf /system/priv-app/Camera.apk");
-                        Tools.Shell("cp -f /system/stocksettings/ColorCameraMod.apk /system/priv-app/Camera.apk");
+                        Tools.Shell("cp -f /system/stocksettings/OppoCamera.apk /system/priv-app/Camera.apk");
                         Tools.Shell("chmod 0644 /system/priv-app/Camera.apk");
                         break;
                     case 1:
