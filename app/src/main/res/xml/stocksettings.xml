@@ -58,7 +58,7 @@
         android:title="@string/density_title"/>
 
     <Preference
-        android:summary="© 2015 MIUI Tools | Powered by Xs"
+        android:summary="© 2016 MIUI Tools | Powered by Xs"
         android:title="@string/about_title"
         android:key="about_key" >
         <intent

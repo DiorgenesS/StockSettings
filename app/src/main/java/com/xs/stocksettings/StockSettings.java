@@ -105,6 +105,7 @@ public class StockSettings extends miui.preference.PreferenceActivity implements
             getPreferenceScreen().removePreference(mDoubleTapHomeToSleep);
             getPreferenceScreen().removePreference(mCMSettings);
             getPreferenceScreen().removePreference(mStorageSwitch);
+            getPreferenceScreen().removePreference(mSystemuiStyle);
             //DPI
             String density_edit_message = getResources().getString(R.string.density_edit_message);
             String density_edit_message_format = String.format(density_edit_message,"280-320");
