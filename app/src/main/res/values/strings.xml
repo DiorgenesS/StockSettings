@@ -29,12 +29,6 @@
     <string name="sound_patch_title">Sound Patch</string>
     <string name="sound_patch_summary">Click to patch default audio level</string>
     <string name="app_screen_mask_title">App Screen Mask</string>
-    <string name="storage_switch_title">Storage Switch</string>
-    <string name="storage_switch_internal">Internal Storage</string>
-    <string name="storage_switch_external">External Storage</string>
-    <string name="systemui_style_title">SystemUI Style</string>
-    <string name="systemui_style_default">Default | No Weather...</string>
-    <string name="systemui_style_diy">DIY | Weather Music...</string>
     <string name="donate_link">http://dwz.cn/donate_link</string>
     <string name="donate_summary">If you like my work in making this ROM, you are welcome to treat me some coke:)</string>
     <string name="donate_title">Treat Me Coke</string>

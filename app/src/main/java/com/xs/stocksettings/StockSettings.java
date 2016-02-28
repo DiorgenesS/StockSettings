@@ -22,8 +22,6 @@ public class StockSettings extends miui.preference.PreferenceActivity implements
     private static final String HomeLayoutSwitch = "home_layout_switch_key";
     private static final String Density = "density_key";
     private static final String AppScreenMask = "app_screen_mask_key";
-    private static final String StorageSwitch = "storage_switch_key";
-    private static final String SystemuiStyle = "systemui_style_key";
     private static final String NowDensity = SystemProperties.get("persist.xsdensity");
 
     private CheckBoxPreference mDoubleTapHomeToSleep;
@@ -31,8 +29,6 @@ public class StockSettings extends miui.preference.PreferenceActivity implements
     private PreferenceScreen mAppScreenMask;
     private ListPreference mCameraSwitch;
     private ListPreference mHomeLayoutSwitch;
-    private ListPreference mStorageSwitch;
-    private ListPreference mSystemuiStyle;
     private EditTextPreference mDensity;
 
     public void onCreate(Bundle savedInstanceState) {
@@ -51,17 +47,9 @@ public class StockSettings extends miui.preference.PreferenceActivity implements
         mHomeLayoutSwitch = (ListPreference) findPreference(HomeLayoutSwitch);
         mHomeLayoutSwitch.setOnPreferenceChangeListener(this);
 
-        mStorageSwitch = (ListPreference) findPreference(StorageSwitch);
-        mStorageSwitch.setOnPreferenceChangeListener(this);
-
-        mSystemuiStyle = (ListPreference) findPreference(SystemuiStyle);
-        mSystemuiStyle.setOnPreferenceChangeListener(this);
-
         //Device
         if (DeviceInfo.IsBacon()) { /* Oneplus A0001 */
             getPreferenceScreen().removePreference(mAppScreenMask);
-            getPreferenceScreen().removePreference(mStorageSwitch);
-            getPreferenceScreen().removePreference(mSystemuiStyle);
             mCameraSwitch.setEntries(R.array.camera_switch_entries_bacon);
             mCameraSwitch.setEntryValues(R.array.camera_switch_values_bacon);
             mHomeLayoutSwitch.setEntries(R.array.home_layout_switch_entries);
@@ -96,16 +84,10 @@ public class StockSettings extends miui.preference.PreferenceActivity implements
         } else if (DeviceInfo.Is8297()) { /* Coolpad 8297 */
             mCameraSwitch.setEntries(R.array.camera_switch_entries_8297);
             mCameraSwitch.setEntryValues(R.array.camera_switch_values_8297);
-            mStorageSwitch.setEntries(R.array.storage_switch_entries);
-            mStorageSwitch.setEntryValues(R.array.storage_switch_values);
-            mSystemuiStyle.setEntries(R.array.systemui_style_entries);
-            mSystemuiStyle.setEntryValues(R.array.systemui_style_values);
             mHomeLayoutSwitch.setEntries(R.array.home_layout_switch_entries);
             mHomeLayoutSwitch.setEntryValues(R.array.home_layout_switch_values);
             getPreferenceScreen().removePreference(mDoubleTapHomeToSleep);
             getPreferenceScreen().removePreference(mCMSettings);
-            getPreferenceScreen().removePreference(mStorageSwitch);
-            getPreferenceScreen().removePreference(mSystemuiStyle);
             //DPI
             String density_edit_message = getResources().getString(R.string.density_edit_message);
             String density_edit_message_format = String.format(density_edit_message,"280-320");
@@ -142,8 +124,6 @@ public class StockSettings extends miui.preference.PreferenceActivity implements
         super.onStart();
         setListPreferenceSummary(mCameraSwitch);
         setListPreferenceSummary(mHomeLayoutSwitch);
-        setListPreferenceSummary(mStorageSwitch);
-        setListPreferenceSummary(mSystemuiStyle);
         setEditTextPreferenceSummary(mDensity);
     }
 
@@ -210,30 +190,6 @@ public class StockSettings extends miui.preference.PreferenceActivity implements
                     }
                 }
             }
-
-        if (mListPreference == mStorageSwitch) {
-            if (DeviceInfo.IsBacon()) {
-
-            } else if (DeviceInfo.Is8297()) {
-                if (0 == Integer.parseInt(mListPreference.getValue())) {
-                    mListPreference.setSummary(R.string.storage_switch_internal);
-                } else {
-                    mListPreference.setSummary(R.string.storage_switch_external);
-                }
-            }
-        }
-
-        if (mListPreference == mSystemuiStyle) {
-            if (DeviceInfo.IsBacon()) {
-
-            } else if (DeviceInfo.Is8297()) {
-                if (0 == Integer.parseInt(mListPreference.getValue())) {
-                    mListPreference.setSummary(R.string.systemui_style_default);
-                } else {
-                    mListPreference.setSummary(R.string.systemui_style_diy);
-                }
-            }
-        }
     }
 
     public boolean onPreferenceChange(Preference preference, Object newValue) {
@@ -369,81 +325,6 @@ public class StockSettings extends miui.preference.PreferenceActivity implements
                 }
             }
         }
-
-        if (mStorageSwitch == preference) {
-            if (DeviceInfo.IsBacon()) {
-
-            } else if (DeviceInfo.Is8297()) {
-                String ValueStorageSwitch = (String) newValue;
-                mStorageSwitch.setValue(ValueStorageSwitch);
-                int mode = Integer.parseInt(ValueStorageSwitch);
-                switch (mode) {
-                    case 0:
-                        preference.setSummary(R.string.storage_switch_internal);
-                        Tools.Shell("mount -o remount,rw /system");
-                        Tools.Shell("rm -rf /system/bin/sdcard");
-                        Tools.Shell("rm -rf /system/bin/vold");
-                        Tools.Shell("rm -rf /system/etc/vold.fstab");
-                        Tools.Shell("rm -rf /system/etc/vold.fstab.nand");
-                        Tools.Shell("cp -r /system/stocksettings/internal/sdcard /system/bin/sdcard");
-                        Tools.Shell("cp -r /system/stocksettings/internal/vold /system/bin/vold");
-                        Tools.Shell("chmod 0755 /system/bin/sdcard");
-                        Tools.Shell("chmod 0755 /system/bin/vold");
-                        Tools.Shell("dd if=/system/stocksettings/internal/boot.img of=/dev/bootimg");
-                        DialogReboot();
-                        break;
-                    case 1:
-                        preference.setSummary(R.string.storage_switch_external);
-                        Tools.Shell("mount -o remount,rw /system");
-                        Tools.Shell("rm -rf /system/bin/sdcard");
-                        Tools.Shell("rm -rf /system/bin/vold");
-                        Tools.Shell("rm -rf /system/etc/vold.fstab");
-                        Tools.Shell("rm -rf /system/etc/vold.fstab.nand");
-                        Tools.Shell("cp -r /system/stocksettings/external/sdcard /system/bin/sdcard");
-                        Tools.Shell("cp -r /system/stocksettings/external/vold /system/bin/vold");
-                        Tools.Shell("cp -r /system/stocksettings/external/vold.fstab /system/etc/vold.fstab");
-                        Tools.Shell("cp -r /system/stocksettings/external/vold.fstab.nand /system/etc/vold.fstab.nand");
-                        Tools.Shell("chmod 0755 /system/bin/sdcard");
-                        Tools.Shell("chmod 0755 /system/bin/vold");
-                        Tools.Shell("chmod 0755 /system/etc/vold.fstab");
-                        Tools.Shell("chmod 0755 /system/etc/vold.fstab.nand");
-                        Tools.Shell("dd if=/system/stocksettings/external/boot.img of=/dev/bootimg");
-                        DialogReboot();
-                        break;
-                    default:
-                        break;
-                }
-            }
-        }
-
-        if (mSystemuiStyle == preference) {
-            if (DeviceInfo.IsBacon()) {
-
-            } else if (DeviceInfo.Is8297()) {
-                String ValueSystemuiStyle = (String) newValue;
-                mSystemuiStyle.setValue(ValueSystemuiStyle);
-                int mode = Integer.parseInt(ValueSystemuiStyle);
-                switch (mode) {
-                    case 0:
-                        preference.setSummary(R.string.systemui_style_default);
-                        Tools.Shell("mount -o remount,rw /data");
-                        Tools.Shell("cp -r /system/stocksettings/systemui/default/statusbar_clock.maml /data/data/com.android.systemui/files/statusbar_clock.maml");
-                        Tools.Shell("cp -r /system/stocksettings/systemui/default/statusbar_music.maml /data/data/com.android.systemui/files/statusbar_music.maml");
-                        DialogReboot();
-                        break;
-                    case 1:
-                        preference.setSummary(R.string.systemui_style_diy);
-                        Tools.Shell("mount -o remount,rw /data");
-                        Tools.Shell("cp -r /system/stocksettings/systemui/diy/statusbar_clock.maml /data/data/com.android.systemui/files/statusbar_clock.maml");
-                        Tools.Shell("cp -r /system/stocksettings/systemui/diy/statusbar_music.maml /data/data/com.android.systemui/files/statusbar_music.maml");
-                        DialogReboot();
-                        break;
-                    default:
-                        break;
-                }
-            }
-        }
-
         return false;
     }
 

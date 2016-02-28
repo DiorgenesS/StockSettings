@@ -39,16 +39,6 @@
 
     <ListPreference
         android:defaultValue="0"
-        android:key="storage_switch_key"
-        android:title="@string/storage_switch_title" />
-
-    <ListPreference
-        android:defaultValue="0"
-        android:key="systemui_style_key"
-        android:title="@string/systemui_style_title" />
-
-    <ListPreference
-        android:defaultValue="0"
         android:title="@string/home_layout_switch_title"
         android:key="home_layout_switch_key" />
 

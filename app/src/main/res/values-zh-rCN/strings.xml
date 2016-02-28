@@ -26,12 +26,6 @@
     <string name="sound_patch_title">声音补丁</string>
     <string name="sound_patch_summary">增大默认音量等级</string>
     <string name="app_screen_mask_title">护目镜</string>
-    <string name="storage_switch_title">存储切换</string>
-    <string name="storage_switch_external">外置存储</string>
-    <string name="storage_switch_internal">内置存储</string>
-    <string name="systemui_style_default">默认风格 | 无天气、农历、音乐...</string>
-    <string name="systemui_style_diy">自定风格 | 状态栏显示天气和农历等</string>
-    <string name="systemui_style_title">状态栏风格</string>
     <string name="donate_title">请我喝可乐</string>
     <string name="donate_summary">如果觉得ROM做的还不错，那就请我喝一罐可乐吧:)</string>
     <string name="donate_link">https://qr.alipay.com/apqb2gl09e91ifsq17</string>

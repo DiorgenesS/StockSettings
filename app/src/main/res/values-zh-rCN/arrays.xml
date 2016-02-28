@@ -12,14 +12,4 @@
         <item>酷派相机</item>
     </string-array>
 
-    <string-array name="storage_switch_entries">
-        <item>内置存储</item>
-        <item>外置存储</item>
-    </string-array>
-
-    <string-array name="systemui_style_entries">
-        <item>默认风格 | 无天气、农历、音乐</item>
-        <item>自定风格 | 通知栏显示天气和农历等</item>
-    </string-array>
-
 </resources>
