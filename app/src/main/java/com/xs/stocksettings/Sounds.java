@@ -103,26 +103,39 @@ public class Sounds extends miui.preference.PreferenceActivity {
             }
         }
         if (preference == mCameraSound) {
-            Tools.Shell("mount -o remount,rw /system");
-            if  (mCameraSound.isChecked()) {
-                new Thread() {
-                    public void run() {
-                        Tools.Shell("sed -i 's/bak/ogg/g' /system/lib/libcameraservice.so");
+            if (DeviceInfo.Is8297()) {
+                Tools.Shell("mount -o remount,rw /system");
+                if  (mCameraSound.isChecked()) {
+                    new Thread() {
+                        public void run() {
+                            Tools.Shell("sed -i 's/bak/ogg/g' /system/lib/libcameraservice.so");
+                        }
+                    }.start();
+                    mCameraSound.setSummary(getResources().getString(R.string.camera_sound_summary_on));
+                    DialogReboot();
+                } else {
+                    new Thread() {
+                        public void run() {
+                            Tools.Shell("sed -i 's/ogg/bak/g' /system/lib/libcameraservice.so");
+                        }
+                    }.start();
+                    mCameraSound.setSummary(getResources().getString(R.string.camera_sound_summary_off));
+                    if (Tools.IsInstall(this, "com.oppo.camera")) {
+                        Toast.makeText(this, getResources().getString(R.string.find_oppo_camera), Toast.LENGTH_LONG).show();
                     }
-                }.start();
-                mCameraSound.setSummary(getResources().getString(R.string.camera_sound_summary_on));
-                DialogReboot();
-            } else {
-                new Thread() {
-                    public void run() {
-                        Tools.Shell("sed -i 's/ogg/bak/g' /system/lib/libcameraservice.so");
-                    }
-                }.start();
-                mCameraSound.setSummary(getResources().getString(R.string.camera_sound_summary_off));
-                if (Tools.IsInstall(this, "com.oppo.camera")) {
-                    Toast.makeText(this, getResources().getString(R.string.find_oppo_camera), Toast.LENGTH_LONG).show();
+                    DialogReboot();
                 }
-                DialogReboot();
+            } else if (DeviceInfo.IsBacon()) {
+                if  (mCameraSound.isChecked()) {
+                    Tools.Shell("setprop persist.camera.shutter.disable 0");
+                    mCameraSound.setSummary(getResources().getString(R.string.camera_sound_summary_on));
+                } else {
+                    Tools.Shell("setprop persist.camera.shutter.disable 1");
+                    mCameraSound.setSummary(getResources().getString(R.string.camera_sound_summary_off));
+                    if (Tools.IsInstall(this, "com.oppo.camera")) {
+                        Toast.makeText(this, getResources().getString(R.string.find_oppo_camera), Toast.LENGTH_LONG).show();
+                    }
+                }
             }
         }
         return false;
