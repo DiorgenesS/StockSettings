@@ -23,6 +23,7 @@
     </PreferenceScreen>
 
     <PreferenceScreen
+        android:summary="@string/cm_settings_summary"
         android:title="@string/cm_settings_title"
         android:key="cm_settings_key" >
         <intent

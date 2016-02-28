@@ -5,8 +5,9 @@
     <string name="camera_sound_summary_on">相机声音已启用！</string>
     <string name="warning_title">警告！</string>
     <string name="warning_summary">停用相机声音在某些国家属于违法行为，请严谨遵守当地法律！</string>
-    <string name="double_tap_home_to_sleep_title">双击Home锁屏</string>
+    <string name="double_tap_home_to_sleep_title">双击主页锁屏</string>
     <string name="cm_settings_title">原厂设置</string>
+    <string name="cm_settings_summary">黑屏手势，呼吸灯等</string>
     <string name="camera_switch_title">相机切换</string>
     <string name="about_title">关于</string>
     <string name="camera_switch_oppo_summary">当前相机为OPPO相机</string>
@@ -16,7 +17,7 @@
     <string name="density_error">警告，输入密度值超出范围，请重新输入</string>
     <string name="density_title">屏幕密度</string>
     <string name="density_edit_title">屏幕密度修改</string>
-    <string name="density_edit_message">请输入一个合理的密度值(%1$s)\n修改密度值可能导致系统频发FC，界面错位等，请谨慎修改！</string>
+    <string name="density_edit_message">请输入一个合理的密度值(%1$s)\n修改密度值可能导致布局切换失效，界面错位等，请谨慎修改！</string>
     <string name="density_summary">当前密度值为%1$s，默认密度值为%2$s</string>
     <string name="dialog_ok">应用成功，是否重启手机？</string>
     <string name="dialog_yes">确定</string>
@@ -33,7 +34,7 @@
     <string name="power_sound_title">充电声音</string>
     <string name="power_sound_summary_off">充电插拔声音及低电量提示音已禁用！</string>
     <string name="power_sound_summary_on">充电插拔声音及低电量提示音已启用！</string>
-    <string name="sounds">声音</string>
+    <string name="sounds">系统声音</string>
     <string name="screenshot_sound_title">截屏声音</string>
     <string name="screenshot_sound_summary_off">截屏声音已禁用！</string>
     <string name="screenshot_sound_summary_on">截屏声音已启用！</string>

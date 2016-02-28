@@ -7,6 +7,7 @@
     <string name="warning_summary">Shutter sound is compulsory in some regions.\nPlease abide strictly by the laws, rules and regulations of your area.</string>
     <string name="double_tap_home_to_sleep_title">Double tap home to sleep</string>
     <string name="cm_settings_title">CyanogenMod Settings</string>
+    <string name="cm_settings_summary">Gesture, LED ...</string>
     <string name="camera_switch_title">Camera Switch</string>
     <string name="about_title">About</string>
     <string name="camera_switch_oppo_summary">OPPO Camera</string>
@@ -36,7 +37,7 @@
     <string name="power_sound_title">Power Sound</string>
     <string name="power_sound_summary_off">Off</string>
     <string name="power_sound_summary_on">On</string>
-    <string name="sounds">Sounds</string>
+    <string name="sounds">System Sounds</string>
     <string name="screenshot_sound_summary_off">Screenshot Sound Off!</string>
     <string name="screenshot_sound_summary_on">Screenshot Sound On!</string>
     <string name="screenshot_sound_title">Screenshot Sound</string>
