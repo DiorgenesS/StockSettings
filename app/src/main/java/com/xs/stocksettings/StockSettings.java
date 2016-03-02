@@ -47,13 +47,14 @@ public class StockSettings extends miui.preference.PreferenceActivity implements
         mHomeLayoutSwitch = (ListPreference) findPreference(HomeLayoutSwitch);
         mHomeLayoutSwitch.setOnPreferenceChangeListener(this);
 
+        mHomeLayoutSwitch.setEntries(new String[]{"4x5", "4x6", "5x5"});
+        mHomeLayoutSwitch.setEntryValues(new String[]{"0", "1", "2"});
+
         //Device
         if (DeviceInfo.IsBacon()) { /* Oneplus A0001 */
             getPreferenceScreen().removePreference(mAppScreenMask);
             mCameraSwitch.setEntries(R.array.camera_switch_entries_bacon);
             mCameraSwitch.setEntryValues(R.array.camera_switch_values_bacon);
-            mHomeLayoutSwitch.setEntries(R.array.home_layout_switch_entries);
-            mHomeLayoutSwitch.setEntryValues(R.array.home_layout_switch_values);
             //DPI
             String density_edit_message = getResources().getString(R.string.density_edit_message);
             String density_edit_message_format = String.format(density_edit_message,"300-600");
@@ -84,8 +85,6 @@ public class StockSettings extends miui.preference.PreferenceActivity implements
         } else if (DeviceInfo.Is8297()) { /* Coolpad 8297 */
             mCameraSwitch.setEntries(R.array.camera_switch_entries_8297);
             mCameraSwitch.setEntryValues(R.array.camera_switch_values_8297);
-            mHomeLayoutSwitch.setEntries(R.array.home_layout_switch_entries);
-            mHomeLayoutSwitch.setEntryValues(R.array.home_layout_switch_values);
             getPreferenceScreen().removePreference(mDoubleTapHomeToSleep);
             getPreferenceScreen().removePreference(mCMSettings);
             //DPI
@@ -172,7 +171,6 @@ public class StockSettings extends miui.preference.PreferenceActivity implements
             }
 
             if (mListPreference == mHomeLayoutSwitch) {
-                if (DeviceInfo.IsBacon()) {
                     if (0 == Integer.parseInt(mListPreference.getValue())) {
                         mListPreference.setSummary(R.string.home_layout_switch_summary_4x5);
                     } else if (1 == Integer.parseInt(mListPreference.getValue())) {
@@ -180,15 +178,6 @@ public class StockSettings extends miui.preference.PreferenceActivity implements
                     } else if (2 == Integer.parseInt(mListPreference.getValue())) {
                         mListPreference.setSummary(R.string.home_layout_switch_summary_5x5);
                     }
-                } else if (DeviceInfo.Is8297()) {
-                    if (0 == Integer.parseInt(mListPreference.getValue())) {
-                        mListPreference.setSummary(R.string.home_layout_switch_summary_4x5);
-                    } else if (1 == Integer.parseInt(mListPreference.getValue())) {
-                        mListPreference.setSummary(R.string.home_layout_switch_summary_4x6);
-                    } else if (2 == Integer.parseInt(mListPreference.getValue())) {
-                        mListPreference.setSummary(R.string.home_layout_switch_summary_5x5);
-                    }
-                }
             }
     }
 
@@ -249,7 +238,6 @@ public class StockSettings extends miui.preference.PreferenceActivity implements
         }
 
         if (mHomeLayoutSwitch == preference) {
-            if (DeviceInfo.IsBacon()) {
                 String ValueHomeLayoutSwitch = (String) newValue;
                 mHomeLayoutSwitch.setValue(ValueHomeLayoutSwitch);
                 int mode = Integer.parseInt(ValueHomeLayoutSwitch);
@@ -286,44 +274,6 @@ public class StockSettings extends miui.preference.PreferenceActivity implements
                     default:
                         break;
                 }
-            } else if (DeviceInfo.Is8297()) {
-                String ValueHomeLayoutSwitch = (String) newValue;
-                mHomeLayoutSwitch.setValue(ValueHomeLayoutSwitch);
-                int mode = Integer.parseInt(ValueHomeLayoutSwitch);
-                switch  (mode) {
-                    case 0:
-                        preference.setSummary(R.string.home_layout_switch_summary_4x5);
-                        Tools.Shell("mount -o remount,rw /system");
-                        Tools.Shell("rm -rf /system/media/theme/default/com.miui.home");
-                        Tools.Shell("busybox killall com.miui.home");
-                        Intent intent = new Intent(Intent.ACTION_MAIN);
-                        intent.addCategory(Intent.CATEGORY_HOME);
-                        startActivity(intent);
-                        break;
-                    case 1:
-                        preference.setSummary(R.string.home_layout_switch_summary_4x6);
-                        Tools.Shell("mount -o remount,rw /system");
-                        Tools.Shell("rm -rf /system/media/theme/default/com.miui.home");
-                        Tools.Shell("cp -f /system/stocksettings/com.miui.home46 /system/media/theme/default/com.miui.home");
-                        Tools.Shell("busybox killall com.miui.home");
-                        Intent intent1 = new Intent(Intent.ACTION_MAIN);
-                        intent1.addCategory(Intent.CATEGORY_HOME);
-                        startActivity(intent1);
-                        break;
-                    case 2:
-                        preference.setSummary(R.string.home_layout_switch_summary_5x5);
-                        Tools.Shell("mount -o remount,rw /system");
-                        Tools.Shell("rm -rf /system/media/theme/default/com.miui.home");
-                        Tools.Shell("cp -f /system/stocksettings/com.miui.home55 /system/media/theme/default/com.miui.home");
-                        Tools.Shell("busybox killall com.miui.home");
-                        Intent intent2 = new Intent(Intent.ACTION_MAIN);
-                        intent2.addCategory(Intent.CATEGORY_HOME);
-                        startActivity(intent2);
-                        break;
-                    default:
-                        break;
-                }
-            }
         }
         return false;
     }
