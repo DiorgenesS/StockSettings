@@ -62,6 +62,7 @@ public class StockSettings extends miui.preference.PreferenceActivity implements
                 //mHomeLayoutSwitch.setEntryValues(new String[]{"0", "1", "2"});
                 mHomeLayoutSwitch.setEntries(new String[]{"4x6", "5x5"});
                 mHomeLayoutSwitch.setEntryValues(new String[]{"1", "2"});
+                Toast.makeText(this,R.string.home_layout_switch_summary_not_support_4x5,Toast.LENGTH_SHORT).show();
             }
 
             getPreferenceScreen().removePreference(mAppScreenMask);
