@@ -23,6 +23,8 @@ public class StockSettings extends miui.preference.PreferenceActivity implements
     private static final String Density = "density_key";
     private static final String AppScreenMask = "app_screen_mask_key";
     private static final String NowDensity = SystemProperties.get("persist.xsdensity");
+    //获取persist.xsdensity值并转换为int类型
+    private static final int IntNowDensity = Integer.parseInt(NowDensity);
 
     private CheckBoxPreference mDoubleTapHomeToSleep;
     private PreferenceScreen mCMSettings;
@@ -47,11 +49,21 @@ public class StockSettings extends miui.preference.PreferenceActivity implements
         mHomeLayoutSwitch = (ListPreference) findPreference(HomeLayoutSwitch);
         mHomeLayoutSwitch.setOnPreferenceChangeListener(this);
 
+        //默认布局切换
         mHomeLayoutSwitch.setEntries(new String[]{"4x5", "4x6", "5x5"});
         mHomeLayoutSwitch.setEntryValues(new String[]{"0", "1", "2"});
 
         //Device
         if (DeviceInfo.IsBacon()) { /* Oneplus A0001 */
+
+            //添加DPI判断，如果DPI≤440，则移除4x5布局切换
+            if (IntNowDensity <= 440) {
+                //mHomeLayoutSwitch.setEntries(new String[]{"4x5", "4x6", "5x5"});
+                //mHomeLayoutSwitch.setEntryValues(new String[]{"0", "1", "2"});
+                mHomeLayoutSwitch.setEntries(new String[]{"4x6", "5x5"});
+                mHomeLayoutSwitch.setEntryValues(new String[]{"1", "2"});
+            }
+
             getPreferenceScreen().removePreference(mAppScreenMask);
             mCameraSwitch.setEntries(R.array.camera_switch_entries_bacon);
             mCameraSwitch.setEntryValues(R.array.camera_switch_values_bacon);
@@ -172,7 +184,12 @@ public class StockSettings extends miui.preference.PreferenceActivity implements
 
             if (mListPreference == mHomeLayoutSwitch) {
                     if (0 == Integer.parseInt(mListPreference.getValue())) {
+                        //默认设置，summary为4x5
                         mListPreference.setSummary(R.string.home_layout_switch_summary_4x5);
+                        //如果检测到是一加一，并且DPI≤440，则设置4x5布局的summary为不支持4x5布局
+                        if (DeviceInfo.IsBacon() && IntNowDensity <= 440) {
+                            mListPreference.setSummary(R.string.home_layout_switch_summary_not_support_4x5);
+                        }
                     } else if (1 == Integer.parseInt(mListPreference.getValue())) {
                         mListPreference.setSummary(R.string.home_layout_switch_summary_4x6);
                     } else if (2 == Integer.parseInt(mListPreference.getValue())) {
@@ -253,9 +270,16 @@ public class StockSettings extends miui.preference.PreferenceActivity implements
                         break;
                     case 1:
                         preference.setSummary(R.string.home_layout_switch_summary_4x6);
-                        Tools.Shell("mount -o remount,rw /system");
-                        Tools.Shell("rm -rf /system/media/theme/default/com.miui.home");
-                        Tools.Shell("cp -f /system/stocksettings/com.miui.home46 /system/media/theme/default/com.miui.home");
+                        if (DeviceInfo.IsBacon() && IntNowDensity <= 440) {
+                            //如果检测到是一加一，并且DPI≤440，则直接删除默认主题路径的桌面布局文件
+                            Tools.Shell("mount -o remount,rw /system");
+                            Tools.Shell("rm -rf /system/media/theme/default/com.miui.home");
+                        } else {
+                            //否则就使用内置的桌面布局文件
+                            Tools.Shell("mount -o remount,rw /system");
+                            Tools.Shell("rm -rf /system/media/theme/default/com.miui.home");
+                            Tools.Shell("cp -f /system/stocksettings/com.miui.home46 /system/media/theme/default/com.miui.home");
+                        }
                         Tools.Shell("busybox killall com.miui.home");
                         Intent intent1 = new Intent(Intent.ACTION_MAIN);
                         intent1.addCategory(Intent.CATEGORY_HOME);
