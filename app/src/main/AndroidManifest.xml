@@ -1,12 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.xs.stocksettings"
-    android:versionCode="1"
-    android:versionName="1.0"
     android:sharedUserId="android.uid.system" >
-
-    <uses-sdk
-        android:minSdkVersion="19"
-        android:targetSdkVersion="19" />
 
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
     <uses-permission android:name="android.permission.ACCESS_SUPERUSER" />

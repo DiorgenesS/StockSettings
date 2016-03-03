@@ -73,7 +73,7 @@ public class Sounds extends miui.preference.PreferenceActivity {
         }
     }
 
-    public boolean onPreferenceTreeClick(PreferenceScreen preferencescreen , Preference preference) {
+    public boolean onPreferenceTreeClick(PreferenceScreen preferencescreen, Preference preference) {
         if (preference == mScreenshotSound) {
             if (mScreenshotSound.isChecked()) {
                 Tools.Shell("setprop persist.xs.screenshot.sound 1");
@@ -94,7 +94,7 @@ public class Sounds extends miui.preference.PreferenceActivity {
         }
         if (preference == mSoundPatch) {
             Tools.Shell("mount -o remount,rw /data");
-            if (mSoundPatch.isChecked()){
+            if (mSoundPatch.isChecked()) {
                 Tools.Shell("cp -r /system/stocksettings/Audio_ver1_Vol_custom /data/nvram/APCFG/APRDCL/Audio_ver1_Vol_custom");
                 DialogReboot();
             } else {
@@ -105,7 +105,7 @@ public class Sounds extends miui.preference.PreferenceActivity {
         if (preference == mCameraSound) {
             if (DeviceInfo.Is8297()) {
                 Tools.Shell("mount -o remount,rw /system");
-                if  (mCameraSound.isChecked()) {
+                if (mCameraSound.isChecked()) {
                     new Thread() {
                         public void run() {
                             Tools.Shell("sed -i 's/bak/ogg/g' /system/lib/libcameraservice.so");
@@ -126,7 +126,7 @@ public class Sounds extends miui.preference.PreferenceActivity {
                     DialogReboot();
                 }
             } else if (DeviceInfo.IsBacon()) {
-                if  (mCameraSound.isChecked()) {
+                if (mCameraSound.isChecked()) {
                     Tools.Shell("setprop persist.camera.shutter.disable 0");
                     mCameraSound.setSummary(getResources().getString(R.string.camera_sound_summary_on));
                 } else {
@@ -154,7 +154,7 @@ public class Sounds extends miui.preference.PreferenceActivity {
                 .setNeutralButton(R.string.dialog_no, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Toast.makeText(getApplicationContext(),R.string.dialog_reboot,Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), R.string.dialog_reboot, Toast.LENGTH_LONG).show();
                         dialog.dismiss();
                     }
                 })
