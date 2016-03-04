@@ -87,8 +87,7 @@ public class StockSettings extends miui.preference.PreferenceActivity implements
                         Toast.makeText(getBaseContext(), R.string.density_error, Toast.LENGTH_LONG).show();
                         return false;
                     } else {
-                        int i = Integer.parseInt(NewDensity);
-                        if (i < 300 || i > 600) {
+                        if (IntNowDensity < 300 || IntNowDensity > 600) {
                             Toast.makeText(getBaseContext(), R.string.density_error, Toast.LENGTH_LONG).show();
                             return false;
                         }
@@ -119,8 +118,7 @@ public class StockSettings extends miui.preference.PreferenceActivity implements
                         Toast.makeText(getBaseContext(), R.string.density_error, Toast.LENGTH_LONG).show();
                         return false;
                     } else {
-                        int i = Integer.parseInt(NewDensity);
-                        if (i < 280 || i > 320) {
+                        if (IntNowDensity < 280 || IntNowDensity > 320) {
                             Toast.makeText(getBaseContext(), R.string.density_error, Toast.LENGTH_LONG).show();
                             return false;
                         }
