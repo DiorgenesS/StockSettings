@@ -3,6 +3,7 @@ package com.xs.stocksettings;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.EditTextPreference;
@@ -68,7 +69,14 @@ public class StockSettings extends miui.preference.PreferenceActivity implements
                 //mHomeLayoutSwitch.setEntryValues(new String[]{"0", "1", "2"});
                 mHomeLayoutSwitch.setEntries(new String[]{"4x6", "5x5"});
                 mHomeLayoutSwitch.setEntryValues(new String[]{"1", "2"});
-                Toast.makeText(this, R.string.home_layout_switch_summary_not_support_4x5, Toast.LENGTH_SHORT).show();
+
+                //dialogAgree， 提醒4x5布局移除窗口
+                SharedPreferences sp = getSharedPreferences("config", MODE_PRIVATE);
+                Boolean isAgree = sp.getBoolean("isAgree", false);
+                if (!isAgree.equals(true)) {
+                    dialogAgree();
+                }
+
             }
 
             getPreferenceScreen().removePreference(mAppScreenMask);
@@ -83,11 +91,11 @@ public class StockSettings extends miui.preference.PreferenceActivity implements
                 @Override
                 public boolean onPreferenceChange(Preference preference, Object newValue) {
                     String NewDensity = (String) newValue;
+                    int i = Integer.parseInt(NewDensity);
                     if (NewDensity.equals("")) {
                         Toast.makeText(getBaseContext(), R.string.density_error, Toast.LENGTH_LONG).show();
                         return false;
                     } else {
-                        int i = Integer.parseInt(NewDensity);
                         if (i < 300 || i > 600) {
                             Toast.makeText(getBaseContext(), R.string.density_error, Toast.LENGTH_LONG).show();
                             return false;
@@ -95,8 +103,15 @@ public class StockSettings extends miui.preference.PreferenceActivity implements
                         String density_sumarry = getResources().getString(R.string.density_summary);
                         String density_summary_format = String.format(density_sumarry, NewDensity, 480);
                         mDensity.setSummary(density_summary_format);
-                        DialogReboot();
                         Tools.Shell("setprop persist.xsdensity " + NewDensity + "");
+                        //如果新DPI≤440，那么将isAgree窗口重置为false状态
+                        if (i <= 440) {
+                            SharedPreferences sp = getSharedPreferences("config", MODE_PRIVATE);
+                            SharedPreferences.Editor editor = sp.edit();
+                            editor.putBoolean("isAgree", false);
+                            editor.commit();
+                        }
+                        DialogReboot();
                         return true;
                     }
                 }
@@ -193,9 +208,9 @@ public class StockSettings extends miui.preference.PreferenceActivity implements
             if (0 == Integer.parseInt(mListPreference.getValue())) {
                 //默认设置，summary为4x5
                 mListPreference.setSummary(R.string.home_layout_switch_summary_4x5);
-                //如果检测到是一加一，并且DPI≤440，则设置4x5布局的summary为不支持4x5布局
+                //如果检测到是一加一，并且DPI≤440，则设置4x5布局的summary为4x6
                 if (DeviceInfo.IsBacon() && IntNowDensity <= 440) {
-                    mListPreference.setSummary(R.string.home_layout_switch_summary_not_support_4x5);
+                    mListPreference.setSummary(R.string.home_layout_switch_summary_4x6);
                 }
             } else if (1 == Integer.parseInt(mListPreference.getValue())) {
                 mListPreference.setSummary(R.string.home_layout_switch_summary_4x6);
@@ -324,6 +339,22 @@ public class StockSettings extends miui.preference.PreferenceActivity implements
                     public void onClick(DialogInterface dialog, int which) {
                         Toast.makeText(getApplicationContext(), R.string.dialog_reboot, Toast.LENGTH_LONG).show();
                         dialog.dismiss();
+                    }
+                })
+                .show();
+    }
+
+    private void dialogAgree() {
+        new AlertDialog.Builder(this)
+                .setCancelable(false)
+                .setTitle(R.string.home_layout_switch_summary_not_support_4x5)
+                .setPositiveButton(R.string.dialog_is_agree, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        SharedPreferences sp = getSharedPreferences("config", MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sp.edit();
+                        editor.putBoolean("isAgree", true);
+                        editor.commit();
                     }
                 })
                 .show();

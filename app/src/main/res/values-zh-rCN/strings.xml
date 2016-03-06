@@ -22,6 +22,7 @@
     <string name="dialog_ok">应用成功，是否重启手机？</string>
     <string name="dialog_yes">确定</string>
     <string name="dialog_no">取消</string>
+    <string name="dialog_is_agree">不再提醒</string>
     <string name="dialog_reboot">请在稍晚些时刻手动重启手机</string>
     <string name="camera_switch_cp_summary">当前相机为酷派相机</string>
     <string name="sound_patch_title">声音补丁</string>

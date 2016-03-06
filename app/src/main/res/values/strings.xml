@@ -28,6 +28,7 @@
     <string name="dialog_yes">Yes</string>
     <string name="dialog_no">No</string>
     <string name="dialog_reboot">Please restart your mobile phone manually in some time later</string>
+    <string name="dialog_is_agree">Never Notify</string>
     <string name="sound_patch_title">Sound Patch</string>
     <string name="sound_patch_summary">Click to patch default audio level</string>
     <string name="app_screen_mask_title">App Screen Mask</string>
