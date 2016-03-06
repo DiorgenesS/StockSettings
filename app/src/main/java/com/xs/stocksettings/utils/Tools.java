@@ -15,7 +15,7 @@ public class Tools {
 
     private static final String LOG_TAG = "StockSettings";
 
-    public static int Shell(String paramString) {
+    public static int shell(String paramString) {
         try {
             Log.i(LOG_TAG, paramString);
             Process localProcess = Runtime.getRuntime().exec("su");
@@ -35,7 +35,7 @@ public class Tools {
         return 1;
     }
 
-    public static boolean IsInstall(Context context, String packageName) {
+    public static boolean isInstall(Context context, String packageName) {
         final PackageManager packageManager = context.getPackageManager();
         // 获取所有已安装程序的包信息
         List<PackageInfo> pinfo = packageManager.getInstalledPackages(0);

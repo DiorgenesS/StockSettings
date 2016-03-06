@@ -11,11 +11,11 @@ public class DeviceInfo {
     private static final String IsBacon = "bacon_xs";
     private static final String Is8297 = "8297_xs";
 
-    public static boolean IsBacon() {
+    public static boolean isBacon() {
         return MOD_DEVICE.equals(IsBacon);
     }
 
-    public static boolean Is8297() {
+    public static boolean is8297() {
         return MOD_DEVICE.equals(Is8297);
     }
 }

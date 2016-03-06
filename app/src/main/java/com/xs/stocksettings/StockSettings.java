@@ -61,7 +61,7 @@ public class StockSettings extends miui.preference.PreferenceActivity implements
         mHomeLayoutSwitch.setEntryValues(new String[]{"0", "1", "2"});
 
         //Device
-        if (DeviceInfo.IsBacon()) { /* Oneplus A0001 */
+        if (DeviceInfo.isBacon()) { /* Oneplus A0001 */
 
             //添加DPI判断，如果DPI≤440，则移除4x5布局切换
             if (IntNowDensity <= 440) {
@@ -103,7 +103,7 @@ public class StockSettings extends miui.preference.PreferenceActivity implements
                         String density_sumarry = getResources().getString(R.string.density_summary);
                         String density_summary_format = String.format(density_sumarry, NewDensity, 480);
                         mDensity.setSummary(density_summary_format);
-                        Tools.Shell("setprop persist.xsdensity " + NewDensity + "");
+                        Tools.shell("setprop persist.xsdensity " + NewDensity + "");
                         //如果新DPI≤440，那么将isAgree窗口重置为false状态
                         if (i <= 440) {
                             SharedPreferences sp = getSharedPreferences("config", MODE_PRIVATE);
@@ -111,12 +111,19 @@ public class StockSettings extends miui.preference.PreferenceActivity implements
                             editor.putBoolean("isAgree", false);
                             editor.commit();
                         }
-                        DialogReboot();
+                        //重置桌面布局
+                        SharedPreferences sp = getSharedPreferences("com.xs.stocksettings_preferences", MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sp.edit();
+                        editor.putString("home_layout_switch_key", "0");
+                        editor.commit();
+                        Tools.shell("mount -o remount,rw /system");
+                        Tools.shell("rm -rf /system/media/theme/default/com.miui.home");
+                        dialogReboot();
                         return true;
                     }
                 }
             });
-        } else if (DeviceInfo.Is8297()) { /* Coolpad 8297 */
+        } else if (DeviceInfo.is8297()) { /* Coolpad 8297 */
             mCameraSwitch.setEntries(R.array.camera_switch_entries_8297);
             mCameraSwitch.setEntryValues(R.array.camera_switch_values_8297);
             getPreferenceScreen().removePreference(mDoubleTapHomeToSleep);
@@ -143,8 +150,8 @@ public class StockSettings extends miui.preference.PreferenceActivity implements
                     String density_summary = getResources().getString(R.string.density_summary);
                     String density_summar_format = String.format(density_summary, NewDensity, 320);
                     mDensity.setSummary(density_summar_format);
-                    DialogReboot();
-                    Tools.Shell("setprop persist.xsdensity " + NewDensity + "");
+                    dialogReboot();
+                    Tools.shell("setprop persist.xsdensity " + NewDensity + "");
                     return true;
                 }
             });
@@ -173,11 +180,11 @@ public class StockSettings extends miui.preference.PreferenceActivity implements
 
     private void setEditTextPreferenceSummary(EditTextPreference mEditTextPreference) {
         if (mEditTextPreference == mDensity) {
-            if (DeviceInfo.IsBacon()) {
+            if (DeviceInfo.isBacon()) {
                 String density_summary = getResources().getString(R.string.density_summary);
                 String density_summary_format = String.format(density_summary, NowDensity, "480");
                 mDensity.setSummary(density_summary_format);
-            } else if (DeviceInfo.Is8297()) {
+            } else if (DeviceInfo.is8297()) {
                 String density_summary = getResources().getString(R.string.density_summary);
                 String density_summary_format = String.format(density_summary, NowDensity, "320");
                 mDensity.setSummary(density_summary_format);
@@ -187,7 +194,7 @@ public class StockSettings extends miui.preference.PreferenceActivity implements
 
     private void setListPreferenceSummary(ListPreference mListPreference) {
         if (mListPreference == mCameraSwitch) {
-            if (DeviceInfo.IsBacon()) {
+            if (DeviceInfo.isBacon()) {
                 if (0 == Integer.parseInt(mListPreference.getValue())) {
                     mListPreference.setSummary(R.string.camera_switch_oppo_summary);
                 } else if (1 == Integer.parseInt(mListPreference.getValue())) {
@@ -195,7 +202,7 @@ public class StockSettings extends miui.preference.PreferenceActivity implements
                 } else if (2 == Integer.parseInt(mListPreference.getValue())) {
                     mListPreference.setSummary(R.string.camera_switch_cm_summary);
                 }
-            } else if (DeviceInfo.Is8297()) {
+            } else if (DeviceInfo.is8297()) {
                 if (0 == Integer.parseInt(mListPreference.getValue())) {
                     mListPreference.setSummary(R.string.camera_switch_miui_summary);
                 } else if (1 == Integer.parseInt(mListPreference.getValue())) {
@@ -209,7 +216,7 @@ public class StockSettings extends miui.preference.PreferenceActivity implements
                 //默认设置，summary为4x5
                 mListPreference.setSummary(R.string.home_layout_switch_summary_4x5);
                 //如果检测到是一加一，并且DPI≤440，则设置4x5布局的summary为4x6
-                if (DeviceInfo.IsBacon() && IntNowDensity <= 440) {
+                if (DeviceInfo.isBacon() && IntNowDensity <= 440) {
                     mListPreference.setSummary(R.string.home_layout_switch_summary_4x6);
                 }
             } else if (1 == Integer.parseInt(mListPreference.getValue())) {
@@ -222,53 +229,53 @@ public class StockSettings extends miui.preference.PreferenceActivity implements
 
     public boolean onPreferenceChange(Preference preference, Object newValue) {
         if (mCameraSwitch == preference) {
-            if (DeviceInfo.IsBacon()) {
+            if (DeviceInfo.isBacon()) {
                 String ValueCameraSwitch = (String) newValue;
                 mCameraSwitch.setValue(ValueCameraSwitch);
                 int mode = Integer.parseInt(ValueCameraSwitch);
                 switch (mode) {
                     case 0:
                         preference.setSummary(R.string.camera_switch_oppo_summary);
-                        Tools.Shell("mount -o remount,rw /system");
-                        Tools.Shell("rm -rf /system/priv-app/Camera.apk");
-                        Tools.Shell("cp -f /system/stocksettings/OppoCamera.apk /system/priv-app/Camera.apk");
-                        Tools.Shell("chmod 0644 /system/priv-app/Camera.apk");
+                        Tools.shell("mount -o remount,rw /system");
+                        Tools.shell("rm -rf /system/priv-app/Camera.apk");
+                        Tools.shell("cp -f /system/stocksettings/OppoCamera.apk /system/priv-app/Camera.apk");
+                        Tools.shell("chmod 0644 /system/priv-app/Camera.apk");
                         break;
                     case 1:
                         preference.setSummary(R.string.camera_switch_miui_summary);
-                        Tools.Shell("mount -o remount,rw /system");
-                        Tools.Shell("rm -rf /system/priv-app/Camera.apk");
-                        Tools.Shell("cp -f /system/stocksettings/MiuiCamera.apk /system/priv-app/Camera.apk");
-                        Tools.Shell("chmod 0644 /system/priv-app/Camera.apk");
+                        Tools.shell("mount -o remount,rw /system");
+                        Tools.shell("rm -rf /system/priv-app/Camera.apk");
+                        Tools.shell("cp -f /system/stocksettings/MiuiCamera.apk /system/priv-app/Camera.apk");
+                        Tools.shell("chmod 0644 /system/priv-app/Camera.apk");
                         break;
                     case 2:
                         preference.setSummary(R.string.camera_switch_cm_summary);
-                        Tools.Shell("mount -o remount,rw /system");
-                        Tools.Shell("rm -rf /system/priv-app/Camera.apk");
-                        Tools.Shell("cp -f /system/stocksettings/CyanogenModCamera.apk /system/priv-app/Camera.apk");
-                        Tools.Shell("chmod 0644 /system/priv-app/Camera.apk");
+                        Tools.shell("mount -o remount,rw /system");
+                        Tools.shell("rm -rf /system/priv-app/Camera.apk");
+                        Tools.shell("cp -f /system/stocksettings/CyanogenModCamera.apk /system/priv-app/Camera.apk");
+                        Tools.shell("chmod 0644 /system/priv-app/Camera.apk");
                         break;
                     default:
                         break;
                 }
-            } else if (DeviceInfo.Is8297()) {
+            } else if (DeviceInfo.is8297()) {
                 String ValueCameraSwitch = (String) newValue;
                 mCameraSwitch.setValue(ValueCameraSwitch);
                 int mode = Integer.parseInt(ValueCameraSwitch);
                 switch (mode) {
                     case 0:
                         preference.setSummary(R.string.camera_switch_miui_summary);
-                        Tools.Shell("mount -o remount,rw /system");
-                        Tools.Shell("rm -rf /system/priv-app/Camera.apk");
-                        Tools.Shell("cp -f /system/stocksettings/MiuiCamera.apk /system/priv-app/Camera.apk");
-                        Tools.Shell("chmod 0644 /system/priv-app/Camera.apk");
+                        Tools.shell("mount -o remount,rw /system");
+                        Tools.shell("rm -rf /system/priv-app/Camera.apk");
+                        Tools.shell("cp -f /system/stocksettings/MiuiCamera.apk /system/priv-app/Camera.apk");
+                        Tools.shell("chmod 0644 /system/priv-app/Camera.apk");
                         break;
                     case 1:
                         preference.setSummary(R.string.camera_switch_cp_summary);
-                        Tools.Shell("mount -o remount,rw /system");
-                        Tools.Shell("rm -rf /system/priv-app/Camera.apk");
-                        Tools.Shell("cp -f /system/stocksettings/CoolpadCamera.apk /system/priv-app/Camera.apk");
-                        Tools.Shell("chmod 0644 /system/priv-app/Camera.apk");
+                        Tools.shell("mount -o remount,rw /system");
+                        Tools.shell("rm -rf /system/priv-app/Camera.apk");
+                        Tools.shell("cp -f /system/stocksettings/CoolpadCamera.apk /system/priv-app/Camera.apk");
+                        Tools.shell("chmod 0644 /system/priv-app/Camera.apk");
                         break;
                     default:
                         break;
@@ -283,36 +290,36 @@ public class StockSettings extends miui.preference.PreferenceActivity implements
             switch (mode) {
                 case 0:
                     preference.setSummary(R.string.home_layout_switch_summary_4x5);
-                    Tools.Shell("mount -o remount,rw /system");
-                    Tools.Shell("rm -rf /system/media/theme/default/com.miui.home");
-                    Tools.Shell("busybox killall com.miui.home");
+                    Tools.shell("mount -o remount,rw /system");
+                    Tools.shell("rm -rf /system/media/theme/default/com.miui.home");
+                    Tools.shell("busybox killall com.miui.home");
                     Intent intent = new Intent(Intent.ACTION_MAIN);
                     intent.addCategory(Intent.CATEGORY_HOME);
                     startActivity(intent);
                     break;
                 case 1:
                     preference.setSummary(R.string.home_layout_switch_summary_4x6);
-                    if (DeviceInfo.IsBacon() && IntNowDensity <= 440) {
+                    if (DeviceInfo.isBacon() && IntNowDensity <= 440) {
                         //如果检测到是一加一，并且DPI≤440，则直接删除默认主题路径的桌面布局文件
-                        Tools.Shell("mount -o remount,rw /system");
-                        Tools.Shell("rm -rf /system/media/theme/default/com.miui.home");
+                        Tools.shell("mount -o remount,rw /system");
+                        Tools.shell("rm -rf /system/media/theme/default/com.miui.home");
                     } else {
                         //否则就使用内置的桌面布局文件
-                        Tools.Shell("mount -o remount,rw /system");
-                        Tools.Shell("rm -rf /system/media/theme/default/com.miui.home");
-                        Tools.Shell("cp -f /system/stocksettings/com.miui.home46 /system/media/theme/default/com.miui.home");
+                        Tools.shell("mount -o remount,rw /system");
+                        Tools.shell("rm -rf /system/media/theme/default/com.miui.home");
+                        Tools.shell("cp -f /system/stocksettings/com.miui.home46 /system/media/theme/default/com.miui.home");
                     }
-                    Tools.Shell("busybox killall com.miui.home");
+                    Tools.shell("busybox killall com.miui.home");
                     Intent intent1 = new Intent(Intent.ACTION_MAIN);
                     intent1.addCategory(Intent.CATEGORY_HOME);
                     startActivity(intent1);
                     break;
                 case 2:
                     preference.setSummary(R.string.home_layout_switch_summary_5x5);
-                    Tools.Shell("mount -o remount,rw /system");
-                    Tools.Shell("rm -rf /system/media/theme/default/com.miui.home");
-                    Tools.Shell("cp -f /system/stocksettings/com.miui.home55 /system/media/theme/default/com.miui.home");
-                    Tools.Shell("busybox killall com.miui.home");
+                    Tools.shell("mount -o remount,rw /system");
+                    Tools.shell("rm -rf /system/media/theme/default/com.miui.home");
+                    Tools.shell("cp -f /system/stocksettings/com.miui.home55 /system/media/theme/default/com.miui.home");
+                    Tools.shell("busybox killall com.miui.home");
                     Intent intent2 = new Intent(Intent.ACTION_MAIN);
                     intent2.addCategory(Intent.CATEGORY_HOME);
                     startActivity(intent2);
@@ -324,14 +331,14 @@ public class StockSettings extends miui.preference.PreferenceActivity implements
         return false;
     }
 
-    public void DialogReboot() {
+    public void dialogReboot() {
         new AlertDialog.Builder(this)
                 .setCancelable(false)
                 .setTitle(R.string.dialog_ok)
                 .setPositiveButton(R.string.dialog_yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Tools.Shell("reboot");
+                        Tools.shell("reboot");
                     }
                 })
                 .setNeutralButton(R.string.dialog_no, new DialogInterface.OnClickListener() {

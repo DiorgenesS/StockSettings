@@ -37,7 +37,7 @@ public class Sounds extends miui.preference.PreferenceActivity {
         mSoundPatch = (CheckBoxPreference) findPreference(SoundPatch);
         mScreenshotSound = (CheckBoxPreference) findPreference(ScreenshotSound);
 
-        if (DeviceInfo.IsBacon()) {
+        if (DeviceInfo.isBacon()) {
             getPreferenceScreen().removePreference(mSoundPatch);
         }
     }
@@ -76,63 +76,63 @@ public class Sounds extends miui.preference.PreferenceActivity {
     public boolean onPreferenceTreeClick(PreferenceScreen preferencescreen, Preference preference) {
         if (preference == mScreenshotSound) {
             if (mScreenshotSound.isChecked()) {
-                Tools.Shell("setprop persist.xs.screenshot.sound 1");
+                Tools.shell("setprop persist.xs.screenshot.sound 1");
                 mScreenshotSound.setSummary(getResources().getString(R.string.screenshot_sound_summary_on));
             } else {
-                Tools.Shell("setprop persist.xs.screenshot.sound 0");
+                Tools.shell("setprop persist.xs.screenshot.sound 0");
                 mScreenshotSound.setSummary(getResources().getString(R.string.screenshot_sound_summary_off));
             }
         }
         if (preference == mPowerSound) {
             if (mPowerSound.isChecked()) {
-                Tools.Shell("setprop persist.xs.power.sound 1");
+                Tools.shell("setprop persist.xs.power.sound 1");
                 mPowerSound.setSummary(getResources().getString(R.string.power_sound_summary_on));
             } else {
-                Tools.Shell("setprop persist.xs.power.sound 0");
+                Tools.shell("setprop persist.xs.power.sound 0");
                 mPowerSound.setSummary(getResources().getString(R.string.power_sound_summary_off));
             }
         }
         if (preference == mSoundPatch) {
-            Tools.Shell("mount -o remount,rw /data");
+            Tools.shell("mount -o remount,rw /data");
             if (mSoundPatch.isChecked()) {
-                Tools.Shell("cp -r /system/stocksettings/Audio_ver1_Vol_custom /data/nvram/APCFG/APRDCL/Audio_ver1_Vol_custom");
-                DialogReboot();
+                Tools.shell("cp -r /system/stocksettings/Audio_ver1_Vol_custom /data/nvram/APCFG/APRDCL/Audio_ver1_Vol_custom");
+                dialogReboot();
             } else {
-                Tools.Shell("rm -rf /data/nvram/APCFG/APRDCL/Audio_ver1_Vol_custom");
-                DialogReboot();
+                Tools.shell("rm -rf /data/nvram/APCFG/APRDCL/Audio_ver1_Vol_custom");
+                dialogReboot();
             }
         }
         if (preference == mCameraSound) {
-            if (DeviceInfo.Is8297()) {
-                Tools.Shell("mount -o remount,rw /system");
+            if (DeviceInfo.is8297()) {
+                Tools.shell("mount -o remount,rw /system");
                 if (mCameraSound.isChecked()) {
                     new Thread() {
                         public void run() {
-                            Tools.Shell("sed -i 's/bak/ogg/g' /system/lib/libcameraservice.so");
+                            Tools.shell("sed -i 's/bak/ogg/g' /system/lib/libcameraservice.so");
                         }
                     }.start();
                     mCameraSound.setSummary(getResources().getString(R.string.camera_sound_summary_on));
-                    DialogReboot();
+                    dialogReboot();
                 } else {
                     new Thread() {
                         public void run() {
-                            Tools.Shell("sed -i 's/ogg/bak/g' /system/lib/libcameraservice.so");
+                            Tools.shell("sed -i 's/ogg/bak/g' /system/lib/libcameraservice.so");
                         }
                     }.start();
                     mCameraSound.setSummary(getResources().getString(R.string.camera_sound_summary_off));
-                    if (Tools.IsInstall(this, "com.oppo.camera")) {
+                    if (Tools.isInstall(this, "com.oppo.camera")) {
                         Toast.makeText(this, getResources().getString(R.string.find_oppo_camera), Toast.LENGTH_LONG).show();
                     }
-                    DialogReboot();
+                    dialogReboot();
                 }
-            } else if (DeviceInfo.IsBacon()) {
+            } else if (DeviceInfo.isBacon()) {
                 if (mCameraSound.isChecked()) {
-                    Tools.Shell("setprop persist.camera.shutter.disable 0");
+                    Tools.shell("setprop persist.camera.shutter.disable 0");
                     mCameraSound.setSummary(getResources().getString(R.string.camera_sound_summary_on));
                 } else {
-                    Tools.Shell("setprop persist.camera.shutter.disable 1");
+                    Tools.shell("setprop persist.camera.shutter.disable 1");
                     mCameraSound.setSummary(getResources().getString(R.string.camera_sound_summary_off));
-                    if (Tools.IsInstall(this, "com.oppo.camera")) {
+                    if (Tools.isInstall(this, "com.oppo.camera")) {
                         Toast.makeText(this, getResources().getString(R.string.find_oppo_camera), Toast.LENGTH_LONG).show();
                     }
                 }
@@ -141,14 +141,14 @@ public class Sounds extends miui.preference.PreferenceActivity {
         return false;
     }
 
-    public void DialogReboot() {
+    public void dialogReboot() {
         new AlertDialog.Builder(this)
                 .setCancelable(false)
                 .setTitle(R.string.dialog_ok)
                 .setPositiveButton(R.string.dialog_yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Tools.Shell("reboot");
+                        Tools.shell("reboot");
                     }
                 })
                 .setNeutralButton(R.string.dialog_no, new DialogInterface.OnClickListener() {
