@@ -22,7 +22,8 @@
     <string name="density_title">Screen DPI</string>
     <string name="density_error">Warning:Input Error!</string>
     <string name="density_edit_title">Adjust the DPI specified</string>
-    <string name="density_edit_message">please enter a reasonable range of values(%1$s)\nThis operation may lead to frequent system FC, careful revision</string>
+    <string name="density_edit_message">please enter a reasonable range of values(%1$s)\n\nThis operation may lead to frequent system FC, careful revision%2$s</string>
+    <string name="density_edit_message_restore_homelayout">\n\nWill restore MIUI Launcher layout</string>
     <string name="density_summary">Now dpi is%1$s , Default is%2$s</string>
     <string name="dialog_ok">Done!Are you sure want to reboot the phone?</string>
     <string name="dialog_yes">Yes</string>

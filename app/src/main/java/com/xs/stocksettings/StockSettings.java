@@ -84,7 +84,8 @@ public class StockSettings extends miui.preference.PreferenceActivity implements
             mCameraSwitch.setEntryValues(R.array.camera_switch_values_bacon);
             //DPI
             String density_edit_message = getResources().getString(R.string.density_edit_message);
-            String density_edit_message_format = String.format(density_edit_message, "300-600");
+            String density_edit_message_restore_homelayout = getResources().getString(R.string.density_edit_message_restore_homelayout);
+            String density_edit_message_format = String.format(density_edit_message, "300-600", density_edit_message_restore_homelayout);
             mDensity.setDialogMessage(density_edit_message_format);
             mDensity.setDialogTitle(getResources().getString(R.string.density_edit_title));
             mDensity.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
@@ -130,7 +131,7 @@ public class StockSettings extends miui.preference.PreferenceActivity implements
             getPreferenceScreen().removePreference(mCMSettings);
             //DPI
             String density_edit_message = getResources().getString(R.string.density_edit_message);
-            String density_edit_message_format = String.format(density_edit_message, "280-320");
+            String density_edit_message_format = String.format(density_edit_message, "280-320", "");
             mDensity.setDialogMessage(density_edit_message_format);
             mDensity.setDialogTitle(getResources().getString(R.string.density_edit_title));
             mDensity.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
