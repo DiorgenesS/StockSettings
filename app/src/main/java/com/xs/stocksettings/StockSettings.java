@@ -33,6 +33,9 @@ public class StockSettings extends miui.preference.PreferenceActivity implements
     //获取persist.xsdensity值并转换为int类型
     private static final int IntNowDensity = Integer.parseInt(NowDensity);
 
+    //SharedPreferences xml name
+    private static final String SharedPreferencesConfigName = "com.xs.stocksettings_preferences";
+
     private CheckBoxPreference mDoubleTapHomeToSleep;
     private PreferenceScreen mCMSettings;
     private PreferenceScreen mAppScreenMask;
@@ -71,7 +74,7 @@ public class StockSettings extends miui.preference.PreferenceActivity implements
                 mHomeLayoutSwitch.setEntryValues(new String[]{"1", "2"});
 
                 //dialogAgree， 提醒4x5布局移除窗口
-                SharedPreferences sp = getSharedPreferences("config", MODE_PRIVATE);
+                SharedPreferences sp = getSharedPreferences(SharedPreferencesConfigName, MODE_PRIVATE);
                 Boolean isAgree = sp.getBoolean("isAgree", false);
                 if (!isAgree.equals(true)) {
                     dialogAgree();
@@ -107,13 +110,13 @@ public class StockSettings extends miui.preference.PreferenceActivity implements
                         Tools.shell("setprop persist.xsdensity " + NewDensity + "");
                         //如果新DPI≤440，那么将isAgree窗口重置为false状态
                         if (i <= 440) {
-                            SharedPreferences sp = getSharedPreferences("config", MODE_PRIVATE);
+                            SharedPreferences sp = getSharedPreferences(SharedPreferencesConfigName, MODE_PRIVATE);
                             SharedPreferences.Editor editor = sp.edit();
                             editor.putBoolean("isAgree", false);
                             editor.commit();
                         }
                         //重置桌面布局
-                        SharedPreferences sp = getSharedPreferences("com.xs.stocksettings_preferences", MODE_PRIVATE);
+                        SharedPreferences sp = getSharedPreferences(SharedPreferencesConfigName, MODE_PRIVATE);
                         SharedPreferences.Editor editor = sp.edit();
                         editor.putString("home_layout_switch_key", "0");
                         editor.commit();
@@ -359,7 +362,7 @@ public class StockSettings extends miui.preference.PreferenceActivity implements
                 .setPositiveButton(R.string.dialog_is_agree, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        SharedPreferences sp = getSharedPreferences("config", MODE_PRIVATE);
+                        SharedPreferences sp = getSharedPreferences(SharedPreferencesConfigName, MODE_PRIVATE);
                         SharedPreferences.Editor editor = sp.edit();
                         editor.putBoolean("isAgree", true);
                         editor.commit();
