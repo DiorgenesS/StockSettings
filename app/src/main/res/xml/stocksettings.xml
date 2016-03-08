@@ -46,6 +46,15 @@
         android:key="density_key"
         android:title="@string/density_title" />
 
+    <PreferenceScreen
+        android:key="kernel_config_key"
+        android:summary="@string/kernel_config_summary"
+        android:title="@string/kernel_config_title">
+        <intent
+            android:targetClass="de.andip71.boeffla_config_v2.MainActivity"
+            android:targetPackage="de.andip71.boeffla_config_v2" />
+    </PreferenceScreen>
+
     <PreferenceCategory>
         <PreferenceScreen
             android:summary="@string/view_weibo_summary"

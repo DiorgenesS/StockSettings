@@ -46,4 +46,7 @@
     <string name="screenshot_sound_title">Screenshot Sound</string>
     <string name="view_weibo_title">Xs</string>
     <string name="view_weibo_summary">Click to view my sian weibo</string>
+    <string name="kernel_config_open">Has opened the kernel optimization option, please be careful to adjust the kernel information</string>
+    <string name="kernel_config_summary">Please be careful to adjust the kernel information</string>
+    <string name="kernel_config_title">Boeffla Kernel Config</string>
 </resources>

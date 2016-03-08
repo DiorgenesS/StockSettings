@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.preference.CheckBoxPreference;
 import android.preference.EditTextPreference;
 import android.preference.ListPreference;
@@ -29,6 +30,8 @@ public class StockSettings extends miui.preference.PreferenceActivity implements
     private static final String HomeLayoutSwitch = "home_layout_switch_key";
     private static final String Density = "density_key";
     private static final String AppScreenMask = "app_screen_mask_key";
+    private static final String About = "about_key";
+    private static final String KernelConfig = "kernel_config_key";
     private static final String NowDensity = SystemProperties.get("persist.xsdensity");
     //获取persist.xsdensity值并转换为int类型
     private static final int IntNowDensity = Integer.parseInt(NowDensity);
@@ -39,9 +42,14 @@ public class StockSettings extends miui.preference.PreferenceActivity implements
     private CheckBoxPreference mDoubleTapHomeToSleep;
     private PreferenceScreen mCMSettings;
     private PreferenceScreen mAppScreenMask;
+    private PreferenceScreen mAbout;
+    private PreferenceScreen mKernelConfig;
     private ListPreference mCameraSwitch;
     private ListPreference mHomeLayoutSwitch;
     private EditTextPreference mDensity;
+
+    //for kernel config (add preferences)
+    long[] mHits = new long[3];
 
     public void onCreate(Bundle savedInstanceState) {
         setTheme(miui.R.style.Theme_Light_Settings);
@@ -52,6 +60,8 @@ public class StockSettings extends miui.preference.PreferenceActivity implements
         mCMSettings = (PreferenceScreen) findPreference(CMSettings);
         mAppScreenMask = (PreferenceScreen) findPreference(AppScreenMask);
         mDensity = (EditTextPreference) findPreference(Density);
+        mAbout = (PreferenceScreen) findPreference(About);
+        mKernelConfig = (PreferenceScreen) findPreference(KernelConfig);
 
         mCameraSwitch = (ListPreference) findPreference(CameraSwitch);
         mCameraSwitch.setOnPreferenceChangeListener(this);
@@ -80,6 +90,15 @@ public class StockSettings extends miui.preference.PreferenceActivity implements
                     dialogAgree();
                 }
 
+            }
+
+            //检测是否显示优化选项
+            Boolean showKernel = getSharedPreferences(SharedPreferencesConfigName, MODE_PRIVATE)
+                    .getBoolean("show_kernel", false);
+            if (showKernel.equals(true)) {
+                getPreferenceScreen().addPreference(mKernelConfig);
+            } else {
+                getPreferenceScreen().removePreference(mKernelConfig);
             }
 
             getPreferenceScreen().removePreference(mAppScreenMask);
@@ -132,6 +151,7 @@ public class StockSettings extends miui.preference.PreferenceActivity implements
             mCameraSwitch.setEntryValues(R.array.camera_switch_values_8297);
             getPreferenceScreen().removePreference(mDoubleTapHomeToSleep);
             getPreferenceScreen().removePreference(mCMSettings);
+            getPreferenceScreen().removePreference(mKernelConfig);
             //DPI
             String density_edit_message = getResources().getString(R.string.density_edit_message);
             String density_edit_message_format = String.format(density_edit_message, "280-320", "");
@@ -177,6 +197,20 @@ public class StockSettings extends miui.preference.PreferenceActivity implements
                 Settings.System.putInt(getContentResolver(), "key_home_double_tap_action", 8);
             } else {
                 Settings.System.putInt(getContentResolver(), "key_home_double_tap_action", 0);
+            }
+        }
+        if (preference == mAbout) {
+            //连续点击三次，Google API
+            System.arraycopy(mHits, 1, mHits, 0, mHits.length - 1);
+            mHits[mHits.length - 1] = SystemClock.uptimeMillis();
+            if (mHits[0] >= (SystemClock.uptimeMillis() - 500)) {
+                //push show_kernel true to sharedpreferences
+                getSharedPreferences(SharedPreferencesConfigName, MODE_PRIVATE)
+                        .edit()
+                        .putBoolean("show_kernel", true)
+                        .commit();
+                getPreferenceScreen().addPreference(mKernelConfig);
+                Toast.makeText(this, R.string.kernel_config_open, Toast.LENGTH_SHORT).show();
             }
         }
         return false;
