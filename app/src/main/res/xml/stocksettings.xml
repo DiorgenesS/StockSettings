@@ -2,20 +2,19 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <CheckBoxPreference
-        android:title="@string/double_tap_home_to_sleep_title"
-        android:key="double_tap_home_to_sleep_key" />
+        android:key="double_tap_home_to_sleep_key"
+        android:title="@string/double_tap_home_to_sleep_title" />
 
-    <PreferenceScreen
-        android:title="@string/sounds" >
+    <PreferenceScreen android:title="@string/sounds">
         <intent
             android:action="android.intent.action.main"
             android:targetClass="com.xs.stocksettings.Sounds"
-            android:targetPackage="com.xs.stocksettings"/>
+            android:targetPackage="com.xs.stocksettings" />
     </PreferenceScreen>
 
     <PreferenceScreen
-        android:title="@string/app_screen_mask_title"
-        android:key="app_screen_mask_key" >
+        android:key="app_screen_mask_key"
+        android:title="@string/app_screen_mask_title">
         <intent
             android:action="android.intent.action.main"
             android:targetClass="cn.mixiaoxiao.myappscreenmask.MainActivity"
@@ -23,47 +22,52 @@
     </PreferenceScreen>
 
     <PreferenceScreen
+        android:key="cm_settings_key"
         android:summary="@string/cm_settings_summary"
-        android:title="@string/cm_settings_title"
-        android:key="cm_settings_key" >
+        android:title="@string/cm_settings_title">
         <intent
             android:action="android.intent.action.main"
             android:targetClass="com.android.settings_ex.DisplaySettings"
-            android:targetPackage="com.android.settings_ex">
-            </intent>
-        </PreferenceScreen>
+            android:targetPackage="com.android.settings_ex" />
+    </PreferenceScreen>
 
     <ListPreference
         android:defaultValue="0"
         android:key="camera_switch_key"
-        android:title="@string/camera_switch_title"/>
+        android:title="@string/camera_switch_title" />
 
     <ListPreference
         android:defaultValue="0"
-        android:title="@string/home_layout_switch_title"
-        android:key="home_layout_switch_key" />
+        android:key="home_layout_switch_key"
+        android:title="@string/home_layout_switch_title" />
 
     <EditTextPreference
         android:digits="1234567890"
         android:key="density_key"
-        android:title="@string/density_title"/>
+        android:title="@string/density_title" />
 
-    <Preference
-        android:summary="© 2016 MIUI Tools | Powered by Xs"
-        android:title="@string/about_title"
-        android:key="about_key" >
-        <intent
-            android:action="android.intent.action.VIEW"
-            android:data="http://weibo.com/acexs" />
-    </Preference>
+    <PreferenceCategory>
+        <PreferenceScreen
+            android:summary="@string/view_weibo_summary"
+            android:title="@string/view_weibo_title">
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="http://weibo.com/acexs" />
+        </PreferenceScreen>
 
-    <Preference
-        android:summary="@string/donate_summary"
-        android:title="@string/donate_title">
-        <intent
-            android:action="android.intent.action.VIEW"
-            android:data="@string/donate_link" />
-    </Preference>
+        <PreferenceScreen
+            android:key="about_key"
+            android:summary="© 2016 MIUI Tools | Powered by Xs"
+            android:title="@string/about_title" />
 
+        <PreferenceScreen
+            android:summary="@string/donate_summary"
+            android:title="@string/donate_title">
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="@string/donate_link" />
+        </PreferenceScreen>
+
+    </PreferenceCategory>
 
 </PreferenceScreen>

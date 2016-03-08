@@ -44,4 +44,6 @@
     <string name="screenshot_sound_summary_off">Screenshot Sound Off!</string>
     <string name="screenshot_sound_summary_on">Screenshot Sound On!</string>
     <string name="screenshot_sound_title">Screenshot Sound</string>
+    <string name="view_weibo_title">Xs</string>
+    <string name="view_weibo_summary">Click to view my sian weibo</string>
 </resources>

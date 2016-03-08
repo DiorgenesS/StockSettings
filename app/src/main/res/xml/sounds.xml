@@ -13,8 +13,8 @@
 
     <CheckBoxPreference
         android:defaultValue="true"
-        android:title="@string/screenshot_sound_title"
-        android:key="screenshot_sound_key"/>
+        android:key="screenshot_sound_key"
+        android:title="@string/screenshot_sound_title" />
 
     <CheckBoxPreference
         android:defaultValue="true"
@@ -23,8 +23,7 @@
 
     <Preference
         android:enabled="false"
-        android:title="@string/warning_title"
-        android:summary="@string/warning_summary"/>
-
+        android:summary="@string/warning_summary"
+        android:title="@string/warning_title" />
 
 </PreferenceScreen>
