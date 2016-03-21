@@ -187,14 +187,16 @@ public class StockSettings extends miui.preference.PreferenceActivity implements
             }
         }
         if (preference == mAbout) {
-            //连续点击三次，Google API
-            System.arraycopy(mHits, 1, mHits, 0, mHits.length - 1);
-            mHits[mHits.length - 1] = SystemClock.uptimeMillis();
-            if (mHits[0] >= (SystemClock.uptimeMillis() - 500)) {
-                Intent i = new Intent(Intent.ACTION_MAIN);
-                i.setClassName("de.andip71.boeffla_config_v2", "de.andip71.boeffla_config_v2.MainActivity");
-                startActivity(i);
-                Toast.makeText(this, R.string.kernel_config_open, Toast.LENGTH_SHORT).show();
+            if (DeviceInfo.isBacon()) {
+                //连续点击三次，Google API
+                System.arraycopy(mHits, 1, mHits, 0, mHits.length - 1);
+                mHits[mHits.length - 1] = SystemClock.uptimeMillis();
+                if (mHits[0] >= (SystemClock.uptimeMillis() - 500)) {
+                    Intent i = new Intent(Intent.ACTION_MAIN);
+                    i.setClassName("de.andip71.boeffla_config_v2", "de.andip71.boeffla_config_v2.MainActivity");
+                    startActivity(i);
+                    Toast.makeText(this, R.string.kernel_config_open, Toast.LENGTH_SHORT).show();
+                }
             }
         }
         return false;
