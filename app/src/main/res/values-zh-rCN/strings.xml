@@ -43,7 +43,5 @@
     <string name="home_layout_switch_summary_not_support_4x5">检测到DPI≤440，将不支持4x5布局切换</string>
     <string name="view_weibo_title">小煞-Xs</string>
     <string name="view_weibo_summary">点击访问我的微博</string>
-    <string name="kernel_config_title">Boeffla 内核优化</string>
-    <string name="kernel_config_summary">请谨慎调节内核信息</string>
     <string name="kernel_config_open">已经打开内核优化选项，请谨慎调节内核信息</string>
 </resources>
