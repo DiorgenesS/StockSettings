@@ -3,7 +3,6 @@ package com.xs.stocksettings;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.preference.CheckBoxPreference;
@@ -31,9 +30,10 @@ public class StockSettings extends miui.preference.PreferenceActivity implements
     private static final String Density = "density_key";
     private static final String AppScreenMask = "app_screen_mask_key";
     private static final String About = "about_key";
-    private static final String NowDensity = SystemProperties.get("persist.xsdensity");
-    //获取persist.xsdensity值并转换为int类型
-    private static final int IntNowDensity = Integer.parseInt(NowDensity);
+    private String NowDensity = SystemProperties.get("persist.sys.density");
+
+    //将String NowDensity转化为int intNowDensity
+    private int IntNowDensity = Integer.parseInt(NowDensity);
 
     //SharedPreferences xml name
     private static final String SharedPreferencesConfigName = "com.xs.stocksettings_preferences";
@@ -81,8 +81,8 @@ public class StockSettings extends miui.preference.PreferenceActivity implements
                 mHomeLayoutSwitch.setEntryValues(new String[]{"1", "2"});
 
                 //dialogAgree， 提醒4x5布局移除窗口
-                SharedPreferences sp = getSharedPreferences(SharedPreferencesConfigName, MODE_PRIVATE);
-                Boolean isAgree = sp.getBoolean("isAgree", false);
+                Boolean isAgree = getSharedPreferences(SharedPreferencesConfigName, MODE_PRIVATE)
+                        .getBoolean("isAgree", false);
                 if (!isAgree.equals(true)) {
                     dialogAgree();
                 }
@@ -114,19 +114,19 @@ public class StockSettings extends miui.preference.PreferenceActivity implements
                         String density_sumarry = getResources().getString(R.string.density_summary);
                         String density_summary_format = String.format(density_sumarry, NewDensity, 480);
                         mDensity.setSummary(density_summary_format);
-                        Tools.shell("setprop persist.xsdensity " + NewDensity + "");
+                        SystemProperties.set("persist.sys.density", +i + "");
                         //如果新DPI≤440，那么将isAgree窗口重置为false状态
                         if (i <= 440) {
-                            SharedPreferences sp = getSharedPreferences(SharedPreferencesConfigName, MODE_PRIVATE);
-                            SharedPreferences.Editor editor = sp.edit();
-                            editor.putBoolean("isAgree", false);
-                            editor.commit();
+                            getSharedPreferences(SharedPreferencesConfigName, MODE_PRIVATE)
+                                    .edit()
+                                    .putBoolean("isAgree", false)
+                                    .commit();
                         }
                         //重置桌面布局
-                        SharedPreferences sp = getSharedPreferences(SharedPreferencesConfigName, MODE_PRIVATE);
-                        SharedPreferences.Editor editor = sp.edit();
-                        editor.putString("home_layout_switch_key", "0");
-                        editor.commit();
+                        getSharedPreferences(SharedPreferencesConfigName, MODE_PRIVATE)
+                                .edit()
+                                .putString("home_layout_switch_key", "0")
+                                .commit();
                         Tools.shell("mount -o remount,rw /system");
                         Tools.shell("rm -rf /system/media/theme/default/com.miui.home");
                         dialogReboot();
@@ -148,11 +148,11 @@ public class StockSettings extends miui.preference.PreferenceActivity implements
                 @Override
                 public boolean onPreferenceChange(Preference preference, Object newValue) {
                     String NewDensity = (String) newValue;
+                    int i = Integer.parseInt(NewDensity);
                     if (NewDensity.equals("")) {
                         Toast.makeText(getBaseContext(), R.string.density_error, Toast.LENGTH_LONG).show();
                         return false;
                     } else {
-                        int i = Integer.parseInt(NewDensity);
                         if (i < 280 || i > 320) {
                             Toast.makeText(getBaseContext(), R.string.density_error, Toast.LENGTH_LONG).show();
                             return false;
@@ -162,7 +162,7 @@ public class StockSettings extends miui.preference.PreferenceActivity implements
                     String density_summar_format = String.format(density_summary, NewDensity, 320);
                     mDensity.setSummary(density_summar_format);
                     dialogReboot();
-                    Tools.shell("setprop persist.xsdensity " + NewDensity + "");
+                    SystemProperties.set("persist.sys.density", +i + "");
                     return true;
                 }
             });
@@ -382,12 +382,13 @@ public class StockSettings extends miui.preference.PreferenceActivity implements
                 .setPositiveButton(R.string.dialog_is_agree, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        SharedPreferences sp = getSharedPreferences(SharedPreferencesConfigName, MODE_PRIVATE);
-                        SharedPreferences.Editor editor = sp.edit();
-                        editor.putBoolean("isAgree", true);
-                        editor.commit();
+                        getSharedPreferences(SharedPreferencesConfigName, MODE_PRIVATE)
+                                .edit()
+                                .putBoolean("isAgree", true)
+                                .commit();
                     }
                 })
                 .show();
     }
+
 }
