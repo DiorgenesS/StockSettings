@@ -102,11 +102,11 @@ public class StockSettings extends miui.preference.PreferenceActivity implements
                 @Override
                 public boolean onPreferenceChange(Preference preference, Object newValue) {
                     String NewDensity = (String) newValue;
-                    int i = Integer.parseInt(NewDensity);
                     if (NewDensity.equals("")) {
                         Toast.makeText(getBaseContext(), R.string.density_error, Toast.LENGTH_LONG).show();
                         return false;
                     } else {
+                        int i = Integer.parseInt(NewDensity);
                         if (i < 300 || i > 600) {
                             Toast.makeText(getBaseContext(), R.string.density_error, Toast.LENGTH_LONG).show();
                             return false;
@@ -148,22 +148,22 @@ public class StockSettings extends miui.preference.PreferenceActivity implements
                 @Override
                 public boolean onPreferenceChange(Preference preference, Object newValue) {
                     String NewDensity = (String) newValue;
-                    int i = Integer.parseInt(NewDensity);
                     if (NewDensity.equals("")) {
                         Toast.makeText(getBaseContext(), R.string.density_error, Toast.LENGTH_LONG).show();
                         return false;
                     } else {
+                        int i = Integer.parseInt(NewDensity);
                         if (i < 280 || i > 320) {
                             Toast.makeText(getBaseContext(), R.string.density_error, Toast.LENGTH_LONG).show();
                             return false;
                         }
+                        String density_summary = getResources().getString(R.string.density_summary);
+                        String density_summar_format = String.format(density_summary, NewDensity, 320);
+                        mDensity.setSummary(density_summar_format);
+                        dialogReboot();
+                        SystemProperties.set("persist.sys.density", +i + "");
+                        return true;
                     }
-                    String density_summary = getResources().getString(R.string.density_summary);
-                    String density_summar_format = String.format(density_summary, NewDensity, 320);
-                    mDensity.setSummary(density_summar_format);
-                    dialogReboot();
-                    SystemProperties.set("persist.sys.density", +i + "");
-                    return true;
                 }
             });
         } else { /* Null Device*/
