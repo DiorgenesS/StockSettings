@@ -1,8 +1,10 @@
 package com.xs.stocksettings;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.os.PowerManager;
 import android.preference.CheckBoxPreference;
 import android.preference.Preference;
 import android.preference.PreferenceScreen;
@@ -148,7 +150,8 @@ public class Sounds extends miui.preference.PreferenceActivity {
                 .setPositiveButton(R.string.dialog_yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Tools.shell("reboot");
+                        PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
+                        pm.reboot("");
                     }
                 })
                 .setNeutralButton(R.string.dialog_no, new DialogInterface.OnClickListener() {
