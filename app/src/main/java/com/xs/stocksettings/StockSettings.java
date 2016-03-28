@@ -14,6 +14,7 @@ import android.provider.Settings;
 import android.widget.Toast;
 
 import com.xs.stocksettings.utils.DeviceInfo;
+import com.xs.stocksettings.utils.PrefUtils;
 import com.xs.stocksettings.utils.Tools;
 
 import miui.os.SystemProperties;
@@ -34,9 +35,6 @@ public class StockSettings extends miui.preference.PreferenceActivity implements
 
     //将String NowDensity转化为int intNowDensity
     private int IntNowDensity = Integer.parseInt(NowDensity);
-
-    //SharedPreferences xml name
-    private static final String SharedPreferencesConfigName = "com.xs.stocksettings_preferences";
 
     private CheckBoxPreference mDoubleTapHomeToSleep;
     private PreferenceScreen mCMSettings;
@@ -80,11 +78,10 @@ public class StockSettings extends miui.preference.PreferenceActivity implements
                 mHomeLayoutSwitch.setEntries(new String[]{"4x6", "5x5"});
                 mHomeLayoutSwitch.setEntryValues(new String[]{"1", "2"});
 
-                //dialogAgree， 提醒4x5布局移除窗口
-                Boolean isAgree = getSharedPreferences(SharedPreferencesConfigName, MODE_PRIVATE)
-                        .getBoolean("isAgree", false);
-                if (!isAgree.equals(true)) {
-                    dialogAgree();
+                //showDpiWarning， 提醒4x5布局移除窗口
+                Boolean b = PrefUtils.getBoolean(getApplicationContext(), "show_dpi_warning", false);
+                if (b.equals(true)) {
+                    showDpiWarning();
                 }
 
             }
@@ -115,18 +112,12 @@ public class StockSettings extends miui.preference.PreferenceActivity implements
                         String density_summary_format = String.format(density_sumarry, NewDensity, 480);
                         mDensity.setSummary(density_summary_format);
                         SystemProperties.set("persist.sys.density", +i + "");
-                        //如果新DPI≤440，那么将isAgree窗口重置为false状态
+                        //如果新DPI≤440，那么将showDpiWarning窗口重置为true状态
                         if (i <= 440) {
-                            getSharedPreferences(SharedPreferencesConfigName, MODE_PRIVATE)
-                                    .edit()
-                                    .putBoolean("isAgree", false)
-                                    .commit();
+                            PrefUtils.saveBoolean(getApplicationContext(), "show_dpi_warning", true);
                         }
                         //重置桌面布局
-                        getSharedPreferences(SharedPreferencesConfigName, MODE_PRIVATE)
-                                .edit()
-                                .putString("home_layout_switch_key", "0")
-                                .commit();
+                        PrefUtils.saveString(getApplicationContext(), "home_layout_switch_key", "0");
                         Tools.shell("mount -o remount,rw /system");
                         Tools.shell("rm -rf /system/media/theme/default/com.miui.home");
                         dialogReboot();
@@ -375,17 +366,14 @@ public class StockSettings extends miui.preference.PreferenceActivity implements
                 .show();
     }
 
-    private void dialogAgree() {
+    private void showDpiWarning() {
         new AlertDialog.Builder(this)
                 .setCancelable(false)
                 .setTitle(R.string.home_layout_switch_summary_not_support_4x5)
                 .setPositiveButton(R.string.dialog_is_agree, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        getSharedPreferences(SharedPreferencesConfigName, MODE_PRIVATE)
-                                .edit()
-                                .putBoolean("isAgree", true)
-                                .commit();
+                        PrefUtils.saveBoolean(getApplicationContext(), "show_dpi_warning", false);
                     }
                 })
                 .show();
