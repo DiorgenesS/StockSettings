@@ -29,9 +29,6 @@
     <string name="sound_patch_title">声音补丁</string>
     <string name="sound_patch_summary">增大默认音量等级</string>
     <string name="app_screen_mask_title">护目镜</string>
-    <string name="donate_title">请我喝可乐</string>
-    <string name="donate_summary">如果觉得ROM做的还不错，那就请我喝一罐可乐吧:)</string>
-    <string name="donate_link">https://qr.alipay.com/apqb2gl09e91ifsq17</string>
     <string name="find_oppo_camera">检测到系统正在使用OPPO相机，请同时在OPPO相机设置中关闭相机声音</string>
     <string name="power_sound_title">充电声音</string>
     <string name="power_sound_summary_off">充电插拔声音及低电量提示音已禁用！</string>
@@ -44,4 +41,8 @@
     <string name="view_weibo_title">小煞-Xs</string>
     <string name="view_weibo_summary">点击访问我的微博</string>
     <string name="kernel_config_open">已经打开内核优化选项，请谨慎调节内核信息</string>
+    <string name="donate_title">支持作者</string>
+    <string name="donate_summary">点击对作者进行捐助</string>
+    <string name="donate_about"><font color="blue"><b>关于捐赠</b></font></string>
+    <string name="donate_about_info"><font color="black">ROM的适配过程中非常艰辛，享受MIUI的人往往不清楚这是利用大量私人时间制作，顾不上吃饭、喝水、通宵熬夜研究BUG对于我来说都是家常便饭，捐赠不在乎多少，大家有这份心意即可，在这里对捐赠我和心有余而力不足的朋友们致以万分感谢！感谢你们一直支持我的ROM！希望你们一直支持下去！</font>\n\n<font color="red"><b>支付宝:imxs1107@gmail.com</b></font>\n<font color="blue"><b>捐赠纯属自愿,请勿道德绑架!</b></font></string>
 </resources>

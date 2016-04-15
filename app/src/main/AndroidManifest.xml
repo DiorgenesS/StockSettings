@@ -29,6 +29,11 @@
             android:allowBackup="true"
             android:label="@string/sounds" />
 
+        <activity
+            android:name=".DonatePreference"
+            android:allowBackup="true"
+            android:label="@string/donate_title" />
+
     </application>
 
 </manifest>

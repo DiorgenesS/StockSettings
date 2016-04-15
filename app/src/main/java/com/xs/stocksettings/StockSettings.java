@@ -33,6 +33,7 @@ public class StockSettings extends miui.preference.PreferenceActivity implements
     private static final String Density = "density_key";
     private static final String AppScreenMask = "app_screen_mask_key";
     private static final String About = "about_key";
+    private static final String Donate = "donate_key";
     private String NowDensity = SystemProperties.get("persist.sys.density");
 
     //将String NowDensity转化为int intNowDensity
@@ -41,6 +42,7 @@ public class StockSettings extends miui.preference.PreferenceActivity implements
     private CheckBoxPreference mDoubleTapHomeToSleep;
     private PreferenceScreen mCMSettings;
     private PreferenceScreen mAppScreenMask;
+    private PreferenceScreen mDonate;
     private PreferenceScreen mAbout;
     private ListPreference mCameraSwitch;
     private ListPreference mHomeLayoutSwitch;
@@ -59,6 +61,7 @@ public class StockSettings extends miui.preference.PreferenceActivity implements
         mAppScreenMask = (PreferenceScreen) findPreference(AppScreenMask);
         mDensity = (EditTextPreference) findPreference(Density);
         mAbout = (PreferenceScreen) findPreference(About);
+        mDonate = (PreferenceScreen) findPreference(Donate);
 
         mCameraSwitch = (ListPreference) findPreference(CameraSwitch);
         mCameraSwitch.setOnPreferenceChangeListener(this);
@@ -162,6 +165,7 @@ public class StockSettings extends miui.preference.PreferenceActivity implements
         } else { /* Null Device*/
             getPreferenceScreen().removeAll();
         }
+
     }
 
     public void onStart() {
@@ -169,6 +173,15 @@ public class StockSettings extends miui.preference.PreferenceActivity implements
         setListPreferenceSummary(mCameraSwitch);
         setListPreferenceSummary(mHomeLayoutSwitch);
         setEditTextPreferenceSummary(mDensity);
+
+        Boolean b = PrefUtils.getBoolean(getApplicationContext(), "showDonations", true);
+        if (b.equals(true)) {
+            //Activity启动时 调用捐赠页面
+            Intent intent = new Intent();
+            intent.setClassName("com.xs.stocksettings", "com.xs.stocksettings.DonatePreference");
+            startActivity(intent);
+            PrefUtils.saveBoolean(getApplicationContext(), "showDonations", false);
+        }
     }
 
     public boolean onPreferenceTreeClick(PreferenceScreen preferencescreen, Preference preference) {
@@ -191,6 +204,11 @@ public class StockSettings extends miui.preference.PreferenceActivity implements
                     Toast.makeText(this, R.string.kernel_config_open, Toast.LENGTH_SHORT).show();
                 }
             }
+        }
+        if (preference == mDonate) {
+            Intent intent = new Intent();
+            intent.setClassName("com.xs.stocksettings", "com.xs.stocksettings.DonatePreference");
+            startActivity(intent);
         }
         return false;
     }

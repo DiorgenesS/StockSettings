@@ -61,11 +61,8 @@
             android:title="@string/about_title" />
 
         <PreferenceScreen
-            android:summary="@string/donate_summary"
+            android:key="donate_key"
             android:title="@string/donate_title">
-            <intent
-                android:action="android.intent.action.VIEW"
-                android:data="@string/donate_link" />
         </PreferenceScreen>
 
     </PreferenceCategory>
