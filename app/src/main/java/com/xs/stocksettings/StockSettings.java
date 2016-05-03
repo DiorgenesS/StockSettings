@@ -70,6 +70,55 @@ public class StockSettings extends miui.preference.PreferenceActivity implements
         mHomeLayoutSwitch.setEntryValues(new String[]{"0", "1", "2"});
     }
 
+    private void setDpi(final int range1, final int range2, final int defaultRange) {
+        String density_edit_message = getResources().getString(R.string.density_edit_message);
+
+        if (DeviceInfo.isBacon()) {
+            String density_edit_message_restore_homelayout = getResources().getString(R.string.density_edit_message_restore_homelayout);
+            String density_edit_message_format = String.format(density_edit_message, "300-600", density_edit_message_restore_homelayout);
+            mDensity.setDialogMessage(density_edit_message_format);
+        } else if (DeviceInfo.is8297()) {
+            String density_edit_message_format = String.format(density_edit_message, "280-320", "");
+            mDensity.setDialogMessage(density_edit_message_format);
+        }
+
+        mDensity.setDialogTitle(getResources().getString(R.string.density_edit_title));
+        mDensity.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object newValue) {
+                String NewDensity = (String) newValue;
+                if (NewDensity.equals("")) {
+                    Toast.makeText(getBaseContext(), R.string.density_error, Toast.LENGTH_LONG).show();
+                    return false;
+                } else {
+                    int i = Integer.parseInt(NewDensity);
+                    if (i < range1 || i > range2) {
+                        Toast.makeText(getBaseContext(), R.string.density_error, Toast.LENGTH_LONG).show();
+                        return false;
+                    }
+                    String density_summary = getResources().getString(R.string.density_summary);
+                    String density_summary_format = String.format(density_summary, NewDensity, defaultRange);
+                    mDensity.setSummary(density_summary_format);
+                    SystemProperties.set("persist.sys.density", +i + "");
+
+                    if (DeviceInfo.isBacon()) {
+                        //如果新DPI≤440，那么将showDpiWarning窗口重置为true状态
+                        if (i <= 440) {
+                            PrefUtils.saveBoolean(getApplicationContext(), "show_dpi_warning", true);
+                        }
+                        //重置桌面布局
+                        PrefUtils.saveString(getApplicationContext(), "home_layout_switch_key", "0");
+                        Tools.shell("mount -o remount,rw /system");
+                        Tools.shell("rm -rf /system/media/theme/default/com.miui.home");
+                    }
+
+                    dialogReboot();
+                    return true;
+                }
+            }
+        });
+    }
+
     public void onCreate(Bundle savedInstanceState) {
         setTheme(miui.R.style.Theme_Light_Settings);
         super.onCreate(savedInstanceState);
@@ -97,74 +146,17 @@ public class StockSettings extends miui.preference.PreferenceActivity implements
             getPreferenceScreen().removePreference(mAppScreenMask);
             mCameraSwitch.setEntries(R.array.camera_switch_entries_bacon);
             mCameraSwitch.setEntryValues(R.array.camera_switch_values_bacon);
-            //DPI
-            String density_edit_message = getResources().getString(R.string.density_edit_message);
-            String density_edit_message_restore_homelayout = getResources().getString(R.string.density_edit_message_restore_homelayout);
-            String density_edit_message_format = String.format(density_edit_message, "300-600", density_edit_message_restore_homelayout);
-            mDensity.setDialogMessage(density_edit_message_format);
-            mDensity.setDialogTitle(getResources().getString(R.string.density_edit_title));
-            mDensity.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-                @Override
-                public boolean onPreferenceChange(Preference preference, Object newValue) {
-                    String NewDensity = (String) newValue;
-                    if (NewDensity.equals("")) {
-                        Toast.makeText(getBaseContext(), R.string.density_error, Toast.LENGTH_LONG).show();
-                        return false;
-                    } else {
-                        int i = Integer.parseInt(NewDensity);
-                        if (i < 300 || i > 600) {
-                            Toast.makeText(getBaseContext(), R.string.density_error, Toast.LENGTH_LONG).show();
-                            return false;
-                        }
-                        String density_sumarry = getResources().getString(R.string.density_summary);
-                        String density_summary_format = String.format(density_sumarry, NewDensity, 480);
-                        mDensity.setSummary(density_summary_format);
-                        SystemProperties.set("persist.sys.density", +i + "");
-                        //如果新DPI≤440，那么将showDpiWarning窗口重置为true状态
-                        if (i <= 440) {
-                            PrefUtils.saveBoolean(getApplicationContext(), "show_dpi_warning", true);
-                        }
-                        //重置桌面布局
-                        PrefUtils.saveString(getApplicationContext(), "home_layout_switch_key", "0");
-                        Tools.shell("mount -o remount,rw /system");
-                        Tools.shell("rm -rf /system/media/theme/default/com.miui.home");
-                        dialogReboot();
-                        return true;
-                    }
-                }
-            });
+
+            setDpi(300, 600, 480);
+
         } else if (DeviceInfo.is8297()) { /* Coolpad 8297 */
             mCameraSwitch.setEntries(R.array.camera_switch_entries_8297);
             mCameraSwitch.setEntryValues(R.array.camera_switch_values_8297);
             getPreferenceScreen().removePreference(mDoubleTapHomeToSleep);
             getPreferenceScreen().removePreference(mCMSettings);
-            //DPI
-            String density_edit_message = getResources().getString(R.string.density_edit_message);
-            String density_edit_message_format = String.format(density_edit_message, "280-320", "");
-            mDensity.setDialogMessage(density_edit_message_format);
-            mDensity.setDialogTitle(getResources().getString(R.string.density_edit_title));
-            mDensity.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-                @Override
-                public boolean onPreferenceChange(Preference preference, Object newValue) {
-                    String NewDensity = (String) newValue;
-                    if (NewDensity.equals("")) {
-                        Toast.makeText(getBaseContext(), R.string.density_error, Toast.LENGTH_LONG).show();
-                        return false;
-                    } else {
-                        int i = Integer.parseInt(NewDensity);
-                        if (i < 280 || i > 320) {
-                            Toast.makeText(getBaseContext(), R.string.density_error, Toast.LENGTH_LONG).show();
-                            return false;
-                        }
-                        String density_summary = getResources().getString(R.string.density_summary);
-                        String density_summar_format = String.format(density_summary, NewDensity, 320);
-                        mDensity.setSummary(density_summar_format);
-                        dialogReboot();
-                        SystemProperties.set("persist.sys.density", +i + "");
-                        return true;
-                    }
-                }
-            });
+
+            setDpi(280, 320, 320);
+
         } else { /* Null Device*/
             getPreferenceScreen().removeAll();
         }
