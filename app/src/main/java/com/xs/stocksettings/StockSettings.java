@@ -51,11 +51,7 @@ public class StockSettings extends miui.preference.PreferenceActivity implements
     //for kernel config (oepn kernel activity)
     long[] mHits = new long[3];
 
-    public void onCreate(Bundle savedInstanceState) {
-        setTheme(miui.R.style.Theme_Light_Settings);
-        super.onCreate(savedInstanceState);
-        addPreferencesFromResource(R.xml.stocksettings);
-
+    private void initFind() {
         mDoubleTapHomeToSleep = (CheckBoxPreference) findPreference(DoubleTapHomeToSleep);
         mCMSettings = (PreferenceScreen) findPreference(CMSettings);
         mAppScreenMask = (PreferenceScreen) findPreference(AppScreenMask);
@@ -72,6 +68,13 @@ public class StockSettings extends miui.preference.PreferenceActivity implements
         //默认布局切换
         mHomeLayoutSwitch.setEntries(new String[]{"4x5", "4x6", "5x5"});
         mHomeLayoutSwitch.setEntryValues(new String[]{"0", "1", "2"});
+    }
+
+    public void onCreate(Bundle savedInstanceState) {
+        setTheme(miui.R.style.Theme_Light_Settings);
+        super.onCreate(savedInstanceState);
+        addPreferencesFromResource(R.xml.stocksettings);
+        initFind();
 
         //Device
         if (DeviceInfo.isBacon()) { /* Oneplus A0001 */
