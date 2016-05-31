@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="about_title">About</string>
+    <string name="app_name">StockSettings</string>
+    <string name="oneplus_gesture">OnePlus Gesture</string>
+    <string name="oneplus_key_customize">Switch menu and back</string>
+    <string name="weibo_title">Xs</string>
+    <string name="weibo_summary">Click to view my sian weibo</string>
+    <string name="donate_title">Donations</string>
+    <string name="donate_about"><font color="blue"><b>About donations</b></font></string>
+    <string name="donate_summary">Click to donate</string>
+    <string name="donate_about_info">If you would like to buy me some beer, go for it and thank you! If you don\'t want to donate, it is perfectly fine for me. Just feel free to flash all my ROMs. I don\'t do this for the money.</string>
+</resources>

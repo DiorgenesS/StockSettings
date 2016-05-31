@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceScreen
+        android:key="oneplus_gesture"
+        android:title="@string/oneplus_gesture" />
+
+    <PreferenceScreen
+        android:key="oneplus_key_customize"
+        android:title="@string/oneplus_key_customize" />
+
+    <PreferenceScreen
+        android:key="weibo_key"
+        android:summary="@string/weibo_summary"
+        android:title="@string/weibo_title" />
+
+    <PreferenceScreen
+        android:key="about_key"
+        android:summary="© 2016 Flyme Tools | Powered by Xs"
+        android:title="@string/about_title" />
+    
+    <PreferenceScreen
+        android:key="donate_key"
+        android:title="@string/donate_title" />
+
+</PreferenceScreen>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="about_title">关于</string>
+    <string name="app_name">附加设置</string>
+    <string name="oneplus_gesture">黑屏手势</string>
+    <string name="oneplus_key_customize">按键切换</string>
+    <string name="weibo_title">小煞-Xs</string>
+    <string name="weibo_summary">点击访问我的微博</string>
+    <string name="donate_title">支持作者</string>
+    <string name="donate_summary">点击对作者进行捐助</string>
+    <string name="donate_about"><font color="blue"><b>关于捐赠</b></font></string>
+    <string name="donate_about_info"><font color="black">ROM的适配过程中非常艰辛，享受Flyme的人往往不清楚这是利用大量私人时间制作，顾不上吃饭、喝水、通宵熬夜研究BUG对于我来说都是家常便饭，捐赠不在乎多少，大家有这份心意即可，在这里对捐赠我和心有余而力不足的朋友们致以万分感谢！感谢你们一直支持我的ROM！希望你们一直支持下去！</font>\n\n<font color="red"><b>支付宝:imxs1107@gmail.com</b></font>\n<font color="blue"><b>捐赠纯属自愿,请勿道德绑架!</b></font></string>
+</resources>
