@@ -10,4 +10,14 @@
     <string name="donate_summary">点击对作者进行捐助</string>
     <string name="donate_about"><font color="blue"><b>关于捐赠</b></font></string>
     <string name="donate_about_info"><font color="black">ROM的适配过程中非常艰辛，享受Flyme的人往往不清楚这是利用大量私人时间制作，顾不上吃饭、喝水、通宵熬夜研究BUG对于我来说都是家常便饭，捐赠不在乎多少，大家有这份心意即可，在这里对捐赠我和心有余而力不足的朋友们致以万分感谢！感谢你们一直支持我的ROM！希望你们一直支持下去！</font>\n\n<font color="red"><b>支付宝:imxs1107@gmail.com</b></font>\n<font color="blue"><b>捐赠纯属自愿,请勿道德绑架!</b></font></string>
+    <string name="density_error">警告，输入密度值超出范围，请重新输入</string>
+    <string name="density_title">屏幕密度</string>
+    <string name="density_edit_title">屏幕密度修改</string>
+    <string name="density_edit_message">请输入一个合理的密度值(%1$s)\n\n修改密度值可能导致部分界面错位，请谨慎修改%2$s</string>
+    <string name="density_summary">当前密度值为%1$s，默认密度值为%2$s</string>
+    <string name="dialog_ok">应用成功，是否重启手机？</string>
+    <string name="dialog_yes">确定</string>
+    <string name="dialog_no">取消</string>
+    <string name="dialog_is_agree">不再提醒</string>
+    <string name="dialog_reboot">请在稍晚些时刻手动重启手机</string>
 </resources>

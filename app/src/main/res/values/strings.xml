@@ -10,4 +10,14 @@
     <string name="donate_about"><font color="blue"><b>About donations</b></font></string>
     <string name="donate_summary">Click to donate</string>
     <string name="donate_about_info">If you would like to buy me some beer, go for it and thank you! If you don\'t want to donate, it is perfectly fine for me. Just feel free to flash all my ROMs. I don\'t do this for the money.</string>
+    <string name="density_title">Screen DPI</string>
+    <string name="density_error">Warning:Input Error!</string>
+    <string name="density_edit_title">Adjust the DPI specified</string>
+    <string name="density_edit_message">please enter a reasonable range of values(%1$s)\n\nThis operation may lead to frequent system FC, careful revision%2$s</string>
+    <string name="density_summary">Now dpi is%1$s , Default is%2$s</string>
+    <string name="dialog_ok">Done!Are you sure want to reboot the phone?</string>
+    <string name="dialog_yes">Yes</string>
+    <string name="dialog_no">No</string>
+    <string name="dialog_reboot">Please restart your mobile phone manually in some time later</string>
+    <string name="dialog_is_agree">Never Notify</string>
 </resources>
