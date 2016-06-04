@@ -8,10 +8,12 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.os.SystemProperties;
+import android.preference.CheckBoxPreference;
 import android.preference.EditTextPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceScreen;
+import android.provider.Settings;
 import android.widget.Toast;
 
 import com.xs.stocksettings.utils.PrefUtils;
@@ -21,10 +23,11 @@ import com.xs.stocksettings.utils.PrefUtils;
  */
 public class StockSettings extends PreferenceActivity {
     private static final String WEIBO = "weibo_key";
-    private static final String Donate = "donate_key";
-    private static final String Density = "density_key";
-    private static final String ONEPLUS_GESTURE = "oneplus_gesture";
-    private static final String ONEPLUS_KEY_CUSTOMIZE = "oneplus_key_customize";
+    private static final String DONATE = "donate_key";
+    private static final String DENSITY = "density_key";
+    private static final String ONEPLUS_GESTURE = "oneplus_gesture_key";
+    private static final String ONEPLUS_BUTTONS_LED = "oneplus_buttons_led_key";
+    private static final String ONEPLUS_BUTTONS_CUSTOMIZE = "oneplus_buttons_customize_key";
 
     private String NowDensity = SystemProperties.get("persist.xsdensity");
 
@@ -32,17 +35,23 @@ public class StockSettings extends PreferenceActivity {
     private int IntNowDensity = Integer.parseInt(NowDensity);
 
     private EditTextPreference mDensity;
+
     private PreferenceScreen mWeiBo;
     private PreferenceScreen mDonate;
     private PreferenceScreen mOnePlusGesture;
-    private PreferenceScreen mOnePlusKeyCustomize;
+    private PreferenceScreen mOnePlusButtonsCustomize;
+
+    private CheckBoxPreference mOnePlusButtonsLed;
 
     private void initPreference() {
         mWeiBo = (PreferenceScreen) findPreference(WEIBO);
-        mDonate = (PreferenceScreen) findPreference(Donate);
-        mDensity = (EditTextPreference) findPreference(Density);
+        mDonate = (PreferenceScreen) findPreference(DONATE);
         mOnePlusGesture = (PreferenceScreen) findPreference(ONEPLUS_GESTURE);
-        mOnePlusKeyCustomize = (PreferenceScreen) findPreference(ONEPLUS_KEY_CUSTOMIZE);
+        mOnePlusButtonsCustomize = (PreferenceScreen) findPreference(ONEPLUS_BUTTONS_CUSTOMIZE);
+
+        mDensity = (EditTextPreference) findPreference(DENSITY);
+
+        mOnePlusButtonsLed = (CheckBoxPreference) findPreference(ONEPLUS_BUTTONS_LED);
     }
 
     public void onCreate(Bundle savedInstanceState) {
@@ -75,7 +84,8 @@ public class StockSettings extends PreferenceActivity {
         }
         if (preference == mDonate) {
             Intent intent = new Intent();
-            intent.setClassName("com.xs.stocksettings", "com.xs.stocksettings.DonatePreference");
+            intent.setClassName("com.xs.stocksettings",
+                    "com.xs.stocksettings.DonatePreference");
             startActivity(intent);
         }
         if (preference == mOnePlusGesture) {
@@ -84,11 +94,18 @@ public class StockSettings extends PreferenceActivity {
                     "com.android.settings_ex.accessibility.BlackScreenPreferenceActivity");
             startActivity(intent);
         }
-        if (preference == mOnePlusKeyCustomize) {
+        if (preference == mOnePlusButtonsCustomize) {
             Intent intent = new Intent();
             intent.setClassName("com.android.settings_ex",
                     "com.android.settings_ex.accessibility.KeyCustomizeActivity");
             startActivity(intent);
+        }
+        if (preference == mOnePlusButtonsLed) {
+            if (mOnePlusButtonsLed.isChecked()) {
+                Settings.System.putInt(getContentResolver(), "buttons_brightness", 1);
+            } else {
+                Settings.System.putInt(getContentResolver(), "buttons_brightness", 0);
+            }
         }
         return true;
     }

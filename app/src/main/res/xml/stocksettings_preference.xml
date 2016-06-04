@@ -1,18 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <CheckBoxPreference
+        android:defaultValue="true"
+        android:key="oneplus_buttons_led_key"
+        android:title="@string/oneplus_buttons_led_title" />
+
+    <PreferenceScreen
+        android:key="oneplus_gesture_key"
+        android:title="@string/oneplus_gesture_title" />
+
+    <PreferenceScreen
+        android:key="oneplus_buttons_customize_key"
+        android:title="@string/oneplus_buttons_customize_title" />
+
     <EditTextPreference
         android:digits="1234567890"
         android:key="density_key"
         android:title="@string/density_title" />
-
-    <PreferenceScreen
-        android:key="oneplus_gesture"
-        android:title="@string/oneplus_gesture" />
-
-    <PreferenceScreen
-        android:key="oneplus_key_customize"
-        android:title="@string/oneplus_key_customize" />
 
     <PreferenceScreen
         android:key="weibo_key"

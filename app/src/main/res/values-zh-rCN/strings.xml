@@ -2,8 +2,8 @@
 <resources>
     <string name="about_title">关于</string>
     <string name="app_name">附加设置</string>
-    <string name="oneplus_gesture">黑屏手势</string>
-    <string name="oneplus_key_customize">按键切换</string>
+    <string name="oneplus_gesture_title">黑屏手势</string>
+    <string name="oneplus_buttons_customize_title">按键切换</string>
     <string name="weibo_title">小煞-Xs</string>
     <string name="weibo_summary">点击访问我的微博</string>
     <string name="donate_title">支持作者</string>
@@ -20,4 +20,5 @@
     <string name="dialog_no">取消</string>
     <string name="dialog_is_agree">不再提醒</string>
     <string name="dialog_reboot">请在稍晚些时刻手动重启手机</string>
+    <string name="oneplus_buttons_led_title">按键灯</string>>
 </resources>
