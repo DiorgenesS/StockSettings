@@ -11,6 +11,22 @@
         android:key="oneplus_buttons_led_key"
         android:title="@string/oneplus_buttons_led_title" />
 
+    <CheckBoxPreference
+        android:key="samsung_auto_adjust_touch_key"
+        android:title="@string/samsung_auto_adjust_touch_title" />
+
+    <CheckBoxPreference
+        android:key="samsung_motion_pick_up_key"
+        android:title="@string/samsung_motion_pick_up_title" />
+
+    <CheckBoxPreference
+        android:key="samsung_multi_window_enabled_key"
+        android:title="@string/samsung_multi_window_enabled_title" />
+
+    <CheckBoxPreference
+        android:key="samsung_surface_palm_swipe_key"
+        android:title="@string/samsung_surface_palm_swipe_title" />
+
     <PreferenceScreen
         android:key="oneplus_gesture_key"
         android:title="@string/oneplus_gesture_title" />

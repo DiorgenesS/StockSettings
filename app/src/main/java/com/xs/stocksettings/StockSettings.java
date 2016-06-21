@@ -16,6 +16,7 @@ import android.preference.PreferenceScreen;
 import android.provider.Settings;
 import android.widget.Toast;
 
+import com.xs.stocksettings.utils.DeviceInfo;
 import com.xs.stocksettings.utils.PrefUtils;
 
 /**
@@ -29,6 +30,11 @@ public class StockSettings extends PreferenceActivity {
     private static final String ONEPLUS_GESTURE = "oneplus_gesture_key";
     private static final String ONEPLUS_BUTTONS_LED = "oneplus_buttons_led_key";
     private static final String ONEPLUS_BUTTONS_CUSTOMIZE = "oneplus_buttons_customize_key";
+
+    private static final String SAMSUNG_MOTION_PICK_UP = "samsung_motion_pick_up_key";
+    private static final String SAMSUNG_AUTO_ADJUST_TOUCH = "samsung_auto_adjust_touch_key";
+    private static final String SAMSUNG_SURFACE_PALM_SWIPE = "samsung_surface_palm_swipe_key";
+    private static final String SAMSUNG_MULTI_WINDOW_ENABLED = "samsung_multi_window_enabled_key";
 
     private String NowDensity = SystemProperties.get("persist.xsdensity");
 
@@ -44,6 +50,10 @@ public class StockSettings extends PreferenceActivity {
 
     private CheckBoxPreference mOnePlusOTG;
     private CheckBoxPreference mOnePlusButtonsLed;
+    private CheckBoxPreference mSamSungMotionPickUp;
+    private CheckBoxPreference mSamSungAutoAdjustTouch;
+    private CheckBoxPreference mSamSungSurfacePalmSwipe;
+    private CheckBoxPreference mSamSungMultiWindowEnabled;
 
     private void initPreference() {
         mWeiBo = (PreferenceScreen) findPreference(WEIBO);
@@ -55,6 +65,56 @@ public class StockSettings extends PreferenceActivity {
 
         mOnePlusOTG = (CheckBoxPreference) findPreference(ONEPLUS_OTG);
         mOnePlusButtonsLed = (CheckBoxPreference) findPreference(ONEPLUS_BUTTONS_LED);
+
+        mSamSungMotionPickUp = (CheckBoxPreference) findPreference(SAMSUNG_MOTION_PICK_UP);
+        mSamSungAutoAdjustTouch = (CheckBoxPreference) findPreference(SAMSUNG_AUTO_ADJUST_TOUCH);
+        mSamSungSurfacePalmSwipe = (CheckBoxPreference) findPreference(SAMSUNG_SURFACE_PALM_SWIPE);
+        mSamSungMultiWindowEnabled = (CheckBoxPreference) findPreference(SAMSUNG_MULTI_WINDOW_ENABLED);
+
+        if (DeviceInfo.isA2001()) {
+            getPreferenceScreen().removePreference(mSamSungMotionPickUp);
+            getPreferenceScreen().removePreference(mSamSungAutoAdjustTouch);
+            getPreferenceScreen().removePreference(mSamSungSurfacePalmSwipe);
+            getPreferenceScreen().removePreference(mSamSungMultiWindowEnabled);
+        } else if (DeviceInfo.isNote3()) {
+            getPreferenceScreen().removePreference(mOnePlusOTG);
+            getPreferenceScreen().removePreference(mOnePlusGesture);
+            getPreferenceScreen().removePreference(mOnePlusButtonsLed);
+            getPreferenceScreen().removePreference(mOnePlusButtonsCustomize);
+        } else {
+            getPreferenceScreen().removeAll();
+            getPreferenceScreen().addPreference(mWeiBo);
+            getPreferenceScreen().addPreference(mDonate);
+        }
+
+    }
+
+    private void initCheckBoxStatus() {
+        int motion_pick_up = Settings.System.getInt(getContentResolver(), "motion_pick_up", 1);
+        int auto_adjust_touch = Settings.System.getInt(getContentResolver(), "auto_adjust_touch", 0);
+        int surface_palm_swipe = Settings.System.getInt(getContentResolver(), "surface_palm_swipe", 1);
+        int multi_window_enabled = Settings.System.getInt(getContentResolver(), "multi_window_enabled", 1);
+
+        if (motion_pick_up == 1) {
+            mSamSungMotionPickUp.setChecked(true);
+        } else {
+            mSamSungMotionPickUp.setChecked(false);
+        }
+        if (auto_adjust_touch == 1) {
+            mSamSungAutoAdjustTouch.setChecked(true);
+        } else {
+            mSamSungAutoAdjustTouch.setChecked(false);
+        }
+        if (surface_palm_swipe == 1) {
+            mSamSungSurfacePalmSwipe.setChecked(true);
+        } else {
+            mSamSungSurfacePalmSwipe.setChecked(false);
+        }
+        if (multi_window_enabled == 1) {
+            mSamSungMultiWindowEnabled.setChecked(true);
+        } else {
+            mSamSungMultiWindowEnabled.setChecked(false);
+        }
     }
 
     public void onCreate(Bundle savedInstanceState) {
@@ -77,6 +137,10 @@ public class StockSettings extends PreferenceActivity {
         }
 
         setEditTextPreferenceSummary(mDensity);
+
+        if (DeviceInfo.isNote3()) {
+            initCheckBoxStatus();
+        }
     }
 
     public boolean onPreferenceTreeClick(PreferenceScreen preferencescreen, Preference preference) {
@@ -115,6 +179,34 @@ public class StockSettings extends PreferenceActivity {
                 SystemProperties.set("persist.sys.oem.otg_support", "true");
             } else {
                 SystemProperties.set("persist.sys.oem.otg_support", "false");
+            }
+        }
+        if (preference == mSamSungSurfacePalmSwipe) {
+            if (mSamSungSurfacePalmSwipe.isChecked()) {
+                Settings.System.putInt(getContentResolver(), "surface_palm_swipe", 1);
+            } else {
+                Settings.System.putInt(getContentResolver(), "surface_palm_swipe", 0);
+            }
+        }
+        if (preference == mSamSungMultiWindowEnabled) {
+            if (mSamSungMultiWindowEnabled.isChecked()) {
+                Settings.System.putInt(getContentResolver(), "multi_window_enabled", 1);
+            } else {
+                Settings.System.putInt(getContentResolver(), "multi_window_enabled", 0);
+            }
+        }
+        if (preference == mSamSungMotionPickUp) {
+            if (mSamSungMotionPickUp.isChecked()) {
+                Settings.System.putInt(getContentResolver(), "motion_pick_up", 1);
+            } else {
+                Settings.System.putInt(getContentResolver(), "motion_pick_up", 0);
+            }
+        }
+        if (preference == mSamSungAutoAdjustTouch) {
+            if (mSamSungAutoAdjustTouch.isChecked()) {
+                Settings.System.putInt(getContentResolver(), "auto_adjust_touch", 1);
+            } else {
+                Settings.System.putInt(getContentResolver(), "auto_adjust_touch", 0);
             }
         }
         return true;

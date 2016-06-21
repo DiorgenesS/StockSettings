@@ -20,5 +20,9 @@
     <string name="dialog_no">取消</string>
     <string name="dialog_is_agree">不再提醒</string>
     <string name="dialog_reboot">请在稍晚些时刻手动重启手机</string>
-    <string name="oneplus_buttons_led_title">按键灯</string>>
+    <string name="oneplus_buttons_led_title">按键灯</string>
+    <string name="samsung_auto_adjust_touch_title">手套模式</string>
+    <string name="samsung_motion_pick_up_title">智能提示</string>
+    <string name="samsung_multi_window_enabled_title">程序窗口化</string>
+    <string name="samsung_surface_palm_swipe_title">手掌截图</string>
 </resources>
