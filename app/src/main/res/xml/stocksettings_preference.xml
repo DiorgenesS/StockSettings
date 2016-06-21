@@ -2,6 +2,11 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <CheckBoxPreference
+        android:defaultValue="false"
+        android:key="oneplus_otg_key"
+        android:title="@string/oneplus_otg_title" />
+
+    <CheckBoxPreference
         android:defaultValue="true"
         android:key="oneplus_buttons_led_key"
         android:title="@string/oneplus_buttons_led_title" />

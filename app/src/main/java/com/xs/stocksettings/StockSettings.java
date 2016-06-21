@@ -25,6 +25,7 @@ public class StockSettings extends PreferenceActivity {
     private static final String WEIBO = "weibo_key";
     private static final String DONATE = "donate_key";
     private static final String DENSITY = "density_key";
+    private static final String ONEPLUS_OTG = "oneplus_otg_key";
     private static final String ONEPLUS_GESTURE = "oneplus_gesture_key";
     private static final String ONEPLUS_BUTTONS_LED = "oneplus_buttons_led_key";
     private static final String ONEPLUS_BUTTONS_CUSTOMIZE = "oneplus_buttons_customize_key";
@@ -41,6 +42,7 @@ public class StockSettings extends PreferenceActivity {
     private PreferenceScreen mOnePlusGesture;
     private PreferenceScreen mOnePlusButtonsCustomize;
 
+    private CheckBoxPreference mOnePlusOTG;
     private CheckBoxPreference mOnePlusButtonsLed;
 
     private void initPreference() {
@@ -51,6 +53,7 @@ public class StockSettings extends PreferenceActivity {
 
         mDensity = (EditTextPreference) findPreference(DENSITY);
 
+        mOnePlusOTG = (CheckBoxPreference) findPreference(ONEPLUS_OTG);
         mOnePlusButtonsLed = (CheckBoxPreference) findPreference(ONEPLUS_BUTTONS_LED);
     }
 
@@ -105,6 +108,13 @@ public class StockSettings extends PreferenceActivity {
                 Settings.System.putInt(getContentResolver(), "buttons_brightness", 1);
             } else {
                 Settings.System.putInt(getContentResolver(), "buttons_brightness", 0);
+            }
+        }
+        if (preference == mOnePlusOTG) {
+            if (mOnePlusOTG.isChecked()) {
+                SystemProperties.set("persist.sys.oem.otg_support", "true");
+            } else {
+                SystemProperties.set("persist.sys.oem.otg_support", "false");
             }
         }
         return true;

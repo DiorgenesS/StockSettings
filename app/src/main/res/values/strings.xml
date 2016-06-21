@@ -21,4 +21,5 @@
     <string name="dialog_reboot">Please restart your mobile phone manually in some time later</string>
     <string name="dialog_is_agree">Never Notify</string>
     <string name="oneplus_buttons_led_title">Buttons Led</string>>
+    <string name="oneplus_otg_title">OTG</string>>
 </resources>
