@@ -150,10 +150,9 @@ public class StockSettings extends miui.preference.PreferenceActivity implements
             setDpi(300, 600, 480);
 
         } else if (DeviceInfo.is8297()) { /* Coolpad 8297 */
-            mCameraSwitch.setEntries(R.array.camera_switch_entries_8297);
-            mCameraSwitch.setEntryValues(R.array.camera_switch_values_8297);
             getPreferenceScreen().removePreference(mDoubleTapHomeToSleep);
             getPreferenceScreen().removePreference(mCMSettings);
+            getPreferenceScreen().removePreference(mCameraSwitch);
 
             setDpi(280, 320, 320);
 
@@ -165,7 +164,11 @@ public class StockSettings extends miui.preference.PreferenceActivity implements
 
     public void onStart() {
         super.onStart();
-        setListPreferenceSummary(mCameraSwitch);
+
+        if (DeviceInfo.isBacon()) {
+            setListPreferenceSummary(mCameraSwitch);
+        }
+
         setListPreferenceSummary(mHomeLayoutSwitch);
         setEditTextPreferenceSummary(mDensity);
 
@@ -232,12 +235,6 @@ public class StockSettings extends miui.preference.PreferenceActivity implements
                 } else if (2 == Integer.parseInt(mListPreference.getValue())) {
                     mListPreference.setSummary(R.string.camera_switch_cm_summary);
                 }
-            } else if (DeviceInfo.is8297()) {
-                if (0 == Integer.parseInt(mListPreference.getValue())) {
-                    mListPreference.setSummary(R.string.camera_switch_miui_summary);
-                } else if (1 == Integer.parseInt(mListPreference.getValue())) {
-                    mListPreference.setSummary(R.string.camera_switch_cp_summary);
-                }
             }
         }
 
@@ -283,28 +280,6 @@ public class StockSettings extends miui.preference.PreferenceActivity implements
                         Tools.shell("mount -o remount,rw /system");
                         Tools.shell("rm -rf /system/priv-app/Camera.apk");
                         Tools.shell("cp -f /system/stocksettings/CyanogenModCamera.apk /system/priv-app/Camera.apk");
-                        Tools.shell("chmod 0644 /system/priv-app/Camera.apk");
-                        break;
-                    default:
-                        break;
-                }
-            } else if (DeviceInfo.is8297()) {
-                String ValueCameraSwitch = (String) newValue;
-                mCameraSwitch.setValue(ValueCameraSwitch);
-                int mode = Integer.parseInt(ValueCameraSwitch);
-                switch (mode) {
-                    case 0:
-                        preference.setSummary(R.string.camera_switch_miui_summary);
-                        Tools.shell("mount -o remount,rw /system");
-                        Tools.shell("rm -rf /system/priv-app/Camera.apk");
-                        Tools.shell("cp -f /system/stocksettings/MiuiCamera.apk /system/priv-app/Camera.apk");
-                        Tools.shell("chmod 0644 /system/priv-app/Camera.apk");
-                        break;
-                    case 1:
-                        preference.setSummary(R.string.camera_switch_cp_summary);
-                        Tools.shell("mount -o remount,rw /system");
-                        Tools.shell("rm -rf /system/priv-app/Camera.apk");
-                        Tools.shell("cp -f /system/stocksettings/CoolpadCamera.apk /system/priv-app/Camera.apk");
                         Tools.shell("chmod 0644 /system/priv-app/Camera.apk");
                         break;
                     default:

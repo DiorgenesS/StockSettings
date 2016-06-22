@@ -7,9 +7,4 @@
         <item>CM相机</item>
     </string-array>
 
-    <string-array name="camera_switch_entries_8297">
-        <item>MIUI相机</item>>
-        <item>酷派相机</item>
-    </string-array>
-
 </resources>

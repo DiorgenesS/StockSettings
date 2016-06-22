@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">其他附加设置</string>
+    <string name="app_name">附加设置</string>
     <string name="camera_sound_title">相机声音</string>
     <string name="camera_sound_summary_off">相机声音已禁用！</string>
     <string name="camera_sound_summary_on">相机声音已启用！</string>
@@ -25,7 +25,6 @@
     <string name="dialog_no">取消</string>
     <string name="dialog_is_agree">不再提醒</string>
     <string name="dialog_reboot">请在稍晚些时刻手动重启手机</string>
-    <string name="camera_switch_cp_summary">当前相机为酷派相机</string>
     <string name="sound_patch_title">声音补丁</string>
     <string name="sound_patch_summary">增大默认音量等级</string>
     <string name="app_screen_mask_title">护目镜</string>
