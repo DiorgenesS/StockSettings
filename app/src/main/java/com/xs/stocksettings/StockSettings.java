@@ -36,7 +36,7 @@ public class StockSettings extends PreferenceActivity {
     private static final String SAMSUNG_SURFACE_PALM_SWIPE = "samsung_surface_palm_swipe_key";
     private static final String SAMSUNG_MULTI_WINDOW_ENABLED = "samsung_multi_window_enabled_key";
 
-    private String NowDensity = SystemProperties.get("persist.xsdensity");
+    private String NowDensity = SystemProperties.get("persist.sys.density");
 
     //将String NowDensity转化为int intNowDensity
     private int IntNowDensity = Integer.parseInt(NowDensity);
@@ -234,7 +234,7 @@ public class StockSettings extends PreferenceActivity {
                     String density_summary = getResources().getString(R.string.density_summary);
                     String density_summary_format = String.format(density_summary, NewDensity, defaultRange);
                     mDensity.setSummary(density_summary_format);
-                    SystemProperties.set("persist.xsdensity", +i + "");
+                    SystemProperties.set("persist.sys.density", +i + "");
                     dialogReboot();
                     return true;
                 }
