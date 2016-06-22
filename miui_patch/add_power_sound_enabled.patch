@@ -1,6 +1,6 @@
-From 69cc634de16b27e69dba86a9d71836cef4576fed Mon Sep 17 00:00:00 2001
+From 37fd8a51e53924c9a8f2ca05f2912be4f837eddd Mon Sep 17 00:00:00 2001
 From: X-s <imxs1107@gmail.com>
-Date: Tue, 25 Aug 2015 20:32:04 +0800
+Date: Wed, 22 Jun 2016 20:50:17 +0800
 Subject: [PATCH] add power sounds
 
 ---
@@ -9,19 +9,20 @@ Subject: [PATCH] add power sounds
 
 --- a/MiuiSystemUI/smali/com/android/systemui/power/PowerUI.smali
 +++ b/MiuiSystemUI/smali/com/android/systemui/power/PowerUI.smali
-@@ -366,9 +366,11 @@
+@@ -401,9 +401,11 @@
      move-result-object v0
-
+ 
      .local v0, "cr":Landroid/content/ContentResolver;
 -    const-string v2, "power_sounds_enabled"
-+    const-string v2, "persist.xs.power.sound"
-
++    #const-string v2, "power_sounds_enabled"
++    const-string v2, "persist.xs.power.sound.enabled"
+ 
 -    invoke-static {v0, v2, v3}, Landroid/provider/Settings$System;->getInt(Landroid/content/ContentResolver;Ljava/lang/String;I)I
 +    #invoke-static {v0, v2, v3}, Landroid/provider/Settings$System;->getInt(Landroid/content/ContentResolver;Ljava/lang/String;I)I
-+
 +    invoke-static {v2, v3}, Landroid/os/SystemProperties;->getInt(Ljava/lang/String;I)I
-
+ 
      move-result v2
-
+ 
 -- 
-1.9.1
+2.7.4
+

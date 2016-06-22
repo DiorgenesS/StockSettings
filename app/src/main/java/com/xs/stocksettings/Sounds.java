@@ -78,19 +78,19 @@ public class Sounds extends miui.preference.PreferenceActivity {
     public boolean onPreferenceTreeClick(PreferenceScreen preferencescreen, Preference preference) {
         if (preference == mScreenshotSound) {
             if (mScreenshotSound.isChecked()) {
-                Tools.shell("setprop persist.xs.screenshot.sound 1");
+                Tools.shell("setprop persist.xs.screen.sound.enabled 1");
                 mScreenshotSound.setSummary(getResources().getString(R.string.screenshot_sound_summary_on));
             } else {
-                Tools.shell("setprop persist.xs.screenshot.sound 0");
+                Tools.shell("setprop persist.xs.screen.sound.enabled 0");
                 mScreenshotSound.setSummary(getResources().getString(R.string.screenshot_sound_summary_off));
             }
         }
         if (preference == mPowerSound) {
             if (mPowerSound.isChecked()) {
-                Tools.shell("setprop persist.xs.power.sound 1");
+                Tools.shell("setprop persist.xs.power.sound.enabled 1");
                 mPowerSound.setSummary(getResources().getString(R.string.power_sound_summary_on));
             } else {
-                Tools.shell("setprop persist.xs.power.sound 0");
+                Tools.shell("setprop persist.xs.power.sound.enabled 0");
                 mPowerSound.setSummary(getResources().getString(R.string.power_sound_summary_off));
             }
         }
