@@ -26,4 +26,5 @@
     <string name="samsung_motion_pick_up_title">Motion Pick Up</string>
     <string name="samsung_multi_window_enabled_title">Multi Window</string>
     <string name="samsung_surface_palm_swipe_title">Surface Palm Swipe</string>
+    <string name="build_date_title">Build Date</string>
 </resources>

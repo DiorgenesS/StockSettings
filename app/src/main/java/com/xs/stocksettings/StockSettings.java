@@ -24,8 +24,10 @@ import com.xs.stocksettings.utils.PrefUtils;
  */
 public class StockSettings extends PreferenceActivity {
     private static final String WEIBO = "weibo_key";
+    private static final String ABOUT = "about_key";
     private static final String DONATE = "donate_key";
     private static final String DENSITY = "density_key";
+    private static final String BUILD_DATE = "build_date_key";
     private static final String ONEPLUS_OTG = "oneplus_otg_key";
     private static final String ONEPLUS_GESTURE = "oneplus_gesture_key";
     private static final String ONEPLUS_BUTTONS_LED = "oneplus_buttons_led_key";
@@ -36,6 +38,7 @@ public class StockSettings extends PreferenceActivity {
     private static final String SAMSUNG_SURFACE_PALM_SWIPE = "samsung_surface_palm_swipe_key";
     private static final String SAMSUNG_MULTI_WINDOW_ENABLED = "samsung_multi_window_enabled_key";
 
+    private String BuildDate = SystemProperties.get("ro.build.date");
     private String NowDensity = SystemProperties.get("persist.sys.density");
 
     //将String NowDensity转化为int intNowDensity
@@ -44,7 +47,9 @@ public class StockSettings extends PreferenceActivity {
     private EditTextPreference mDensity;
 
     private PreferenceScreen mWeiBo;
+    private PreferenceScreen mAbout;
     private PreferenceScreen mDonate;
+    private PreferenceScreen mBuildDate;
     private PreferenceScreen mOnePlusGesture;
     private PreferenceScreen mOnePlusButtonsCustomize;
 
@@ -57,7 +62,9 @@ public class StockSettings extends PreferenceActivity {
 
     private void initPreference() {
         mWeiBo = (PreferenceScreen) findPreference(WEIBO);
+        mAbout = (PreferenceScreen) findPreference(ABOUT);
         mDonate = (PreferenceScreen) findPreference(DONATE);
+        mBuildDate = (PreferenceScreen) findPreference(BUILD_DATE);
         mOnePlusGesture = (PreferenceScreen) findPreference(ONEPLUS_GESTURE);
         mOnePlusButtonsCustomize = (PreferenceScreen) findPreference(ONEPLUS_BUTTONS_CUSTOMIZE);
 
@@ -92,9 +99,14 @@ public class StockSettings extends PreferenceActivity {
             getPreferenceScreen().removePreference(mSamSungMultiWindowEnabled);
         } else {
             getPreferenceScreen().removeAll();
+            getPreferenceScreen().addPreference(mAbout);
             getPreferenceScreen().addPreference(mWeiBo);
             getPreferenceScreen().addPreference(mDonate);
+            getPreferenceScreen().addPreference(mBuildDate);
         }
+
+        //ROM编译日期
+        mBuildDate.setSummary(BuildDate);
 
     }
 

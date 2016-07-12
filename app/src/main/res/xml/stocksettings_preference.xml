@@ -46,12 +46,18 @@
         android:title="@string/weibo_title" />
 
     <PreferenceScreen
+        android:key="donate_key"
+        android:title="@string/donate_title" />
+
+    <PreferenceScreen
+        android:enabled="false"
         android:key="about_key"
         android:summary="© 2016 Flyme Tools | Powered by Xs"
         android:title="@string/about_title" />
 
     <PreferenceScreen
-        android:key="donate_key"
-        android:title="@string/donate_title" />
+        android:enabled="false"
+        android:key="build_date_key"
+        android:title="@string/build_date_title" />
 
 </PreferenceScreen>
