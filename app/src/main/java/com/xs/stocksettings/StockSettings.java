@@ -81,6 +81,15 @@ public class StockSettings extends PreferenceActivity {
             getPreferenceScreen().removePreference(mOnePlusGesture);
             getPreferenceScreen().removePreference(mOnePlusButtonsLed);
             getPreferenceScreen().removePreference(mOnePlusButtonsCustomize);
+        } else if (DeviceInfo.is8297()) {
+            getPreferenceScreen().removePreference(mOnePlusOTG);
+            getPreferenceScreen().removePreference(mOnePlusGesture);
+            getPreferenceScreen().removePreference(mOnePlusButtonsLed);
+            getPreferenceScreen().removePreference(mOnePlusButtonsCustomize);
+            getPreferenceScreen().removePreference(mSamSungMotionPickUp);
+            getPreferenceScreen().removePreference(mSamSungAutoAdjustTouch);
+            getPreferenceScreen().removePreference(mSamSungSurfacePalmSwipe);
+            getPreferenceScreen().removePreference(mSamSungMultiWindowEnabled);
         } else {
             getPreferenceScreen().removeAll();
             getPreferenceScreen().addPreference(mWeiBo);
@@ -121,7 +130,11 @@ public class StockSettings extends PreferenceActivity {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.stocksettings_preference);
         initPreference();
-        setDpi(360, 480, 480);
+        if (DeviceInfo.is8297()) {// Coolpad 8297
+            setDpi(280, 320, 320);
+        } else { // OnePlus A2001, SamSung Note3
+            setDpi(360, 480, 480);
+        }
     }
 
     public void onStart() {
@@ -214,7 +227,7 @@ public class StockSettings extends PreferenceActivity {
 
     private void setDpi(final int range1, final int range2, final int defaultRange) {
         String density_edit_message = getResources().getString(R.string.density_edit_message);
-        String density_edit_message_format = String.format(density_edit_message, "360-480", "");
+        String density_edit_message_format = String.format(density_edit_message, range1 + "-" + range2, "");
         mDensity.setDialogMessage(density_edit_message_format);
 
         mDensity.setDialogTitle(getResources().getString(R.string.density_edit_title));
@@ -244,9 +257,15 @@ public class StockSettings extends PreferenceActivity {
 
     private void setEditTextPreferenceSummary(EditTextPreference mEditTextPreference) {
         if (mEditTextPreference == mDensity) {
-            String density_summary = getResources().getString(R.string.density_summary);
-            String density_summary_format = String.format(density_summary, NowDensity, "480");
-            mDensity.setSummary(density_summary_format);
+            if (DeviceInfo.is8297()) {
+                String density_summary = getResources().getString(R.string.density_summary);
+                String density_summary_format = String.format(density_summary, NowDensity, "320");
+                mDensity.setSummary(density_summary_format);
+            } else {// OnePlus A2001, SamSung Note3
+                String density_summary = getResources().getString(R.string.density_summary);
+                String density_summary_format = String.format(density_summary, NowDensity, "480");
+                mDensity.setSummary(density_summary_format);
+            }
         }
     }
 
