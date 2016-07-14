@@ -35,6 +35,10 @@
         android:key="oneplus_buttons_customize_key"
         android:title="@string/oneplus_buttons_customize_title" />
 
+    <PreferenceScreen
+        android:title="@string/settings_ex_title"
+        android:key="settings_ex_key" />
+
     <EditTextPreference
         android:digits="1234567890"
         android:key="density_key"

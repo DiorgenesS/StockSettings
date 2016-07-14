@@ -28,6 +28,7 @@ public class StockSettings extends PreferenceActivity {
     private static final String DONATE = "donate_key";
     private static final String DENSITY = "density_key";
     private static final String BUILD_DATE = "build_date_key";
+    private static final String SETTINGS_EX = "settings_ex_key";
     private static final String ONEPLUS_OTG = "oneplus_otg_key";
     private static final String ONEPLUS_GESTURE = "oneplus_gesture_key";
     private static final String ONEPLUS_BUTTONS_LED = "oneplus_buttons_led_key";
@@ -50,6 +51,7 @@ public class StockSettings extends PreferenceActivity {
     private PreferenceScreen mAbout;
     private PreferenceScreen mDonate;
     private PreferenceScreen mBuildDate;
+    private PreferenceScreen mSettingsEx;
     private PreferenceScreen mOnePlusGesture;
     private PreferenceScreen mOnePlusButtonsCustomize;
 
@@ -65,6 +67,7 @@ public class StockSettings extends PreferenceActivity {
         mAbout = (PreferenceScreen) findPreference(ABOUT);
         mDonate = (PreferenceScreen) findPreference(DONATE);
         mBuildDate = (PreferenceScreen) findPreference(BUILD_DATE);
+        mSettingsEx = (PreferenceScreen) findPreference(SETTINGS_EX);
         mOnePlusGesture = (PreferenceScreen) findPreference(ONEPLUS_GESTURE);
         mOnePlusButtonsCustomize = (PreferenceScreen) findPreference(ONEPLUS_BUTTONS_CUSTOMIZE);
 
@@ -79,11 +82,13 @@ public class StockSettings extends PreferenceActivity {
         mSamSungMultiWindowEnabled = (CheckBoxPreference) findPreference(SAMSUNG_MULTI_WINDOW_ENABLED);
 
         if (DeviceInfo.isA2001()) {
+            getPreferenceScreen().removePreference(mSettingsEx);
             getPreferenceScreen().removePreference(mSamSungMotionPickUp);
             getPreferenceScreen().removePreference(mSamSungAutoAdjustTouch);
             getPreferenceScreen().removePreference(mSamSungSurfacePalmSwipe);
             getPreferenceScreen().removePreference(mSamSungMultiWindowEnabled);
         } else if (DeviceInfo.isNote3()) {
+            getPreferenceScreen().removePreference(mSettingsEx);
             getPreferenceScreen().removePreference(mOnePlusOTG);
             getPreferenceScreen().removePreference(mOnePlusGesture);
             getPreferenceScreen().removePreference(mOnePlusButtonsLed);
@@ -233,6 +238,11 @@ public class StockSettings extends PreferenceActivity {
             } else {
                 Settings.System.putInt(getContentResolver(), "auto_adjust_touch", 0);
             }
+        }
+        if (preference == mSettingsEx) {
+            Intent intent = new Intent();
+            intent.setClassName("com.android.settings_ex", "com.android.settings_ex.Settings");
+            startActivity(intent);
         }
         return true;
     }
