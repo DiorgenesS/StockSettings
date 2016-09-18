@@ -33,13 +33,7 @@
     <string name="sound_patch_summary">Click to patch default audio level</string>
     <string name="app_screen_mask_title">App Screen Mask</string>
     <string name="find_oppo_camera">The system is being used in the OPPO camera, please turn off the camera sound on the OPPO camera settings</string>
-    <string name="power_sound_title">Power Sound</string>
-    <string name="power_sound_summary_off">Off</string>
-    <string name="power_sound_summary_on">On</string>
     <string name="sounds">System Sounds</string>
-    <string name="screenshot_sound_summary_off">Screenshot Sound Off!</string>
-    <string name="screenshot_sound_summary_on">Screenshot Sound On!</string>
-    <string name="screenshot_sound_title">Screenshot Sound</string>
     <string name="view_weibo_title">Xs</string>
     <string name="view_weibo_summary">Click to view my sian weibo</string>
     <string name="kernel_config_open">Has opened the kernel optimization option, please be careful to adjust the kernel information</string>

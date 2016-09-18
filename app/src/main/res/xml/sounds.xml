@@ -11,16 +11,6 @@
         android:key="camera_sound_key"
         android:title="@string/camera_sound_title" />
 
-    <CheckBoxPreference
-        android:defaultValue="true"
-        android:key="screenshot_sound_key"
-        android:title="@string/screenshot_sound_title" />
-
-    <CheckBoxPreference
-        android:defaultValue="true"
-        android:key="power_sound_key"
-        android:title="@string/power_sound_title" />
-
     <Preference
         android:enabled="false"
         android:summary="@string/warning_summary"

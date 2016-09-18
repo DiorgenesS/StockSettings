@@ -19,15 +19,11 @@ import com.xs.stocksettings.utils.Tools;
 public class Sounds extends miui.preference.PreferenceActivity {
 
     private static final String CameraSound = "camera_sound_key";
-    private static final String PowerSound = "power_sound_key";
     private static final String SoundPatch = "sound_patch_key";
-    private static final String ScreenshotSound = "screenshot_sound_key";
 
 
     private CheckBoxPreference mCameraSound;
-    private CheckBoxPreference mPowerSound;
     private CheckBoxPreference mSoundPatch;
-    private CheckBoxPreference mScreenshotSound;
 
     public void onCreate(Bundle savedInstanceState) {
         setTheme(miui.R.style.Theme_Light_Settings);
@@ -35,9 +31,7 @@ public class Sounds extends miui.preference.PreferenceActivity {
         addPreferencesFromResource(R.xml.sounds);
 
         mCameraSound = (CheckBoxPreference) findPreference(CameraSound);
-        mPowerSound = (CheckBoxPreference) findPreference(PowerSound);
         mSoundPatch = (CheckBoxPreference) findPreference(SoundPatch);
-        mScreenshotSound = (CheckBoxPreference) findPreference(ScreenshotSound);
 
         if (DeviceInfo.isBacon()) {
             getPreferenceScreen().removePreference(mSoundPatch);
@@ -47,8 +41,6 @@ public class Sounds extends miui.preference.PreferenceActivity {
     public void onStart() {
         super.onStart();
         setCheckBoxPreferenceSummary(mCameraSound);
-        setCheckBoxPreferenceSummary(mPowerSound);
-        setCheckBoxPreferenceSummary(mScreenshotSound);
     }
 
     private void setCheckBoxPreferenceSummary(CheckBoxPreference mCheckBoxPreference) {
@@ -59,41 +51,9 @@ public class Sounds extends miui.preference.PreferenceActivity {
                 mCameraSound.setSummary(getResources().getString(R.string.camera_sound_summary_off));
             }
         }
-        if (mCheckBoxPreference == mPowerSound) {
-            if (mPowerSound.isChecked()) {
-                mPowerSound.setSummary(getResources().getString(R.string.power_sound_summary_on));
-            } else {
-                mPowerSound.setSummary(getResources().getString(R.string.power_sound_summary_off));
-            }
-        }
-        if (mCheckBoxPreference == mScreenshotSound) {
-            if (mScreenshotSound.isChecked()) {
-                mScreenshotSound.setSummary(getResources().getString(R.string.screenshot_sound_summary_on));
-            } else {
-                mScreenshotSound.setSummary(getResources().getString(R.string.screenshot_sound_summary_off));
-            }
-        }
     }
 
     public boolean onPreferenceTreeClick(PreferenceScreen preferencescreen, Preference preference) {
-        if (preference == mScreenshotSound) {
-            if (mScreenshotSound.isChecked()) {
-                Tools.shell("setprop persist.xs.screen.sound.enabled 1");
-                mScreenshotSound.setSummary(getResources().getString(R.string.screenshot_sound_summary_on));
-            } else {
-                Tools.shell("setprop persist.xs.screen.sound.enabled 0");
-                mScreenshotSound.setSummary(getResources().getString(R.string.screenshot_sound_summary_off));
-            }
-        }
-        if (preference == mPowerSound) {
-            if (mPowerSound.isChecked()) {
-                Tools.shell("setprop persist.xs.power.sound.enabled 1");
-                mPowerSound.setSummary(getResources().getString(R.string.power_sound_summary_on));
-            } else {
-                Tools.shell("setprop persist.xs.power.sound.enabled 0");
-                mPowerSound.setSummary(getResources().getString(R.string.power_sound_summary_off));
-            }
-        }
         if (preference == mSoundPatch) {
             Tools.shell("mount -o remount,rw /data");
             if (mSoundPatch.isChecked()) {

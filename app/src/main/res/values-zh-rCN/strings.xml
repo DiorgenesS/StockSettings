@@ -29,13 +29,7 @@
     <string name="sound_patch_summary">增大默认音量等级</string>
     <string name="app_screen_mask_title">护目镜</string>
     <string name="find_oppo_camera">检测到系统正在使用OPPO相机，请同时在OPPO相机设置中关闭相机声音</string>
-    <string name="power_sound_title">充电声音</string>
-    <string name="power_sound_summary_off">充电插拔声音及低电量提示音已禁用！</string>
-    <string name="power_sound_summary_on">充电插拔声音及低电量提示音已启用！</string>
     <string name="sounds">系统声音</string>
-    <string name="screenshot_sound_title">截屏声音</string>
-    <string name="screenshot_sound_summary_off">截屏声音已禁用！</string>
-    <string name="screenshot_sound_summary_on">截屏声音已启用！</string>
     <string name="home_layout_switch_summary_not_support_4x5">检测到DPI≤440，将不支持4x5布局切换</string>
     <string name="view_weibo_title">小煞-Xs</string>
     <string name="view_weibo_summary">点击访问我的微博</string>
