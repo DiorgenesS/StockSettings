@@ -5,6 +5,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 
+import com.xs.stocksettings.R;
+
 /**
  * Created by xs on 16-4-14.
  */

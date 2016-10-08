@@ -4,12 +4,11 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.PowerManager;
-import android.os.SystemClock;
 import android.preference.CheckBoxPreference;
 import android.preference.EditTextPreference;
-import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceScreen;
 import android.provider.Settings;
@@ -17,71 +16,60 @@ import android.widget.Toast;
 
 import com.xs.stocksettings.utils.DeviceInfo;
 import com.xs.stocksettings.utils.PrefUtils;
-import com.xs.stocksettings.utils.Tools;
 
 import miui.os.SystemProperties;
 
 /**
- * Created by xs on 15-7-25.
+ * Created by xs on 16-10-9.
  */
-public class StockSettings extends miui.preference.PreferenceActivity implements Preference.OnPreferenceChangeListener {
+public class StockSettings extends miui.preference.PreferenceActivity {
+    private static final String WEIBO = "weibo_key";
+    private static final String ABOUT = "about_key";
+    private static final String DONATE = "donate_key";
+    private static final String DENSITY = "density_key";
+    private static final String ONEPLUS_OTG = "oneplus_otg_key";
+    private static final String ONEPLUS_BUTTONS_LED = "oneplus_buttons_led_key";
 
-    private static final String DoubleTapHomeToSleep = "double_tap_home_to_sleep_key";
-    private static final String CMSettings = "cm_settings_key";
-    private static final String CameraSwitch = "camera_switch_key";
-    private static final String HomeLayoutSwitch = "home_layout_switch_key";
-    private static final String Density = "density_key";
-    private static final String AppScreenMask = "app_screen_mask_key";
-    private static final String About = "about_key";
-    private static final String Donate = "donate_key";
-    private String NowDensity = SystemProperties.get("persist.sys.density");
+    //获取当前系统设定的density值
+    private String StringNowDensity = SystemProperties.get("persist.sys.density");
 
-    //将String NowDensity转化为int intNowDensity
-    private int IntNowDensity = Integer.parseInt(NowDensity);
+    //将StringNowDensity转化为IntNowDensity
+    private int IntNowDensity = Integer.parseInt(StringNowDensity);
 
-    private CheckBoxPreference mDoubleTapHomeToSleep;
-    private PreferenceScreen mCMSettings;
-    private PreferenceScreen mAppScreenMask;
-    private PreferenceScreen mDonate;
+    private PreferenceScreen mWeiBo;
     private PreferenceScreen mAbout;
-    private ListPreference mCameraSwitch;
-    private ListPreference mHomeLayoutSwitch;
+    private PreferenceScreen mDonate;
+
     private EditTextPreference mDensity;
 
-    //for kernel config (oepn kernel activity)
-    long[] mHits = new long[3];
+    private CheckBoxPreference mOnePlusOTG;
+    private CheckBoxPreference mOnePlusButtonsLed;
 
-    private void initFind() {
-        mDoubleTapHomeToSleep = (CheckBoxPreference) findPreference(DoubleTapHomeToSleep);
-        mCMSettings = (PreferenceScreen) findPreference(CMSettings);
-        mAppScreenMask = (PreferenceScreen) findPreference(AppScreenMask);
-        mDensity = (EditTextPreference) findPreference(Density);
-        mAbout = (PreferenceScreen) findPreference(About);
-        mDonate = (PreferenceScreen) findPreference(Donate);
 
-        mCameraSwitch = (ListPreference) findPreference(CameraSwitch);
-        mCameraSwitch.setOnPreferenceChangeListener(this);
+    private void initPreference() {
+        mWeiBo = (PreferenceScreen) findPreference(WEIBO);
+        mAbout = (PreferenceScreen) findPreference(ABOUT);
+        mDonate = (PreferenceScreen) findPreference(DONATE);
 
-        mHomeLayoutSwitch = (ListPreference) findPreference(HomeLayoutSwitch);
-        mHomeLayoutSwitch.setOnPreferenceChangeListener(this);
+        mDensity = (EditTextPreference) findPreference(DENSITY);
 
-        //默认布局切换
-        mHomeLayoutSwitch.setEntries(new String[]{"4x5", "4x6", "5x5"});
-        mHomeLayoutSwitch.setEntryValues(new String[]{"0", "1", "2"});
+        mOnePlusOTG = (CheckBoxPreference) findPreference(ONEPLUS_OTG);
+        mOnePlusButtonsLed = (CheckBoxPreference) findPreference(ONEPLUS_BUTTONS_LED);
+
+        if (DeviceInfo.isBacon()) {
+
+        } else {
+            getPreferenceScreen().removeAll();
+            getPreferenceScreen().addPreference(mAbout);
+            getPreferenceScreen().addPreference(mWeiBo);
+            getPreferenceScreen().addPreference(mDonate);
+        }
     }
 
     private void setDpi(final int range1, final int range2, final int defaultRange) {
         String density_edit_message = getResources().getString(R.string.density_edit_message);
-
-        if (DeviceInfo.isBacon()) {
-            String density_edit_message_restore_homelayout = getResources().getString(R.string.density_edit_message_restore_homelayout);
-            String density_edit_message_format = String.format(density_edit_message, "300-600", density_edit_message_restore_homelayout);
-            mDensity.setDialogMessage(density_edit_message_format);
-        } else if (DeviceInfo.is8297()) {
-            String density_edit_message_format = String.format(density_edit_message, "280-320", "");
-            mDensity.setDialogMessage(density_edit_message_format);
-        }
-
+        String density_edit_message_format = String.format(density_edit_message, range1 + "-" + range2, "");
+        mDensity.setDialogMessage(density_edit_message_format);
         mDensity.setDialogTitle(getResources().getString(R.string.density_edit_title));
         mDensity.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
@@ -100,18 +88,6 @@ public class StockSettings extends miui.preference.PreferenceActivity implements
                     String density_summary_format = String.format(density_summary, NewDensity, defaultRange);
                     mDensity.setSummary(density_summary_format);
                     SystemProperties.set("persist.sys.density", +i + "");
-
-                    if (DeviceInfo.isBacon()) {
-                        //如果新DPI≤440，那么将showDpiWarning窗口重置为true状态
-                        if (i <= 440) {
-                            PrefUtils.saveBoolean(getApplicationContext(), "show_dpi_warning", true);
-                        }
-                        //重置桌面布局
-                        PrefUtils.saveString(getApplicationContext(), "home_layout_switch_key", "0");
-                        Tools.shell("mount -o remount,rw /system");
-                        Tools.shell("rm -rf /system/media/theme/default/com.miui.home");
-                    }
-
                     dialogReboot();
                     return true;
                 }
@@ -122,55 +98,17 @@ public class StockSettings extends miui.preference.PreferenceActivity implements
     public void onCreate(Bundle savedInstanceState) {
         setTheme(miui.R.style.Theme_Light_Settings);
         super.onCreate(savedInstanceState);
-        addPreferencesFromResource(R.xml.stocksettings);
-        initFind();
+        addPreferencesFromResource(R.xml.stocksettings_preference);
+        initPreference();
 
-        //Device
-        if (DeviceInfo.isBacon()) { /* Oneplus A0001 */
-
-            //添加DPI判断，如果DPI≤440，则移除4x5布局切换
-            if (IntNowDensity <= 440) {
-                //mHomeLayoutSwitch.setEntries(new String[]{"4x5", "4x6", "5x5"});
-                //mHomeLayoutSwitch.setEntryValues(new String[]{"0", "1", "2"});
-                mHomeLayoutSwitch.setEntries(new String[]{"4x6", "5x5"});
-                mHomeLayoutSwitch.setEntryValues(new String[]{"1", "2"});
-
-                //showDpiWarning， 提醒4x5布局移除窗口
-                Boolean b = PrefUtils.getBoolean(getApplicationContext(), "show_dpi_warning", false);
-                if (b.equals(true)) {
-                    showDpiWarning();
-                }
-
-            }
-
-            getPreferenceScreen().removePreference(mAppScreenMask);
-            mCameraSwitch.setEntries(R.array.camera_switch_entries_bacon);
-            mCameraSwitch.setEntryValues(R.array.camera_switch_values_bacon);
-
+        if (DeviceInfo.isBacon()) {
+            //设置默认density
             setDpi(300, 600, 480);
-
-        } else if (DeviceInfo.is8297()) { /* Coolpad 8297 */
-            getPreferenceScreen().removePreference(mDoubleTapHomeToSleep);
-            getPreferenceScreen().removePreference(mCMSettings);
-            getPreferenceScreen().removePreference(mCameraSwitch);
-
-            setDpi(280, 320, 320);
-
-        } else { /* Null Device*/
-            getPreferenceScreen().removeAll();
         }
-
     }
 
     public void onStart() {
         super.onStart();
-
-        if (DeviceInfo.isBacon()) {
-            setListPreferenceSummary(mCameraSwitch);
-        }
-
-        setListPreferenceSummary(mHomeLayoutSwitch);
-        setEditTextPreferenceSummary(mDensity);
 
         Boolean b = PrefUtils.getBoolean(getApplicationContext(), "showDonations", true);
         if (b.equals(true)) {
@@ -180,160 +118,49 @@ public class StockSettings extends miui.preference.PreferenceActivity implements
             startActivity(intent);
             PrefUtils.saveBoolean(getApplicationContext(), "showDonations", false);
         }
+
+        //每次启动设置当前density值至summary
+        setEditTextPreferenceSummary(mDensity);
     }
 
     public boolean onPreferenceTreeClick(PreferenceScreen preferencescreen, Preference preference) {
-        if (preference == mDoubleTapHomeToSleep) {
-            if (mDoubleTapHomeToSleep.isChecked()) {
-                Settings.System.putInt(getContentResolver(), "key_home_double_tap_action", 8);
-            } else {
-                Settings.System.putInt(getContentResolver(), "key_home_double_tap_action", 0);
-            }
-        }
-        if (preference == mAbout) {
-            if (DeviceInfo.isBacon()) {
-                //连续点击三次，Google API
-                System.arraycopy(mHits, 1, mHits, 0, mHits.length - 1);
-                mHits[mHits.length - 1] = SystemClock.uptimeMillis();
-                if (mHits[0] >= (SystemClock.uptimeMillis() - 500)) {
-                    Intent i = new Intent(Intent.ACTION_MAIN);
-                    i.setClassName("de.andip71.boeffla_config_v2", "de.andip71.boeffla_config_v2.MainActivity");
-                    startActivity(i);
-                    Toast.makeText(this, R.string.kernel_config_open, Toast.LENGTH_SHORT).show();
-                }
-            }
+        if (preference == mWeiBo) {
+            Uri uri = Uri.parse("http://weibo.com/acexs");
+            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+            startActivity(intent);
         }
         if (preference == mDonate) {
             Intent intent = new Intent();
-            intent.setClassName("com.xs.stocksettings", "com.xs.stocksettings.DonatePreference");
+            intent.setClassName("com.xs.stocksettings",
+                    "com.xs.stocksettings.DonatePreference");
             startActivity(intent);
         }
-        return false;
+        if (preference == mOnePlusButtonsLed) {
+            if (mOnePlusButtonsLed.isChecked()) {
+                Settings.System.putInt(getContentResolver(), "buttons_brightness", 1);
+            } else {
+                Settings.System.putInt(getContentResolver(), "buttons_brightness", 0);
+            }
+        }
+        if (preference == mOnePlusOTG) {
+            if (mOnePlusOTG.isChecked()) {
+                SystemProperties.set("persist.sys.oem.otg_support", "true");
+            } else {
+                SystemProperties.set("persist.sys.oem.otg_support", "false");
+            }
+        }
+        return true;
     }
 
     private void setEditTextPreferenceSummary(EditTextPreference mEditTextPreference) {
         if (mEditTextPreference == mDensity) {
             if (DeviceInfo.isBacon()) {
                 String density_summary = getResources().getString(R.string.density_summary);
-                String density_summary_format = String.format(density_summary, NowDensity, "480");
-                mDensity.setSummary(density_summary_format);
-            } else if (DeviceInfo.is8297()) {
-                String density_summary = getResources().getString(R.string.density_summary);
-                String density_summary_format = String.format(density_summary, NowDensity, "320");
+                //StringNowDensity为当前系统density，480为默认
+                String density_summary_format = String.format(density_summary, StringNowDensity, "480");
                 mDensity.setSummary(density_summary_format);
             }
         }
-    }
-
-    private void setListPreferenceSummary(ListPreference mListPreference) {
-        if (mListPreference == mCameraSwitch) {
-            if (DeviceInfo.isBacon()) {
-                if (0 == Integer.parseInt(mListPreference.getValue())) {
-                    mListPreference.setSummary(R.string.camera_switch_oppo_summary);
-                } else if (1 == Integer.parseInt(mListPreference.getValue())) {
-                    mListPreference.setSummary(R.string.camera_switch_miui_summary);
-                } else if (2 == Integer.parseInt(mListPreference.getValue())) {
-                    mListPreference.setSummary(R.string.camera_switch_cm_summary);
-                }
-            }
-        }
-
-        if (mListPreference == mHomeLayoutSwitch) {
-            if (0 == Integer.parseInt(mListPreference.getValue())) {
-                //默认设置，summary为4x5
-                mListPreference.setSummary(R.string.home_layout_switch_summary_4x5);
-                //如果检测到是一加一，并且DPI≤440，则设置4x5布局的summary为4x6
-                if (DeviceInfo.isBacon() && IntNowDensity <= 440) {
-                    mListPreference.setSummary(R.string.home_layout_switch_summary_4x6);
-                }
-            } else if (1 == Integer.parseInt(mListPreference.getValue())) {
-                mListPreference.setSummary(R.string.home_layout_switch_summary_4x6);
-            } else if (2 == Integer.parseInt(mListPreference.getValue())) {
-                mListPreference.setSummary(R.string.home_layout_switch_summary_5x5);
-            }
-        }
-    }
-
-    public boolean onPreferenceChange(Preference preference, Object newValue) {
-        if (mCameraSwitch == preference) {
-            if (DeviceInfo.isBacon()) {
-                String ValueCameraSwitch = (String) newValue;
-                mCameraSwitch.setValue(ValueCameraSwitch);
-                int mode = Integer.parseInt(ValueCameraSwitch);
-                switch (mode) {
-                    case 0:
-                        preference.setSummary(R.string.camera_switch_oppo_summary);
-                        Tools.shell("mount -o remount,rw /system");
-                        Tools.shell("rm -rf /system/priv-app/Camera.apk");
-                        Tools.shell("cp -f /system/stocksettings/OppoCamera.apk /system/priv-app/Camera.apk");
-                        Tools.shell("chmod 0644 /system/priv-app/Camera.apk");
-                        break;
-                    case 1:
-                        preference.setSummary(R.string.camera_switch_miui_summary);
-                        Tools.shell("mount -o remount,rw /system");
-                        Tools.shell("rm -rf /system/priv-app/Camera.apk");
-                        Tools.shell("cp -f /system/stocksettings/MiuiCamera.apk /system/priv-app/Camera.apk");
-                        Tools.shell("chmod 0644 /system/priv-app/Camera.apk");
-                        break;
-                    case 2:
-                        preference.setSummary(R.string.camera_switch_cm_summary);
-                        Tools.shell("mount -o remount,rw /system");
-                        Tools.shell("rm -rf /system/priv-app/Camera.apk");
-                        Tools.shell("cp -f /system/stocksettings/CyanogenModCamera.apk /system/priv-app/Camera.apk");
-                        Tools.shell("chmod 0644 /system/priv-app/Camera.apk");
-                        break;
-                    default:
-                        break;
-                }
-            }
-        }
-
-        if (mHomeLayoutSwitch == preference) {
-            String ValueHomeLayoutSwitch = (String) newValue;
-            mHomeLayoutSwitch.setValue(ValueHomeLayoutSwitch);
-            int mode = Integer.parseInt(ValueHomeLayoutSwitch);
-            switch (mode) {
-                case 0:
-                    preference.setSummary(R.string.home_layout_switch_summary_4x5);
-                    Tools.shell("mount -o remount,rw /system");
-                    Tools.shell("rm -rf /system/media/theme/default/com.miui.home");
-                    Tools.shell("busybox killall com.miui.home");
-                    Intent intent = new Intent(Intent.ACTION_MAIN);
-                    intent.addCategory(Intent.CATEGORY_HOME);
-                    startActivity(intent);
-                    break;
-                case 1:
-                    preference.setSummary(R.string.home_layout_switch_summary_4x6);
-                    if (DeviceInfo.isBacon() && IntNowDensity <= 440) {
-                        //如果检测到是一加一，并且DPI≤440，则直接删除默认主题路径的桌面布局文件
-                        Tools.shell("mount -o remount,rw /system");
-                        Tools.shell("rm -rf /system/media/theme/default/com.miui.home");
-                    } else {
-                        //否则就使用内置的桌面布局文件
-                        Tools.shell("mount -o remount,rw /system");
-                        Tools.shell("rm -rf /system/media/theme/default/com.miui.home");
-                        Tools.shell("cp -f /system/stocksettings/com.miui.home46 /system/media/theme/default/com.miui.home");
-                    }
-                    Tools.shell("busybox killall com.miui.home");
-                    Intent intent1 = new Intent(Intent.ACTION_MAIN);
-                    intent1.addCategory(Intent.CATEGORY_HOME);
-                    startActivity(intent1);
-                    break;
-                case 2:
-                    preference.setSummary(R.string.home_layout_switch_summary_5x5);
-                    Tools.shell("mount -o remount,rw /system");
-                    Tools.shell("rm -rf /system/media/theme/default/com.miui.home");
-                    Tools.shell("cp -f /system/stocksettings/com.miui.home55 /system/media/theme/default/com.miui.home");
-                    Tools.shell("busybox killall com.miui.home");
-                    Intent intent2 = new Intent(Intent.ACTION_MAIN);
-                    intent2.addCategory(Intent.CATEGORY_HOME);
-                    startActivity(intent2);
-                    break;
-                default:
-                    break;
-            }
-        }
-        return false;
     }
 
     public void dialogReboot() {
@@ -356,18 +183,4 @@ public class StockSettings extends miui.preference.PreferenceActivity implements
                 })
                 .show();
     }
-
-    private void showDpiWarning() {
-        new AlertDialog.Builder(this)
-                .setCancelable(false)
-                .setTitle(R.string.home_layout_switch_summary_not_support_4x5)
-                .setPositiveButton(R.string.dialog_is_agree, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        PrefUtils.saveBoolean(getApplicationContext(), "show_dpi_warning", false);
-                    }
-                })
-                .show();
-    }
-
 }

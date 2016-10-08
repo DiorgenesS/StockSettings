@@ -1,12 +1,13 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 19
+    compileSdkVersion 23
     buildToolsVersion "23.0.3"
+
     defaultConfig {
         applicationId "com.xs.stocksettings"
         minSdkVersion 19
-        targetSdkVersion 19
+        targetSdkVersion 23
         versionCode 1
         versionName "1.0"
     }
@@ -19,5 +20,7 @@ android {
 }
 
 dependencies {
+    testCompile 'junit:junit:4.12'
+    compile 'com.android.support:appcompat-v7:23.4.0'
     provided files('libs/miui.jar')
 }

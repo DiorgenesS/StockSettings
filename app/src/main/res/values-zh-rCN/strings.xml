@@ -1,41 +1,22 @@
 <resources>
     <string name="app_name">附加设置</string>
-    <string name="camera_sound_title">相机声音</string>
-    <string name="camera_sound_summary_off">相机声音已禁用！</string>
-    <string name="camera_sound_summary_on">相机声音已启用！</string>
-    <string name="warning_title">警告！</string>
-    <string name="warning_summary">停用相机声音在某些国家属于违法行为，请严谨遵守当地法律！</string>
-    <string name="double_tap_home_to_sleep_title">双击主页锁屏</string>
-    <string name="cm_settings_title">原厂设置</string>
-    <string name="cm_settings_summary">黑屏手势，呼吸灯等</string>
-    <string name="camera_switch_title">相机切换</string>
     <string name="about_title">关于</string>
-    <string name="camera_switch_oppo_summary">当前相机为OPPO相机</string>
-    <string name="camera_switch_miui_summary">当前相机为MIUI相机</string>
-    <string name="camera_switch_cm_summary">当前相机为CM相机</string>
-    <string name="home_layout_switch_title">桌面布局</string>
-    <string name="density_error">警告，输入密度值超出范围，请重新输入</string>
-    <string name="density_title">屏幕密度</string>
-    <string name="density_edit_title">屏幕密度修改</string>
-    <string name="density_edit_message">请输入一个合理的密度值(%1$s)\n\n修改密度值可能导致部分界面错位，请谨慎修改%2$s</string>
-    <string name="density_edit_message_restore_homelayout">\n\n设置DPI后，桌面布局将会恢复默认值,请重新切换桌面布局</string>
-    <string name="density_summary">当前密度值为%1$s，默认密度值为%2$s</string>
+    <string name="weibo_title">小煞-Xs</string>
+    <string name="weibo_summary">点击访问我的微博</string>
+    <string name="oneplus_otg_title">OTG</string>
+    <string name="oneplus_buttons_led_title">按键灯</string>
+    <string name="donate_title">支持作者</string>
+    <string name="donate_summary">点击对作者进行捐助</string>
+    <string name="donate_about"><font color="blue"><b>关于捐赠</b></font></string>
+    <string name="donate_about_info"><font color="black">ROM的适配过程中非常艰辛，享受MIUI的人往往不清楚这是利用大量私人时间制作，顾不上吃饭、喝水、通宵熬夜研究BUG对于我来说都是家常便饭，捐赠不在乎多少，大家有这份心意即可，在这里对捐赠我和心有余而力不足的朋友们致以万分感谢！感谢你们一直支持我的ROM！希望你们一直支持下去！</font>\n\n<font color="red"><b>支付宝:imxs1107@gmail.com</b></font>\n<font color="blue"><b>捐赠纯属自愿,请勿道德绑架!</b></font></string>
     <string name="dialog_ok">应用成功，是否重启手机？</string>
     <string name="dialog_yes">确定</string>
     <string name="dialog_no">取消</string>
     <string name="dialog_is_agree">不再提醒</string>
     <string name="dialog_reboot">请在稍晚些时刻手动重启手机</string>
-    <string name="sound_patch_title">声音补丁</string>
-    <string name="sound_patch_summary">增大默认音量等级</string>
-    <string name="app_screen_mask_title">护目镜</string>
-    <string name="find_oppo_camera">检测到系统正在使用OPPO相机，请同时在OPPO相机设置中关闭相机声音</string>
-    <string name="sounds">系统声音</string>
-    <string name="home_layout_switch_summary_not_support_4x5">检测到DPI≤440，将不支持4x5布局切换</string>
-    <string name="view_weibo_title">小煞-Xs</string>
-    <string name="view_weibo_summary">点击访问我的微博</string>
-    <string name="kernel_config_open">已经打开内核优化选项，请谨慎调节内核信息</string>
-    <string name="donate_title">支持作者</string>
-    <string name="donate_summary">点击对作者进行捐助</string>
-    <string name="donate_about"><font color="blue"><b>关于捐赠</b></font></string>
-    <string name="donate_about_info"><font color="black">ROM的适配过程中非常艰辛，享受MIUI的人往往不清楚这是利用大量私人时间制作，顾不上吃饭、喝水、通宵熬夜研究BUG对于我来说都是家常便饭，捐赠不在乎多少，大家有这份心意即可，在这里对捐赠我和心有余而力不足的朋友们致以万分感谢！感谢你们一直支持我的ROM！希望你们一直支持下去！</font>\n\n<font color="red"><b>支付宝:imxs1107@gmail.com</b></font>\n<font color="blue"><b>捐赠纯属自愿,请勿道德绑架!</b></font></string>
+    <string name="density_error">警告，输入密度值超出范围，请重新输入</string>
+    <string name="density_title">屏幕密度</string>
+    <string name="density_edit_title">屏幕密度修改</string>
+    <string name="density_edit_message">请输入一个合理的密度值(%1$s)\n\n修改密度值可能导致部分界面错位，请谨慎修改%2$s</string>
+    <string name="density_summary">当前密度值为%1$s，默认密度值为%2$s</string>
 </resources>

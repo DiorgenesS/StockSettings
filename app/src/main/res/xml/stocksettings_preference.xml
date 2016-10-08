@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <CheckBoxPreference
+        android:defaultValue="false"
+        android:key="oneplus_otg_key"
+        android:title="@string/oneplus_otg_title" />
+
+    <CheckBoxPreference
+        android:defaultValue="true"
+        android:key="oneplus_buttons_led_key"
+        android:title="@string/oneplus_buttons_led_title" />
+
+    <EditTextPreference
+        android:digits="1234567890"
+        android:key="density_key"
+        android:title="@string/density_title" />
+
+    <PreferenceCategory>
+        <PreferenceScreen
+            android:key="weibo_key"
+            android:summary="@string/weibo_summary"
+            android:title="@string/weibo_title" />
+
+        <PreferenceScreen
+            android:key="donate_key"
+            android:title="@string/donate_title" />
+
+        <PreferenceScreen
+            android:enabled="false"
+            android:key="about_key"
+            android:summary="© 2016 MIUI Tools | Powered by Xs"
+            android:title="@string/about_title" />
+    </PreferenceCategory>
+    >
+
+</PreferenceScreen>
