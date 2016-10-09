@@ -19,4 +19,5 @@
     <string name="density_edit_title">屏幕密度修改</string>
     <string name="density_edit_message">请输入一个合理的密度值(%1$s)\n\n修改密度值可能导致部分界面错位，请谨慎修改%2$s</string>
     <string name="density_summary">当前密度值为%1$s，默认密度值为%2$s</string>
+    <string name="oneplus_notify_light_title">呼吸灯</string>
 </resources>

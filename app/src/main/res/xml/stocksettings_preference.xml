@@ -11,6 +11,11 @@
         android:key="oneplus_buttons_led_key"
         android:title="@string/oneplus_buttons_led_title" />
 
+    <CheckBoxPreference
+        android:defaultValue="true"
+        android:key="oneplus_notify_light_key"
+        android:title="@string/oneplus_notify_light_title" />
+
     <EditTextPreference
         android:digits="1234567890"
         android:key="density_key"

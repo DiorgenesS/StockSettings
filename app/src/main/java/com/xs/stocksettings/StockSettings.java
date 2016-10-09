@@ -29,6 +29,7 @@ public class StockSettings extends miui.preference.PreferenceActivity {
     private static final String DENSITY = "density_key";
     private static final String ONEPLUS_OTG = "oneplus_otg_key";
     private static final String ONEPLUS_BUTTONS_LED = "oneplus_buttons_led_key";
+    private static final String ONEPLUS_NOTIFY_LIGHT = "oneplus_notify_light_key";
 
     //获取当前系统设定的density值
     private String StringNowDensity = SystemProperties.get("persist.sys.density");
@@ -44,7 +45,7 @@ public class StockSettings extends miui.preference.PreferenceActivity {
 
     private CheckBoxPreference mOnePlusOTG;
     private CheckBoxPreference mOnePlusButtonsLed;
-
+    private CheckBoxPreference mOnePlusNotifyLight;
 
     private void initPreference() {
         mWeiBo = (PreferenceScreen) findPreference(WEIBO);
@@ -55,6 +56,7 @@ public class StockSettings extends miui.preference.PreferenceActivity {
 
         mOnePlusOTG = (CheckBoxPreference) findPreference(ONEPLUS_OTG);
         mOnePlusButtonsLed = (CheckBoxPreference) findPreference(ONEPLUS_BUTTONS_LED);
+        mOnePlusNotifyLight = (CheckBoxPreference) findPreference(ONEPLUS_NOTIFY_LIGHT);
 
         if (DeviceInfo.isBacon()) {
 
@@ -76,12 +78,12 @@ public class StockSettings extends miui.preference.PreferenceActivity {
             public boolean onPreferenceChange(Preference preference, Object newValue) {
                 String NewDensity = (String) newValue;
                 if (NewDensity.equals("")) {
-                    Toast.makeText(getBaseContext(), R.string.density_error, Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), R.string.density_error, Toast.LENGTH_LONG).show();
                     return false;
                 } else {
                     int i = Integer.parseInt(NewDensity);
                     if (i < range1 || i > range2) {
-                        Toast.makeText(getBaseContext(), R.string.density_error, Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), R.string.density_error, Toast.LENGTH_LONG).show();
                         return false;
                     }
                     String density_summary = getResources().getString(R.string.density_summary);
@@ -149,7 +151,21 @@ public class StockSettings extends miui.preference.PreferenceActivity {
                 SystemProperties.set("persist.sys.oem.otg_support", "false");
             }
         }
+        if (preference == mOnePlusNotifyLight) {
+            if (mOnePlusNotifyLight.isChecked()) {
+                updateNotifyLightStatus(1);
+            } else {
+                updateNotifyLightStatus(0);
+            }
+        }
         return true;
+    }
+
+    private void updateNotifyLightStatus(int value){
+        Settings.System.putInt(getContentResolver(), "oem_acc_breath_light", value);
+        Settings.System.putInt(getContentResolver(), "notification_light_pulse", value);
+        Settings.System.putInt(getContentResolver(), "battery_led_low_power", value);
+        Settings.System.putInt(getContentResolver(), "battery_led_charging", value);
     }
 
     private void setEditTextPreferenceSummary(EditTextPreference mEditTextPreference) {
