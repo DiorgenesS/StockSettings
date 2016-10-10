@@ -20,4 +20,5 @@
     <string name="density_edit_message">please enter a reasonable range of values(%1$s)\n\nThis operation may lead to frequent system FC, careful revision%2$s</string>
     <string name="density_summary">Now dpi is%1$s , Default is%2$s</string>
     <string name="oneplus_notify_light_title">Notify Light</string>
+    <string name="original_settings_title">Original Settings</string>
 </resources>

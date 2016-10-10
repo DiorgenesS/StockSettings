@@ -21,6 +21,10 @@
         android:key="density_key"
         android:title="@string/density_title" />
 
+    <PreferenceScreen
+        android:key="original_settings_key"
+        android:title="@string/original_settings_title" />
+
     <PreferenceCategory>
         <PreferenceScreen
             android:key="weibo_key"

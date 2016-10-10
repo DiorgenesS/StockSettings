@@ -12,6 +12,7 @@ import android.preference.EditTextPreference;
 import android.preference.Preference;
 import android.preference.PreferenceScreen;
 import android.provider.Settings;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.xs.stocksettings.utils.DeviceInfo;
@@ -23,11 +24,15 @@ import miui.os.SystemProperties;
  * Created by xs on 16-10-9.
  */
 public class StockSettings extends miui.preference.PreferenceActivity {
+
+    private static final String TAG = "StockSettings";
+
     private static final String WEIBO = "weibo_key";
     private static final String ABOUT = "about_key";
     private static final String DONATE = "donate_key";
     private static final String DENSITY = "density_key";
     private static final String ONEPLUS_OTG = "oneplus_otg_key";
+    private static final String ORIGINAL_SETTINGS = "original_settings_key";
     private static final String ONEPLUS_BUTTONS_LED = "oneplus_buttons_led_key";
     private static final String ONEPLUS_NOTIFY_LIGHT = "oneplus_notify_light_key";
 
@@ -40,6 +45,7 @@ public class StockSettings extends miui.preference.PreferenceActivity {
     private PreferenceScreen mWeiBo;
     private PreferenceScreen mAbout;
     private PreferenceScreen mDonate;
+    private PreferenceScreen mOriginalSettings;
 
     private EditTextPreference mDensity;
 
@@ -51,6 +57,7 @@ public class StockSettings extends miui.preference.PreferenceActivity {
         mWeiBo = (PreferenceScreen) findPreference(WEIBO);
         mAbout = (PreferenceScreen) findPreference(ABOUT);
         mDonate = (PreferenceScreen) findPreference(DONATE);
+        mOriginalSettings = (PreferenceScreen) findPreference(ORIGINAL_SETTINGS);
 
         mDensity = (EditTextPreference) findPreference(DENSITY);
 
@@ -158,10 +165,19 @@ public class StockSettings extends miui.preference.PreferenceActivity {
                 updateNotifyLightStatus(0);
             }
         }
+        if (preference == mOriginalSettings) {
+            try {
+                Intent intent = new Intent().setClassName("com.android.settings_ex",
+                        "com.android.settings_ex.Settings");
+                startActivity(intent);
+            } catch (Exception e) {
+                Log.e(TAG, "Can't found com.android.settings_ex");
+            }
+        }
         return true;
     }
 
-    private void updateNotifyLightStatus(int value){
+    private void updateNotifyLightStatus(int value) {
         Settings.System.putInt(getContentResolver(), "oem_acc_breath_light", value);
         Settings.System.putInt(getContentResolver(), "notification_light_pulse", value);
         Settings.System.putInt(getContentResolver(), "battery_led_low_power", value);
