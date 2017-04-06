@@ -76,6 +76,7 @@ public class StockSettings extends miui.preference.PreferenceActivity {
             getPreferenceScreen().addPreference(mAbout);
             getPreferenceScreen().addPreference(mWeiBo);
             getPreferenceScreen().addPreference(mDonate);
+	    getPreferenceScreen().addPreference(mDensity);
         }
     }
 
@@ -113,11 +114,8 @@ public class StockSettings extends miui.preference.PreferenceActivity {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.stocksettings_preference);
         initPreference();
-
-        if (DeviceInfo.isBacon() || DeviceInfo.isOnePlus2() || DeviceInfo.isOnePlus3()) {
-            //设置默认density
-            setDpi(300, 600, 480);
-        }
+        //设置默认density
+        setDpi(300, 600, 480);
     }
 
     public void onStart() {
@@ -190,12 +188,10 @@ public class StockSettings extends miui.preference.PreferenceActivity {
 
     private void setEditTextPreferenceSummary(EditTextPreference mEditTextPreference) {
         if (mEditTextPreference == mDensity) {
-            if (DeviceInfo.isBacon() || DeviceInfo.isOnePlus2() || DeviceInfo.isOnePlus3()) {
-                String density_summary = getResources().getString(R.string.density_summary);
+		String density_summary = getResources().getString(R.string.density_summary);
                 //StringNowDensity为当前系统density，480为默认
                 String density_summary_format = String.format(density_summary, StringNowDensity, "480");
                 mDensity.setSummary(density_summary_format);
-            }
         }
     }
 
