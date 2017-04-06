@@ -101,7 +101,7 @@ public class StockSettings extends miui.preference.PreferenceActivity {
                     String density_summary = getResources().getString(R.string.density_summary);
                     String density_summary_format = String.format(density_summary, NewDensity, defaultRange);
                     mDensity.setSummary(density_summary_format);
-                    SystemProperties.set("persist.sys.density", +i + "");
+                    SystemProperties.set("ro.sf.lcd_density", +i + "");
                     dialogReboot();
                     return true;
                 }
